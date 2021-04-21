@@ -25,7 +25,7 @@
 
         	console.log("함수실행");
         	
-        	$("#categoryorder").css("display","none");
+        	$("#categoryorder").css("display","none"); 
         		//상품 이미지 리스트 불러오기
         	$.ajax(
         			
