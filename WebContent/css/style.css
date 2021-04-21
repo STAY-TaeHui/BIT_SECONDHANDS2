@@ -38,6 +38,10 @@ html, body {
 	font-smoothing: antialiased;
 	*/
 	margin: 0;
+	
+	
+	overflow-y: hidden;
+	
 }
 
 #bodywrap {
@@ -319,7 +323,7 @@ transparent;
 }
 
 /*---------------------
-  Header
+  Header 헤더
 -----------------------*/
 header {
 	width: 100%;
@@ -328,6 +332,10 @@ header {
 	top: 0;
 	left: 0;
 	z-index: 998;
+	background-color: white;
+}
+
+.header-section{
 	background-color: white;
 }
 
@@ -1028,13 +1036,27 @@ header {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	
 }
 
-.productlist li {
-	width: 20%;
+.productlist li {	
+	width: 300px;	
 	border: 1px red solid;
-	padding:7px;
-	
+	padding:15px;
+
+}
+.thumnail{
+
+	overflow:hidden;
+	width:300px;
+	height:300px;
+	margin:auto;
+}
+
+.thumnail img{
+	width:90%;
+	height:90%;
+
 }
 
 .imginfo {

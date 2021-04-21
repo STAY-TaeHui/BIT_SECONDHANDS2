@@ -31,21 +31,13 @@
         			
         			{	
         				url:"ProductListOk.ajax",
-        				//url:"maincontent.ajax",
         				type:"get",
         				dataType:"json",
         				success:function(responsedata){
         					console.log(responsedata);
         					
-        					
-        						$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
-        						
-        					
+        					getlist(responsedata);
+        					       					
         				},
         			
         		
@@ -83,12 +75,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});	
+        						getlist(responsedata);
 								
         					
         				},
@@ -123,12 +110,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});       						
+        						getlist(responsedata);     						
         					
         				},
         				error:function(xhr){
@@ -165,12 +147,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
+        						getlist(responsedata);
 								
         					
         				},
@@ -206,12 +183,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});        						
+        						getlist(responsedata);       						
         					
         				},
         				error:function(xhr){
@@ -231,7 +203,7 @@
 
 
 <div id="fullwrap">
-	<jsp:include page="WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="WEB-INF/views/include/header_main.jsp"></jsp:include>
 	
 	<div id="bodywrap">
 	
@@ -309,10 +281,12 @@
 	
 	
     <!-- Footer Section Begin -->
-
+	
+	
+	<jsp:include page="WEB-INF/views/include/footer.jsp"></jsp:include>
     <!-- bodywrap end -->
     </div>
-     <jsp:include page="WEB-INF/views/include/footer.jsp"></jsp:include>
+     
      
      </div>
     <!-- fullwrap end -->

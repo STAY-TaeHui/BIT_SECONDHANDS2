@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <!--j쿼리 cdn-->
-    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Page Preloder 
     <div id="preloder">
         <div class="loader"></div>
@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="/index.jsp">
+                            <a href="index.jsp">
                                 <img src="img/logo.png" alt="">
                             </a>
                         </div>
@@ -54,7 +54,7 @@
 
                         <!--  <form class="search"> -->
                             <div class="input-group" id="header_search">
-                                <input type="text" id="keyword">
+                                <input type="text" id="keyword" onkeyup="if(window.event.keyCode==13){search()}">
                                 <button type="submit" name="clickbtn" onclick="search()"><i class="ti-search"></i></button>
                             </div>
                         <!-- </form> -->
@@ -99,6 +99,22 @@
                 </div>
             </div>
         <script>
+        
+        
+        //기본 상품 리스트 불러오는 함수
+        function getlist(responsedata){
+			$.each(responsedata, function(index, obj){
+          							
+				$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+	    				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+	    						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+	    						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+	    		});
+        }
+        
+        
+        
+        
         //로그아웃 함수
         function logout(request){
         	
@@ -138,12 +154,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
+        						getlist(responsedata);
 								
 								//$("#keyword").val("");
         						
@@ -332,12 +343,7 @@ $.each(responsedata, function(index, obj){
         					
         					$(".productlist").empty();
         					
-        					$.each(responsedata, function(index, obj){
-      							
-    							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-    									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-    									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-    						});
+        					getlist(responsedata);
    					
         					
         				},
@@ -373,12 +379,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         					
         					
-        					$.each(responsedata, function(index, obj){
-      							
-    							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-    									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-    									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-    						});
+        					getlist(responsedata);
         						
         					
         				},
@@ -420,12 +421,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});		
+        						getlist(responsedata);	
 								
         					
         				},
@@ -460,12 +456,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});        						
+        						getlist(responsedata);        						
         					
         				},
         				error:function(xhr){
@@ -502,12 +493,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
+        						getlist(responsedata);
 								
         					
         				},
@@ -543,12 +529,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});       						
+        						getlist(responsedata);		
         					
         				},
         				error:function(xhr){

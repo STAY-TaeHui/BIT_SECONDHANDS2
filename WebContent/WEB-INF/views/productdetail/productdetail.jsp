@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                                <img class="product-big-img" src="${pageContext.request.contextPath}/img/store/${jsonobj.pimg_name}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -74,6 +74,7 @@
 
                                 </div>
                                 <div id="contactseller">
+                                	<input type="button" value="찜♥" id="like">
                                      <input type="button" value="연락하기" id="call">
                                     <input type="button" value="바로구매" id="buynow">
                                 </div>
@@ -126,20 +127,19 @@
 	                                                <c:otherwise>
 	                                                
 	                                               <c:forEach var="arr" items="${jsonarr}">
-	                                                <p>${arr}</p>
+	                                               
+	                                                <div class ="recently_p" >
+	                                                <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
+	                                                	<div class="pricearea">
+	                                                	<p>${arr.p_price}원</p>
+	                                                	</div>
+	                                                </div>
+	                                                
 	                                                </c:forEach>
 	                                                
 	                                                </c:otherwise>
 	                                                </c:choose>
-	                                                <!-- 
-	                                                <div class ="recently_p">
-	                                                
-	                                                	<div id="pricearea"></div>
-	                                                </div>
-	                                                <div class ="recently_p">
-	                                                	<div id="pricearea"></div>
-	                                                </div>
-	                                                -->
+	                                               
                                                 </div>
                                                 
                                             </div>
@@ -291,6 +291,63 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    
+    <script>
+    	window.onload=function(){
+    		init();
+    	}
+    	
+	    const like = document.querySelector("#like");
+	    
+	    const BASE_COLOR = "darkgray";
+	    const OTHER_COLOR = "#f70000";
+	    const currentColor = like.style.background;
+	     
+	    //함수만들어준다.
+	    function handClick(){
+       
+	        if(currentColor === BASE_COLOR){
+	        	like.style.background = OTHER_COLOR;
+	        }else{
+	        	like.style.background = BASE_COLOR;
+	        }
+	        
+	        
+	        
+	    }
+	     
+	    //초기화값
+	    function init(){
+	    	like.style.background = BASE_COLOR;
+	    	like.addEventListener("click",handClick);
+	    	
+	    	//찜추가하는 함수 하나
+	    	like.addEventListener("click",likeup);
+	    	
+	    }
+	    
+	    
+	    //찜하는 함수
+	    function likeup(){
+	    	
+	    	/*
+	    	if(currentColor === BASE_COLOR){
+	    		console.log("이 상품을 찜합니다");
+	    		handClick();
+	    		
+	    	} else{
+	    		console.log("이 상품의 찜을 해제합니다");
+	    		handClick();
+	    	}
+	    	*/
+	    	
+	    }
+	    
+	    
+	    
+	    
+    
+    </script>
 </body>
 
 </html>
