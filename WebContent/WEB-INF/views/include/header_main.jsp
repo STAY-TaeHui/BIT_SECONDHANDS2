@@ -32,15 +32,7 @@
     						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
     		});
     }
-    
-    
-    
-        //로그아웃 함수
-        function logout(request){
-        	
-        	request.getSession().invalidate();
-        	request.getSession(true);
-        }
+
         
       //검색하기 함수
         function search(){
@@ -267,7 +259,7 @@
             	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
-            	<li onclick="logout(${request})">로그아웃</li>
+            	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
             	<li><a href="resister.do">회원가입</a></li>

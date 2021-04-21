@@ -34,7 +34,7 @@
             	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
-            	<li onclick="logout(${request})">로그아웃</li>
+            	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
             	<li><a href="register.do">회원가입</a></li>
@@ -100,7 +100,6 @@
             </div>
         <script>
         
-        
         //기본 상품 리스트 불러오는 함수
         function getlist(responsedata){
 			$.each(responsedata, function(index, obj){
@@ -112,15 +111,6 @@
 	    		});
         }
         
-        
-        
-        
-        //로그아웃 함수
-        function logout(request){
-        	
-        	request.getSession().invalidate();
-        	request.getSession(true);
-        }
         
       //검색하기 함수
         function search(){
@@ -193,10 +183,7 @@
                 						"<option id='category_t"+obj.t_num+"' value="+obj.t_num+">"+obj.t_name + "</option>"	
                 				);
         						
-        					});
-        					
-        					
-   					
+        					}); 					
         					
         				},
         				error:function(xhr){
@@ -209,9 +196,7 @@
         	
         }
         
-        window.onload = function(){
-        	getcategorytop();
-        }
+
       
         function getcategorymiddle(){
         	
@@ -359,12 +344,17 @@
         
         
         
-    //헤더 둘로 나누기 전 원래 index.jsp에 있었던 함수들
+   		 //헤더 둘로 나누기 전 원래 index.jsp에 있었던 함수들
 
         
         $(function() {    //화면 다 뜨면 시작
 
         	console.log("함수실행");
+        
+        	getcategorytop();
+        	
+        	console.log("페이지 로딩");
+	
         	
         	$("#categoryorder").css("display","none");
         		//상품 이미지 리스트 불러오기
@@ -391,10 +381,7 @@
         			
         			
         		);
-        		
-        	
-        	
-        	
+	
             
         });
         
@@ -529,7 +516,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-        						getlist(responsedata);		
+        						getlist(responsedata);
         					
         				},
         				error:function(xhr){
@@ -548,15 +535,15 @@
 
                         <div id="selectionarea">
 
-                        <select id="top" onchange="getcategorymiddle()" class="c_selection">
+                        <select id="top" onchange="getcategorymiddle()" class="c_selection" name="top">
 							
                         </select>
                         
-                        <select id="middle" onchange="getcategorybottom()" class="c_selection">
+                        <select id="middle" onchange="getcategorybottom()" class="c_selection" name="middle">
 							<option>중분류</option>
                         </select>
                         
-                        <select id="bottom" onchange="getselectedproduct()" class="c_selection">
+                        <select id="bottom" onchange="getselectedproduct()" class="c_selection" name="bottom">
 							<option>소분류</option>
                         </select>
                         </div>

@@ -21,8 +21,9 @@
 
 #like{
 	margin-right:auto;
+	/*
 	background-color:darkgray;
-
+*/
 }
 
 #call{
@@ -37,6 +38,25 @@
 
 #p_content{
 	margin-right:auto;
+}
+
+#replyarea table{
+	margin-top:20px;
+	border-top:1px gray solid;
+	width:100%;
+	color:gray;
+}
+
+#replyarea table th{
+	padding:20px;
+	width:100%;
+}
+
+.replaybtn input{
+	border:none;
+	color:gray;
+	padding:5px;
+	background-color:white;
 }
 
 #shopcontainer{
