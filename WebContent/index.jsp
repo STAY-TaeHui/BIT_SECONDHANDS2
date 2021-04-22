@@ -40,15 +40,13 @@
         					       					
         				},
         			
-        		
+       		
         				error:function(xhr){
         					console.log(xhr);
         				}
-        			}
+        			}        			
         			
-        			
-        		);
-        	
+        		);        	
             
         });
         

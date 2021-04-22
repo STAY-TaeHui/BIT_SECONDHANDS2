@@ -1272,14 +1272,56 @@ public class SecondHandsDAO {
 			return result;
 		}
 		
-		//상품상세 페이지 이동했을 때 현재 유저의 정보 가져오는 함수
-		public JSONObject ChekCurrentUser(String currentuser) {
+		//상품상세 페이지 이동했을 때 현재 유저가 찜한 상품인지 확인하는 함수
+		public boolean ChekLike(String currentuser, int p_num) {
 			
 			
-			JSONObject obj = new JSONObject();
-			
-			
-			return obj;
+			Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      ResultSet rs=null;
+		      
+		      JSONObject obj = new JSONObject();
+		      
+		      System.out.println(currentuser);
+		      System.out.println("상품 상세페이지에 접속한 유저의 정보 불러오기");
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+	         	    String sql = "select p_num from likelist where storename=? and p_num=?";
+
+
+	         	   pstmt = conn.prepareStatement(sql);
+	         	   pstmt.setString(1, currentuser);
+	         	   pstmt.setInt(2, p_num);
+			         
+			       rs= pstmt.executeQuery();   
+		         
+
+		         
+		         while(rs.next()) {				        	 
+
+			        	 return true;
+		         } 
+		         
+		      
+		         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		         System.out.println("SQLException : " + e.getMessage());
+		      }catch(Exception e3) {
+		         System.out.println(e3.getMessage());
+		      }
+		      finally {
+		         try {
+		            rs.close();
+		            pstmt.close();
+		            conn.close();//반환하기
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return false;
 		}
 
 		

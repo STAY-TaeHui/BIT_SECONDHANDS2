@@ -192,126 +192,7 @@
         </div>
     </section>
     
-    <!-- Related Products Section End 
-    <div class="related-products spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>Related Products</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/products/women-1.jpg" alt="">
-                            <div class="sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Coat</div>
-                            <a href="#">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $14.00
-                                <span>$35.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/products/women-2.jpg" alt="">
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Shoes</div>
-                            <a href="#">
-                                <h5>Guangzhou sweater</h5>
-                            </a>
-                            <div class="product-price">
-                                $13.00
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/products/women-3.jpg" alt="">
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Towel</div>
-                            <a href="#">
-                                <h5>Pure Pineapple</h5>
-                            </a>
-                            <div class="product-price">
-                                $34.00
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/products/women-4.jpg" alt="">
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">Towel</div>
-                            <a href="#">
-                                <h5>Converse Shoes</h5>
-                            </a>
-                            <div class="product-price">
-                                $34.00
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    Related Products Section End -->
-
-    <!-- Partner Logo Section Begin -->
-
-    <!-- Partner Logo Section End -->
-
-
-   
+ 
     
     <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
      <!-- bodywrap end -->
@@ -331,15 +212,14 @@
     
     <script>
     	window.onload=function(){
-    		
-    		init();
-   		
+  		
     		//카테고리 유지시키기(미완)
     		setCategory();
     		
-    		
-    		
-    		
+    		//이 페이지의 상품이 찜한 상품인지 확인
+    		checkLike();
+    		init();
+  		
     	}
     	
     	//카테고리 유지 함수
@@ -378,32 +258,52 @@
     	
     	*/
     	
-    	//접속 아이디의 위 세 정보를 가져오는 함수
-    	function getCurrentUser(){
+    	
+    	
+    	//찜한 상품인지 구하기
+    	function checkLike(){
     		
-    		/*
+    		var currentuser = '<%=(String)session.getAttribute("storename")%>';
+    		let check;
+    		
     		$.ajax(
     				
     				{
     					
-    					url:"chekcurrentuser.ajax",
+    					url:"cheklike.ajax",
     					dataType:"json",
+    					data:{
+    						currentuser:currentuser,
+    						p_num:${jsonobj.p_num}
+    						},
+    					success:function(responsedata){
+    						console.log(responsedata);
+    						
+    						check = responsedata;
+    						
+    						if(check == "true"){
+    							console.log("찜한 상품");
+    						}else{
+    							console.log("찜한 상품이 아님");
+    						}
+    						
+    						init(check, currentuser);
+    						
+    						
+    					},
+    					error:function(xhr){
+    						console.log(xhr);
+    					}
     					
     						
     				}
     				
     				);
-    		*/
+    		
+    		
     	}
-    		  
-	    	/*
-	    	if(currentuser === "null"){
-	    		swal("로그인이 필요합니다.")
-	    		
-	    	} 
-    	*/
     	
-    	
+   	
     	//찜 버튼 색깔 바꾸기 위해 선언
 	    const like = document.querySelector("#like");	    
 	    const BASE_COLOR = "darkgray";
@@ -412,42 +312,55 @@
 	     
 	    //색 바뀌는 함수
 	    function handClick(){
-	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
-			
 		
 	    	const currentColor = like.style.background;
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
 	    	
-	        if(currentColor === BASE_COLOR){
-	        	
-	        	like.style.background = OTHER_COLOR;
-	        	
-	        	
-	        }else{
-	        	
-	        	like.style.background = BASE_COLOR;
-	        }
+	    	if(currentuser == "null"){
+	    		swal("로그인이 필요합니다");
+	    	} else{
+	    		
+	    		if(currentColor === BASE_COLOR){
+		        	
+		        	like.style.background = OTHER_COLOR;
+		        		        	
+		        }else{
+		        	
+		        	like.style.background = BASE_COLOR;
+		        }
+		        
+		        likeup(currentColor);
+	    		
+	    	}
 	        
-	        likeup(currentColor, currentuser);
-	        
-	    	
+    	
 	    }
 	     
-	    //찜버튼 초기화값
-	    function init(){
-	    	like.style.background = BASE_COLOR;
-	    	like.addEventListener("click",handClick);
+	    //찜버튼 초기화
+	    function init(check, currentuser){
+	
+		    	console.log(check);
+		    	
+		    	if(check == false){
+		    		
+		    		like.style.background = BASE_COLOR;
+			    	like.addEventListener("click",handClick);
+			    	
+		    	} else{
+		    		like.style.background = OTHER_COLOR;
+			    	like.addEventListener("click",handClick);
+		    	}
 	    	
 	    }
 	    
 	    
 	    //찜하는 함수
-	    function likeup(currentColor, currentuser){
+	    function likeup(currentColor){
 	    	
-	    	  	
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
 	    	
 	    	console.log("현재 유저");
 	    	console.log(currentuser);
-
 	    	
 	    	if(currentColor === BASE_COLOR){
 	    		console.log("이 상품을 찜합니다");

@@ -1,4 +1,4 @@
-package kr.or.bit.ajax;
+package kr.or.bit.ajax.productdetail;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,38 +7,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 import kr.or.bit.dao.SecondHandsDAO;
 
 /**
- * Servlet implementation class ChekCurrentUser
+ * Servlet implementation class GetReplyListOk
  */
-@WebServlet("/chekcurrentuser.ajax")
-public class ChekCurrentUser extends HttpServlet {
+@WebServlet("/getreplylistok.ajax")
+public class GetReplyListOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChekCurrentUser() {
+    public GetReplyListOk() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("This is ChekCurrentUser.ajax");
+    	System.out.println("This is getreplylistok.ajax");
     	
 	      
-	    String currentuser   = request.getParameter("currentuser");
+	    String currentstore   = request.getParameter("currentstore");
     	SecondHandsDAO dao = new SecondHandsDAO();
-    	JSONObject obj = dao.ChekCurrentUser(currentuser);
+    	JSONArray arr = dao.getReplayList(currentstore);
     	
     	 //System.out.println("상품문의 보낼 때 : " + arr);
     	
         response.setContentType("application/x-json; charset=UTF-8");
-        response.getWriter().print(obj);
+        response.getWriter().print(arr);
         
        
     	
@@ -47,5 +46,10 @@ public class ChekCurrentUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
+
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
+
 }

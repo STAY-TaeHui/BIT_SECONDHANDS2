@@ -1,4 +1,4 @@
-package kr.or.bit.ajax;
+package kr.or.bit.ajax.productdetail;
 
 import java.io.IOException;
 import java.io.PrintWriter;
