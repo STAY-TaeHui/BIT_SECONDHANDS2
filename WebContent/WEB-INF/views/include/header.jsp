@@ -67,7 +67,7 @@
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/sell.gif">
                                 </a>
@@ -81,7 +81,7 @@
                             </li>
                             <li class="cart-icon">
                             <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/myshop.gif">
 							</a>

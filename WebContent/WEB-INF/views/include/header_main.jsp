@@ -262,9 +262,15 @@
             	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
-
-            	<li><a href="resister.do">회원가입</a></li>
-
+				
+				<c:choose>
+            	<c:when test="${!sessionScope.isLogined}">
+            	<li><a href="register.do">회원가입</a></li>
+				</c:when>
+				<c:otherwise>
+				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				</c:otherwise>
+				</c:choose>
             	
             </ul>
             </div>
@@ -295,7 +301,7 @@
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/sell.gif">
                                 </a>
@@ -309,7 +315,7 @@
                             </li>
                             <li class="cart-icon">
                             <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/myshop.gif">
 							</a>
