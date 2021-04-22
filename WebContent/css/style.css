@@ -1090,20 +1090,7 @@ header {
 	text-decoration:none;
 	
 }
-.counttext{
-	font-size: 18px;
-    padding: 10px 0px 20px;
-    border-bottom: 1px solid rgb(238, 238, 238);
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    font: inherit;
-    direction: ltr;
-    text-align: left;
-    color: rgb(0 0 0);
-    letter-spacing: -0.5px;
-    margin-bottom: 20px;
-}
+
 .thumnail{
 
 	overflow:hidden;

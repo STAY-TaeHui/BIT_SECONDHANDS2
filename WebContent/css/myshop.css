@@ -36,3 +36,23 @@
 	margin: 30px 0px 0px 10px;
 	font-size: 11px;
 }
+.counttext{
+	font-size: 15px;
+    padding: 20px 0px 20px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    direction: ltr;
+    text-align: left;
+    color: rgb(0 0 0);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.count{
+	color: rgb(247, 47, 51);
+	margin: 0px;
+    padding: 0px;
+    border: 0px;
+    vertical-align: baseline;
+}
