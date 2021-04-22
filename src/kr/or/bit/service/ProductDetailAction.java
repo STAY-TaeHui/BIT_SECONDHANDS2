@@ -30,6 +30,12 @@ public class ProductDetailAction implements Action{
 		//상품 상세페이지의 상점정보 간략히 뿌리기
 		request.setAttribute("jsonarr",dao.showShopInfo(storename));
 		
+		//카테고리 값 표시하기
+		request.setAttribute("categoryarr",dao.setCategory(p_num));
+		
+		//상품 문의 목록 표시하기
+		request.setAttribute("replylist", dao.getReplayList(storename));
+		
 		System.out.println("서비스에서 제이슨 배열 : " + dao.showShopInfo(storename));
 		
 		forward.setPath("/WEB-INF/views/productdetail/productdetail.jsp");

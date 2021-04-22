@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <script>
 
@@ -26,6 +27,14 @@
         	
         	$("#categoryorder").css("display","none");
         		//상품 이미지 리스트 불러오기
+        	
+        	productlist();
+        	
+            
+        });
+        
+        //상품리스트 불러오기
+        function productlist(){
         	$.ajax(
         			{	
         				url:"MyShopProductList.ajax",
@@ -52,10 +61,7 @@
         			
         			
         		);
-        	
-            
-        });
-        
+        }
         
         //최신순 정렬
         function orderbytime(){
