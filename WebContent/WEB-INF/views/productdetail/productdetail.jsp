@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
 <!-- 상품 문의 목록 -->
-<c:set var="replyList" value="${requestScope.replylist}" />
+<c:set var="replylist" value="${requestScope.replylist}" />
 
 <head>
     <meta charset="UTF-8">
@@ -115,30 +116,37 @@
                                                 
                                                 <!-- 상품 문의 댓글 영역 -->
                                                 <div id="replyarea">
-                                                <c:if test="${not empty replyList}">
+                                                <p id="replytitle">상품문의<span></span></p>
                                                 
-													<c:forEach var="reply" items="${replyList}" varStatus="index">
-														<table id="replay${reply.index}"><!-- 이거 넘버링 안됨 -->
+
+											          <textarea placeholder="상품문의입력" id="replytext" name="replytext" style="width:100%; height:100px;"></textarea>
+											          <input type="button" value="댓글달기" class="replybtn" onclick="reply_check()"> 
+
+                                                <div id="relist">
+                                                <c:if test="${not empty replylist}">
+                                                
+													<c:forEach var="reply" items="${replylist}">
+														<table id="reply${reply.rp_num}"><!-- 이거 넘버링 안됨 -->
 															<tr >
-																<th class="replywriter">${jsonobj.storename}</th>
+																<th class="replywriter">${reply.storename}</th>
 															</tr>
 															<tr class="replaycontent">
 																
 																<td>
-																${reply.rp_content}
+																${reply.rp_content}<br>
 																</td>
 															</tr>
-															<tr class="replaybtn">
+															<tr class="replaybtnarea">
 																<td>
-																	<input type="button" value="댓글달기">
-																	<input type="button" value="삭제하기">
-																	<input type="button" value="수정하기">
+														<input type="button" value="댓글달기" class="replybtn">
+														<input type="button" value="삭제하기" class="replybtn" id="del${reply.rp_num}" onclick="deleteReply(${reply.p_num},${reply.rp_num})">
+														<input type="button" value="수정하기" class="replybtn" id="edit${reply.rp_num}">
 																</td>
 															</tr>
 														</table>
 													</c:forEach>
 												</c:if>
-                                                	
+                                                </div>	
                                                 
                                                 </div>
                                             </div>
@@ -149,7 +157,7 @@
                                                 <h5>상점 정보</h5>
                                                 <div id="shopinfo">
 	                                                <div id="title">
-	                                                ${jsonobj.m_profile}
+	                                               <!--  ${jsonobj.m_profile}  -->
 	                                                ${jsonobj.storename}
 	                                                </div>
 	                                                
@@ -165,15 +173,17 @@
 	                                               
 	                                                <div class ="recently_p" >
 	                                                <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
-	                                                	<div class="pricearea">
-	                                                	<p>${arr.p_price}원</p>
-	                                                	</div>
+	                                                	
 	                                                </div>
 	                                                
 	                                                </c:forEach>
 	                                                
 	                                                </c:otherwise>
 	                                                </c:choose>
+	                                                
+	                                                <div id="more">
+	                                                	<input type="button" value="더보기" id="moreinfo">
+	                                                	</div>
 	                                               
                                                 </div>
                                                 
@@ -455,6 +465,19 @@
 	    }
 	    //////////////////////////////////////////////////////
 	    
+	    //댓글 유효성 검사
+	    function reply_check() {
+			
+						if ($("#replytext").val() == "") {
+							
+							swal("내용을 입력해주세요");
+							return false;
+							
+						}
+						
+						writeReply();
+					
+					}	
 	   
 	    
 	    //비동기 상점문의(댓글) 목록 가져오기
@@ -463,20 +486,32 @@
 	    	console.log("상점문의를 가져옵니다");
 	    	
 	    	$.ajax(
-	    		{
-	    			
+	    		{	    			
 	    			url:"getreplylistok.ajax",
 	    			dataType:"json",
-	    			data:{ currentstore:${jsonobj.storename} },
+	    			data:{ p_number:${jsonobj.p_num} },
 	    			success:function(responsedata){
 	    				
 	    				console.log("목록 부르기 성공");
 	    				console.log(responsedata);
+	    				
+	    				$("#relist").empty();
+	    				
+	    				$.each(responsedata,function(index,obj){
+	    					
+	    					$("#relist").append(
+	    							"<table id='reply"+obj.rp_num+"'><tr ><th class='replywriter'>"+obj.storename+"</th></tr>"
+									+"<tr class='replaycontent'><td>"+obj.rp_content+"<br></td></tr><tr class='replaybtnarea'><td>"
+								+"<input type='button' value='댓글달기' class='replybtn'><input type='button' value='삭제하기' class='replybtn' id='del"+obj.rp_num+"'"
+								+"onclick='deleteReply("+obj.p_num+","+obj.rp_num+")'><input type='button' value='수정하기' class='replybtn' id='edit"+obj.rp_num+"'>"
+										+"</td></tr></table>");
+	    					
+	    				});
+		
 	    			},
 	    			error:function(xhr){
 	    				
-	    				console.log(xhr);
-	    				
+	    				console.log(xhr);		
 	    			}
 	    			
 	    		}		
@@ -485,16 +520,91 @@
 	    
 	    //비동기 상점문의(댓글) 달기
 	    function writeReply(){
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
 	    	
-	    	console.log("상점문의를 남깁니다");
-	    	getReplyList();
+	    	let adddata = {
+	    			storename : currentuser,
+	    			rp_content : $("#replytext").val(),
+	    			p_num : ${jsonobj.p_num}
+	    	}
+	    	
+	    	console.log("등록함수 실행");
+
+	    	$.ajax(
+	    		{	
+	    			url : "writereplyok.ajax",
+	    			data : adddata,
+	    			type:"post",
+	    			dataType : "text",
+	    				success : function(responsedata) {
+	    				console.log(responsedata);
+	    				
+	    				if(responsedata == "true"){
+	    					
+							swal("댓글 입력 성공");
+	    					
+	    					$("#replytext").val("");
+	    					
+	    					console.log("상점문의를 남깁니다");
+	    			    	getReplyList();
+	    					
+	    				} else{
+	    					swal("댓글 입력 실패");
+	    				}
+	    					
+	    			},
+	    			error:function(xhr){
+	    				console.log(xhr);
+	    			}
+	    			
+	    			
+	    		}
+	    	);
+    	
 	    }
 	    
 	    //비동기 상점문의(댓글) 삭제
-	    function deleteReply(){
+	    function deleteReply(p_num,rp_num){
 	    	
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
+   	
 	    	console.log("상점문의를 삭제합니다");
-	    	getReplyList();
+	    	
+	    	let params = {
+	    			storename:currentuser,
+	    			p_num:p_num,
+	    			rp_num:rp_num
+	    	}	
+	    	
+
+	    	$.ajax(
+	    	 {
+	    		url:"deletereplyok.ajax",
+	    		data:params,
+	    		dataType:"text",
+	    		success:function(responsedata){						
+	    			
+	    			console.log(responsedata);
+  			
+	    			let check = responsedata.trim();
+	    			
+	    			 if(check == "true"){
+	    				  swal("삭제 성공");
+	    				  let el = document.getElementById('reply'+params.rp_num);
+	    				  el.remove();
+	    			      getReplyList();
+	    				   
+	    			 }else{
+	    				 swal("삭제 실패");
+	    			 }					 
+	    			 
+	    		},
+	    		error:function(error){
+	    			console.log(error);
+	    		}
+	    	 }
+	      );
+
 	    }
 	    
     

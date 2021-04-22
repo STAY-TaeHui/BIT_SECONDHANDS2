@@ -1119,7 +1119,7 @@ public class SecondHandsDAO {
 					}
 					
 					//상품 상세에 들어갈 문의(replay) 불러오는 함수 가희
-					public JSONArray getReplayList(String currentstore) {
+					public JSONArray getReplayList(int p_num) {
 						
 						  Connection conn = null;
 					      PreparedStatement pstmt = null;
@@ -1127,17 +1127,20 @@ public class SecondHandsDAO {
 					      
 					      JSONArray arr = new JSONArray();
 					      
-					      System.out.println(currentstore);
+					      System.out.println(p_num);
+					      
+
 					      System.out.println("상품 문의 불러오기");
 					      
 					      try {
 					         conn=ds.getConnection();				     
 					         	
-				         	    String sql = "select p_num, rp_content, rp_date from reply where storename=?";
+				         	    String sql = "select rp_num, p_num, rp_content, rp_date, storename from reply where p_num=?"
+				         	    			+ " order by rp_num desc";
 
 
 				         	   pstmt = conn.prepareStatement(sql);
-				         	   pstmt.setString(1, currentstore);
+				         	   pstmt.setInt(1, p_num);
 						         
 						       rs= pstmt.executeQuery();   
 					         
@@ -1147,10 +1150,12 @@ public class SecondHandsDAO {
 
 					        		 
 					        		 JSONObject obj = new JSONObject();
-						        	 
+						        	 	
+					        		 	obj.put("rp_num",rs.getInt("rp_num"));
 							            obj.put("p_num",rs.getInt("p_num"));
 							            obj.put("rp_content",rs.getString("rp_content"));
 							            obj.put("rp_date",rs.getString("rp_date"));
+							            obj.put("storename",rs.getString("storename"));
 
 							            
 							            System.out.println("obj : "+obj);
@@ -1323,10 +1328,93 @@ public class SecondHandsDAO {
 		      }
 		      return false;
 		}
-
 		
 		
+		// 상품상세페이지에서 상품문의 작성 함수
+		public Boolean writeReply(int p_num, String storename, String rp_content) {
+			
+			Connection conn = null;
+		      PreparedStatement pstmt = null;
+   
 
+		      System.out.println("상품 상세페이지에 접속한 유저의 정보 불러오기");
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+	         	    String sql = "insert into reply(p_num, storename, rp_content, rp_num) values(?,?,?,rp_num_seq.nextval)";
+
+
+	         	   pstmt = conn.prepareStatement(sql);
+	         	   pstmt.setInt(1, p_num);
+	         	   pstmt.setString(2, storename);
+	         	   pstmt.setString(3, rp_content);
+	         	   
+			         
+			       int result = pstmt.executeUpdate();   
+			       
+			       if(result > 0) {
+			    	   return true;
+			       }
+		         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		         System.out.println("SQLException : " + e.getMessage());
+		      }catch(Exception e3) {
+		         System.out.println(e3.getMessage());
+		      }
+		      finally {
+		         try {
+
+		            pstmt.close();
+		            conn.close();//반환하기
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return false;
+		}
+		
+		//댓글 삭제 함수 가희
+		public Boolean deleteReply(int p_num, String storename, int rp_num) {
+			
+			  Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+	         	    String sql = "delete from reply where storename=? and rp_num=?";
+
+
+	         	   pstmt = conn.prepareStatement(sql);
+	         	   pstmt.setString(1, storename);
+	         	   pstmt.setInt(2, rp_num);
+	         	   
+			         
+			       int result = pstmt.executeUpdate();   
+			       
+			       if(result > 0) {
+			    	   return true;
+			       }
+		         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		         System.out.println("SQLException : " + e.getMessage());
+		      }catch(Exception e3) {
+		         System.out.println(e3.getMessage());
+		      }
+		      finally {
+		         try {
+
+		            pstmt.close();
+		            conn.close();//반환하기
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return false;
+		}
 
 
 

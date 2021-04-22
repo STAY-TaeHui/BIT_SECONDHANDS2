@@ -34,7 +34,7 @@ public class ProductDetailAction implements Action{
 		request.setAttribute("categoryarr",dao.setCategory(p_num));
 		
 		//상품 문의 목록 표시하기
-		request.setAttribute("replylist", dao.getReplayList(storename));
+		request.setAttribute("replylist", dao.getReplayList(p_num));
 		
 		System.out.println("서비스에서 제이슨 배열 : " + dao.showShopInfo(storename));
 		

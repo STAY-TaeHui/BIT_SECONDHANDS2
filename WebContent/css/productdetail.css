@@ -40,6 +40,22 @@
 	margin-right:auto;
 }
 
+/*
+#replytext{
+	
+	width:200px;
+	height:100px;
+	
+}
+*/
+
+#replytext input{
+	border:none;
+	color:gray;
+	padding:5px;
+	background-color:white;
+}
+
 #replyarea table{
 	margin-top:20px;
 	border-top:1px gray solid;
@@ -52,7 +68,7 @@
 	width:100%;
 }
 
-.replaybtn input{
+.replybtn{
 	border:none;
 	color:gray;
 	padding:5px;
@@ -60,7 +76,7 @@
 }
 
 #shopcontainer{
-	border:1px lightgray solid;
+	border-left:1px lightgray solid;
 }
 
 #shopinfo{
@@ -72,30 +88,31 @@
 
 #title{
 	width:100%;
+	text-align:center;
+	padding:10px;
+
 }
 
 .recently_p{
-	width:50%;	
+	width:150px;
+	height:150px;
+	margin:auto;	
 }
 
 .recently_p img{
+	width:150px;
+	height:150px;
 	object-fit:cover;
 }
 
-.pricearea{
-	
-	background-color:black;
-	opacity:70%;
-	position:absolute;
-	bottom:0;
-	height:30px;
+#more{
 	width:100%;
-	color:white;	
 }
 
-.pricearea p{
-	position:relative;
-	top:40%;
-	text-align:center;
-	font-size:1rem;
+#moreinfo{
+	width:100%;
+	border:1px lightgray solid;
+	background-color:white;
+	color:gray;
+	margin-top:20px;
 }
