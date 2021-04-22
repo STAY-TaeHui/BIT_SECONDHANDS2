@@ -44,9 +44,7 @@ public class MyShopController extends HttpServlet {
 	    		action = new MyShopInfoAction();
 	    		forward = action.execute(request, response);
 		 }
-		 else if(url_Command.equals("/myshop")) {
-			 
-		 }
+		 
     	//////////////////////////////////////////////////////
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

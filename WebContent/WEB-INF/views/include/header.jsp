@@ -36,14 +36,22 @@ console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
             <div id="rightmenu">
             <ul id="loginmenu">
             	<c:choose>
-            	<c:when test="${sessionScope.storename eq null}">
+            	<c:when test="${!sessionScope.isLogined}">
             	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
             	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
+            	
+            	<c:choose>
+            	<c:when test="${!sessionScope.isLogined}">
             	<li><a href="register.do">회원가입</a></li>
+				</c:when>
+				<c:otherwise>
+				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				</c:otherwise>
+				</c:choose>
             </ul>
             </div>
                 <div class="row">
