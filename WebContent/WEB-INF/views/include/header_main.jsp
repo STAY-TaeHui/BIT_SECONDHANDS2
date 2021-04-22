@@ -21,12 +21,18 @@
     
     
     <script>
-        //로그아웃 함수
-        function logout(request){
-        	
-        	request.getSession().invalidate();
-        	request.getSession(true);
-        }
+    
+    //기본 상품 리스트 불러오는 함수
+    function getlist(responsedata){
+		$.each(responsedata, function(index, obj){
+      							
+    		$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+    				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+    						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+    						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+    		});
+    }
+
         
       //검색하기 함수
         function search(){
@@ -49,14 +55,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
-								
-								//$("#keyword").val("");
+        						getlist(responsedata);
         						
         					
         				},
@@ -226,12 +225,7 @@
         					
         					$(".productlist").empty();
         					
-        					$.each(responsedata, function(index, obj){
-      							
-    							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-    									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-    									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-    						});
+        					getlist(responsedata);
    					
         					
         				},
@@ -260,15 +254,24 @@
             <div class="inner-header">
             <div id="rightmenu">
             <ul id="loginmenu">
-            	            	<c:choose>
-            	<c:when test="${sessionScope.storename eq null}">
-            	<li>로그인</li>
+            	<c:choose>
+            	<c:when test="${!sessionScope.isLogined}">
+            	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
-            	<li onclick="logout(${request})">로그아웃</li>
+            	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
-            	<li><a href="resister.do">회원가입</a></li>
+				
+				<c:choose>
+            	<c:when test="${!sessionScope.isLogined}">
+            	<li><a href="register.do">회원가입</a></li>
+				</c:when>
+				<c:otherwise>
+				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				</c:otherwise>
+				</c:choose>
+            	
             </ul>
             </div>
                 <div class="row">
@@ -285,7 +288,7 @@
 
                         <!--  <form class="search"> -->
                             <div class="input-group" id="header_search">
-                                <input type="text" id="keyword">
+                                <input type="text" id="keyword" onkeyup="if(window.event.keyCode==13){search()}">
                                 <button type="submit" name="clickbtn" onclick="search()"><i class="ti-search"></i></button>
                             </div>
                         <!-- </form> -->
@@ -298,13 +301,13 @@
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/sell.gif">
                                 </a>
                                 </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="#?storename=${sessionScope.storename}">
                              <img src="img/sell.gif">
                                 </a>
                              </c:otherwise>
@@ -312,13 +315,13 @@
                             </li>
                             <li class="cart-icon">
                             <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/myshop.gif">
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="myshop?storename=${sessionScope.storename}">
                                     <img src="img/myshop.gif">
                                 </a>
                              </c:otherwise>

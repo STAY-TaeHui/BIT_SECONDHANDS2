@@ -17,12 +17,18 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <!--j쿼리 cdn-->
-    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Page Preloder 
     <div id="preloder">
         <div class="loader"></div>
     </div>-->
     <!-- Header Section Begin -->
+<script type="text/javascript">
+console.log("현재 세션은 : " + '${sessionScope.storename}');
+console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
+</script>
+
+
     <header class="header-section">
         <div class="container">
 
@@ -30,20 +36,28 @@
             <div id="rightmenu">
             <ul id="loginmenu">
             	<c:choose>
-            	<c:when test="${sessionScope.storename eq null}">
+            	<c:when test="${!sessionScope.isLogined}">
             	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
-            	<li onclick="logout(${request})">로그아웃</li>
+            	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
+            	
+            	<c:choose>
+            	<c:when test="${!sessionScope.isLogined}">
             	<li><a href="register.do">회원가입</a></li>
+				</c:when>
+				<c:otherwise>
+				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				</c:otherwise>
+				</c:choose>
             </ul>
             </div>
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="/index.jsp">
+                            <a href="index.jsp">
                                 <img src="img/logo.png" alt="">
                             </a>
                         </div>
@@ -54,7 +68,7 @@
 
                         <!--  <form class="search"> -->
                             <div class="input-group" id="header_search">
-                                <input type="text" id="keyword">
+                                <input type="text" id="keyword" onkeyup="if(window.event.keyCode==13){search()}">
                                 <button type="submit" name="clickbtn" onclick="search()"><i class="ti-search"></i></button>
                             </div>
                         <!-- </form> -->
@@ -67,27 +81,28 @@
                         <ul class="nav-right">
                             <li class="heart-icon">
                                 <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
-                            <a href="login.do">
+                            <c:when test="${!sessionScope.isLogined}">
+                            	<a href="login.do">
                                     <img src="img/sell.gif">
                                 </a>
-                                </c:when>
+                              </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
-                             <img src="img/sell.gif">
+	                             <a href="#?storename=${sessionScope.storename}">
+	                             <img src="img/sell.gif">
                                 </a>
                              </c:otherwise>
                              </c:choose>
                             </li>
+                            
                             <li class="cart-icon">
                             <c:choose>
-                            <c:when test="${sessionScope.storename eq null}">
+                            <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/myshop.gif">
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="myshop?storename=${sessionScope.storename}">
                                     <img src="img/myshop.gif">
                                 </a>
                              </c:otherwise>
@@ -99,12 +114,18 @@
                 </div>
             </div>
         <script>
-        //로그아웃 함수
-        function logout(request){
-        	
-        	request.getSession().invalidate();
-        	request.getSession(true);
+        
+        //기본 상품 리스트 불러오는 함수
+        function getlist(responsedata){
+			$.each(responsedata, function(index, obj){
+          							
+				$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+	    				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+	    						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+	    						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+	    		});
         }
+        
         
       //검색하기 함수
         function search(){
@@ -138,12 +159,7 @@
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
+        						getlist(responsedata);
 								
 								//$("#keyword").val("");
         						
@@ -182,10 +198,7 @@ $.each(responsedata, function(index, obj){
                 						"<option id='category_t"+obj.t_num+"' value="+obj.t_num+">"+obj.t_name + "</option>"	
                 				);
         						
-        					});
-        					
-        					
-   					
+        					}); 					
         					
         				},
         				error:function(xhr){
@@ -198,9 +211,7 @@ $.each(responsedata, function(index, obj){
         	
         }
         
-        window.onload = function(){
-        	getcategorytop();
-        }
+
       
         function getcategorymiddle(){
         	
@@ -332,12 +343,7 @@ $.each(responsedata, function(index, obj){
         					
         					$(".productlist").empty();
         					
-        					$.each(responsedata, function(index, obj){
-      							
-    							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-    									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-    									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-    						});
+        					getlist(responsedata);
    					
         					
         				},
@@ -353,12 +359,17 @@ $.each(responsedata, function(index, obj){
         
         
         
-    //헤더 둘로 나누기 전 원래 index.jsp에 있었던 함수들
+   		 //헤더 둘로 나누기 전 원래 index.jsp에 있었던 함수들
 
         
         $(function() {    //화면 다 뜨면 시작
 
         	console.log("함수실행");
+        
+        	getcategorytop();
+        	
+        	console.log("페이지 로딩");
+	
         	
         	$("#categoryorder").css("display","none");
         		//상품 이미지 리스트 불러오기
@@ -373,12 +384,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         					
         					
-        					$.each(responsedata, function(index, obj){
-      							
-    							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-    									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-    									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-    						});
+        					getlist(responsedata);
         						
         					
         				},
@@ -390,10 +396,7 @@ $.each(responsedata, function(index, obj){
         			
         			
         		);
-        		
-        	
-        	
-        	
+	
             
         });
         
@@ -420,12 +423,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-								$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});		
+        						getlist(responsedata);	
 								
         					
         				},
@@ -460,12 +458,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});        						
+        						getlist(responsedata);        						
         					
         				},
         				error:function(xhr){
@@ -502,12 +495,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});
+        						getlist(responsedata);
 								
         					
         				},
@@ -543,12 +531,7 @@ $.each(responsedata, function(index, obj){
         					console.log(responsedata);
         						$(".productlist").empty();
         					       					
-$.each(responsedata, function(index, obj){
-          							
-        							$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"+obj.pimg_name+
-        									"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
-        									"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
-        						});       						
+        						getlist(responsedata);
         					
         				},
         				error:function(xhr){
@@ -567,15 +550,15 @@ $.each(responsedata, function(index, obj){
 
                         <div id="selectionarea">
 
-                        <select id="top" onchange="getcategorymiddle()" class="c_selection">
+                        <select id="top" onchange="getcategorymiddle()" class="c_selection" name="top">
 							
                         </select>
                         
-                        <select id="middle" onchange="getcategorybottom()" class="c_selection">
+                        <select id="middle" onchange="getcategorybottom()" class="c_selection" name="middle">
 							<option>중분류</option>
                         </select>
                         
-                        <select id="bottom" onchange="getselectedproduct()" class="c_selection">
+                        <select id="bottom" onchange="getselectedproduct()" class="c_selection" name="bottom">
 							<option>소분류</option>
                         </select>
                         </div>

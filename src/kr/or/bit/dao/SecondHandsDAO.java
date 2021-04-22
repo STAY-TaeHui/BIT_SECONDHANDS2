@@ -191,7 +191,6 @@ public class SecondHandsDAO {
 	         pstmt = conn.prepareStatement(sql);
 	         
 	         rs= pstmt.executeQuery();
-	         System.out.println("re next : "+rs.next());
 	         
 	         while(rs.next()) {
 	        	
@@ -206,11 +205,8 @@ public class SecondHandsDAO {
 	            obj.put("storename",rs.getString("storename"));
 	            //시간 자르려고 substring 사용
 	            obj.put("p_wr_time", rs.getString("p_wr_time").substring(0, 11));
-	            
-	            System.out.println(obj);
 	            arr.add(obj);
 	            
-	            System.out.println("배열 담겼나 : " +arr.get(0));
 	         } 
 	         System.out.println(arr);
 	         
@@ -233,6 +229,7 @@ public class SecondHandsDAO {
 	      }
 	      return arr;
 	   }
+	
 	 //메인에 뿌려줄 상품 리스트 뽑기
 	   public JSONArray getMyProductList(String storename) { 
 	         Connection conn = null;
@@ -254,7 +251,6 @@ public class SecondHandsDAO {
 	            
 	            rs= pstmt.executeQuery();	            
 	            while(rs.next()) {
-	               SimpleDateFormat date = new SimpleDateFormat ( "yyyy.MM.dd");
 
 	               
 	               JSONObject obj = new JSONObject();
@@ -290,6 +286,8 @@ public class SecondHandsDAO {
 	         System.out.println("arr list = " + arr.size());
 	         return arr;
 	      }
+	   
+	   
 	   //찜 리스트 출력
 	   public JSONArray getMyLikeList(String storename) { 
 	         Connection conn = null;
@@ -298,8 +296,6 @@ public class SecondHandsDAO {
 	         JSONArray arr = new JSONArray();
 	         try {
 	            conn=ds.getConnection();
-	            
-	            //String sql = "select * from member";
 	            
 	            String sql =  "select p.p_num, pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time "
 	            		+"from product p join "
@@ -440,6 +436,62 @@ public class SecondHandsDAO {
 		}
 		
 	}
+	
+	//페이지 이동시 카테고리 유지시켜주는 함수 가희
+			public JSONObject setCategory(int p_num) {
+				
+				JSONObject obj = new JSONObject();
+				
+				  Connection conn = null;
+			      PreparedStatement pstmt = null;
+			      ResultSet rs=null;
+			      JSONArray arr = new JSONArray();
+			      
+			      
+			      try {
+			         conn=ds.getConnection();
+			         String sql = "select b.b_num, m.m_num, t.t_num  from category_top t inner join category_middle m "
+			                 +"on t.t_num = m.t_num left outer join "
+			                 +"category_bottom b on b.m_num = m.m_num left outer join "
+			                 +"product p on p.b_num = b.b_num "
+			                 +"where p.p_num =" + p_num;
+			         
+			         pstmt = conn.prepareStatement(sql);
+			         
+			         rs = pstmt.executeQuery();
+			         
+			         while(rs.next()) {
+			            
+
+			            obj.put("b_num",rs.getInt("b_num"));
+			            obj.put("m_num",rs.getInt("m_num"));
+			            obj.put("t_num",rs.getInt("t_num"));
+
+			            
+			            System.out.println("제이슨 객체 : "+obj);
+			            
+
+			         }
+    
+			         
+			      } catch (SQLException e) {
+			         // TODO: handle exception
+			         System.out.println(e.getMessage());
+			      }catch(Exception e3) {
+			         System.out.println(e3.getMessage());
+			      }
+			      finally {
+			         try {
+			            rs.close();
+			            pstmt.close();
+			            conn.close();//반환하기
+			         } catch (Exception e2) {
+			            System.out.println(e2.getMessage());
+			         }
+			      }
+
+				return obj;
+			}
 	
 	//검색하는 함수 (가희)
 		public JSONArray searchProduct(String keyword){
@@ -947,10 +999,11 @@ public class SecondHandsDAO {
 					         //String sql = "select * from member";
 					         String sql = "";
 					         
-					        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_content,p.storename "
+					        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_content,p.storename, p.p_num "
 							               +"from product p left join product_img pi "
 							               +"on p.p_num=pi.p_num "
-							               +"where p.p_num=" + p_num;
+							               +"where p.p_num=" + p_num
+							               + " and pi.pimg_num=1";
 					        	 		
 
 
@@ -966,7 +1019,8 @@ public class SecondHandsDAO {
 					            obj.put("p_wr_time", rs.getString("p_wr_time"));
 					            obj.put("p_content", rs.getString("p_content"));
 					            obj.put("storename", rs.getString("storename"));
-					           // obj.put("m_profile", rs2.getString("m_profile"));
+					            obj.put("p_num",rs.getInt("p_num"));
+				
 					            System.out.println("들어오나?");
 					            System.out.println("obj : "+obj);
 
@@ -995,53 +1049,56 @@ public class SecondHandsDAO {
 					
 					//상점 정보 구역에 들어갈 상점 프로필, 상품 갯수, 최근 상품 정보 구하기 위한 쿼리문
 			         // 회원, 상품, 상품 이미지 세 개의 테이블 조인
-					public Object showShopInfo(String storename) {
-						Connection conn = null;
+					public JSONArray showShopInfo(String storename) {
+						  Connection conn = null;
 					      PreparedStatement pstmt = null;
 					      ResultSet rs=null;
 					      JSONArray arr = new JSONArray();
 					      System.out.println("상품 상세페이지 함수 실행");
 					      
 					      try {
-					         conn=ds.getConnection();
-		
-	        
-					         
-					         String sql = "";
+					         conn=ds.getConnection();				     
 					         	
-				         	    sql += "select m.m_profile, p.p_price, pi.pimg_name, p.p_num from product p inner join"
-				                        +"product_img pi on p.p_num = pi.p_num left outer join"
-				                        +"member m on p.storename = m.storename"
-				                        +"where p.storename="+storename
+				         	    String sql = "select m.m_profile, p.p_price, pi.pimg_name, p.p_num, p.storename, m.m_phone from product p inner join "
+				                        +"product_img pi on p.p_num = pi.p_num left outer join "
+				                        +"member m on p.storename = m.storename "
+				                        +"where p.storename='"+storename+"' "
+				                        +"and ROWNUM <= 2 "
 				                        +"order by p.p_wr_time desc";
 				         	    
+				         	   System.out.println(storename);
+				         	  System.out.println(sql);
 				         	   pstmt = conn.prepareStatement(sql);
 						         
 						       rs= pstmt.executeQuery();   
 					         
-						       
-					         //while(rs.next()) {				        	 
-					            
-					        	 JSONObject obj = new JSONObject();
-					        	 
-					            obj.put("pimg_name",rs.getString("pimg_name"));
-					            obj.put("p_price",rs.getInt("p_price"));
-					            obj.put("storename", rs.getString("storename"));
-					           obj.put("m_profile", rs.getString("m_profile"));
-					          
-					            
-					            System.out.println("obj : "+obj);
-					            
-					            arr.add(obj);
-					            System.out.println("함수에서 배열은?" + arr);
 
-					         //} 
+					         
+					         while(rs.next()) {				        	 
+
+					        		 
+					        		 JSONObject obj = new JSONObject();
+						        	 
+							            obj.put("pimg_name",rs.getString("pimg_name"));
+							            obj.put("p_price",rs.getInt("p_price"));
+							            obj.put("storename", rs.getString("storename"));
+							            obj.put("m_profile", rs.getString("m_profile"));
+							            //연락하기 때문에 넣어주는 전화번호
+							            //근데 타입 에러가 뜬다
+							            //obj.put("m_phone", rs.getString("m_phone"));
+							            
+							            System.out.println("obj : "+obj);
+							        
+							            
+							            arr.add(obj);
+
+					         } 
 					         
 					      
 					         
 					      } catch (SQLException e) {
 					         // TODO: handle exception
-					         System.out.println("SQLException" + e.getMessage());
+					         System.out.println("SQLException : " + e.getMessage());
 					      }catch(Exception e3) {
 					         System.out.println(e3.getMessage());
 					      }
@@ -1056,6 +1113,69 @@ public class SecondHandsDAO {
 					      }
 					      return arr;
 					}
+					
+					//상품 상세에 들어갈 문의(replay) 불러오는 함수 가희
+					public JSONArray getReplayList(String currentstore) {
+						
+						  Connection conn = null;
+					      PreparedStatement pstmt = null;
+					      ResultSet rs=null;
+					      
+					      JSONArray arr = new JSONArray();
+					      
+					      System.out.println(currentstore);
+					      System.out.println("상품 문의 불러오기");
+					      
+					      try {
+					         conn=ds.getConnection();				     
+					         	
+				         	    String sql = "select p_num, rp_content, rp_date from reply where storename=?";
+
+
+				         	   pstmt = conn.prepareStatement(sql);
+				         	   pstmt.setString(1, currentstore);
+						         
+						       rs= pstmt.executeQuery();   
+					         
+
+					         
+					         while(rs.next()) {				        	 
+
+					        		 
+					        		 JSONObject obj = new JSONObject();
+						        	 
+							            obj.put("p_num",rs.getInt("p_num"));
+							            obj.put("rp_content",rs.getString("rp_content"));
+							            obj.put("rp_date",rs.getString("rp_date"));
+
+							            
+							            System.out.println("obj : "+obj);
+							        
+							            
+							            arr.add(obj);
+
+					         } 
+					         
+					      
+					         
+					      } catch (SQLException e) {
+					         // TODO: handle exception
+					         System.out.println("SQLException : " + e.getMessage());
+					      }catch(Exception e3) {
+					         System.out.println(e3.getMessage());
+					      }
+					      finally {
+					         try {
+					            rs.close();
+					            pstmt.close();
+					            conn.close();//반환하기
+					         } catch (Exception e2) {
+					            System.out.println(e2.getMessage());
+					         }
+					      }
+					      return arr;
+					}
+					
 
 	//상점이름 불러오기 -영훈-
 		public void getProductName() {
@@ -1084,6 +1204,82 @@ public class SecondHandsDAO {
 			}
 
 		}
+		
+		//찜하기 함수
+
+		public String setLike(String islike, String liker, String p_num) {
+				
+			
+				String result = "false";
+			  Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      String sql = "";
+		      System.out.println("찜하기 함수 실행");
+		      
+		      int p_number = Integer.parseInt(p_num);
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+		         //찜하기 누른 것
+		         if( islike.equals("true")) {
+		        
+		        	 sql += "insert into likelist(storename, p_num) values (?,?)";
+		        	 result = "true";
+		        	 
+		        	//찜하기 취소
+		         } else {
+		        	 sql += "delete from likelist where storename=? and p_num=?";
+		        	 
+		        	 
+		        	 //islike = "false";
+		         }
+		         System.out.println(sql);
+		         pstmt = conn.prepareStatement(sql);
+	         	 pstmt.setString(1, liker);
+	         	 pstmt.setInt(2, p_number);
+	         	 			         
+			      int rs= pstmt.executeUpdate();   
+		         
+
+		         if(rs > 0) {
+		        	 System.out.println("찜 수정이 실행되었습니다.");
+		         } else {
+		        	 System.out.println("찜 수정이 실패했습니다.");
+		         }
+	         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		         System.out.println("SQLException : " + e.getMessage());
+		      }catch(Exception e3) {
+		         System.out.println("Exception : "+e3.getMessage());
+		      }
+		      finally {
+		         try {
+
+		            pstmt.close();
+		            conn.close();
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+
+			
+			return result;
+		}
+		
+		//상품상세 페이지 이동했을 때 현재 유저의 정보 가져오는 함수
+		public JSONObject ChekCurrentUser(String currentuser) {
+			
+			
+			JSONObject obj = new JSONObject();
+			
+			
+			return obj;
+		}
+
+		
+		
 
 
 

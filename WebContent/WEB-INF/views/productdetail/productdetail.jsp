@@ -2,9 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
+
+<!-- 상품 문의 목록 -->
+<c:set var="replyList" value="${requestScope.replylist}" />
 
 <head>
     <meta charset="UTF-8">
@@ -16,6 +18,8 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -48,7 +52,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                                <img class="product-big-img" src="${pageContext.request.contextPath}/img/store/${jsonobj.pimg_name}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -74,7 +78,8 @@
 
                                 </div>
                                 <div id="contactseller">
-                                     <input type="button" value="연락하기" id="call">
+                                	<input type="button" value="찜♥" id="like">
+                                     <input type="button" value="연락하기" id="call" onclick="contact()">
                                     <input type="button" value="바로구매" id="buynow">
                                 </div>
 						<!--  
@@ -103,8 +108,39 @@
                                     <div class="product-content">
                                         <div class="row">
                                             <div class="col-lg-8" id="p_content">
+                                            <div>
                                                 <h5>상품 소개</h5>
                                                 <p>${jsonobj.p_content}</p>
+                                                </div>
+                                                
+                                                <!-- 상품 문의 댓글 영역 -->
+                                                <div id="replyarea">
+                                                <c:if test="${not empty replyList}">
+                                                
+													<c:forEach var="reply" items="${replyList}" varStatus="index">
+														<table id="replay${reply.index}"><!-- 이거 넘버링 안됨 -->
+															<tr >
+																<th class="replywriter">${jsonobj.storename}</th>
+															</tr>
+															<tr class="replaycontent">
+																
+																<td>
+																${reply.rp_content}
+																</td>
+															</tr>
+															<tr class="replaybtn">
+																<td>
+																	<input type="button" value="댓글달기">
+																	<input type="button" value="삭제하기">
+																	<input type="button" value="수정하기">
+																</td>
+															</tr>
+														</table>
+													</c:forEach>
+												</c:if>
+                                                	
+                                                
+                                                </div>
                                             </div>
                                             <div class="col-lg-4" id="shopcontainer">
                                             <!--  
@@ -126,20 +162,19 @@
 	                                                <c:otherwise>
 	                                                
 	                                               <c:forEach var="arr" items="${jsonarr}">
-	                                                <p>${arr}</p>
+	                                               
+	                                                <div class ="recently_p" >
+	                                                <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
+	                                                	<div class="pricearea">
+	                                                	<p>${arr.p_price}원</p>
+	                                                	</div>
+	                                                </div>
+	                                                
 	                                                </c:forEach>
 	                                                
 	                                                </c:otherwise>
 	                                                </c:choose>
-	                                                <!-- 
-	                                                <div class ="recently_p">
-	                                                
-	                                                	<div id="pricearea"></div>
-	                                                </div>
-	                                                <div class ="recently_p">
-	                                                	<div id="pricearea"></div>
-	                                                </div>
-	                                                -->
+	                                               
                                                 </div>
                                                 
                                             </div>
@@ -148,6 +183,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -291,6 +328,264 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    
+    <script>
+    	window.onload=function(){
+    		
+    		init();
+   		
+    		//카테고리 유지시키기(미완)
+    		setCategory();
+    		
+    		
+    		
+    		
+    	}
+    	
+    	//카테고리 유지 함수
+    	
+    	function setCategory(){
+    		
+    		
+    		let t = ${categoryarr.t_num};
+    		let m = ${categoryarr.m_num};
+    		let b = ${categoryarr.b_num};
+    		/*
+    		t.attr("selected","selected");
+    		m.attr("selected","selected");
+    		b.attr("selected","selected");
+    		
+    		
+    		//$("#top").val(${categoryarr.t_num}).attr("selected");
+    		
+    		$("#top").val(t).prop("selected", true);
+    		$("#middle").val(m).prop("selected", true);
+    		$("#bottom").val(b).prop("selected", true);
+    		*/
+    		console.log("카테고리는?");
+    		console.log(${categoryarr.t_num});
+    	}
+ 	
+    	///////////////////////////////////////////////
+    	
+    	// 현재 접속한 아이디가 이걸 찜했는지 확인
+    	/* 
+    	1. 접속한 아이디가 해당 상품의 아이디와 다른지
+    	2. 찜했는지
+    	3. 댓글 썼는지
+    	
+    	를 확인해야 한다
+    	
+    	*/
+    	
+    	//접속 아이디의 위 세 정보를 가져오는 함수
+    	function getCurrentUser(){
+    		
+    		/*
+    		$.ajax(
+    				
+    				{
+    					
+    					url:"chekcurrentuser.ajax",
+    					dataType:"json",
+    					
+    						
+    				}
+    				
+    				);
+    		*/
+    	}
+    		  
+	    	/*
+	    	if(currentuser === "null"){
+	    		swal("로그인이 필요합니다.")
+	    		
+	    	} 
+    	*/
+    	
+    	
+    	//찜 버튼 색깔 바꾸기 위해 선언
+	    const like = document.querySelector("#like");	    
+	    const BASE_COLOR = "darkgray";
+	    const OTHER_COLOR = "#f70000";
+	    
+	     
+	    //색 바뀌는 함수
+	    function handClick(){
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
+			
+		
+	    	const currentColor = like.style.background;
+	    	
+	        if(currentColor === BASE_COLOR){
+	        	
+	        	like.style.background = OTHER_COLOR;
+	        	
+	        	
+	        }else{
+	        	
+	        	like.style.background = BASE_COLOR;
+	        }
+	        
+	        likeup(currentColor, currentuser);
+	        
+	    	
+	    }
+	     
+	    //찜버튼 초기화값
+	    function init(){
+	    	like.style.background = BASE_COLOR;
+	    	like.addEventListener("click",handClick);
+	    	
+	    }
+	    
+	    
+	    //찜하는 함수
+	    function likeup(currentColor, currentuser){
+	    	
+	    	  	
+	    	
+	    	console.log("현재 유저");
+	    	console.log(currentuser);
+
+	    	
+	    	if(currentColor === BASE_COLOR){
+	    		console.log("이 상품을 찜합니다");
+	    		
+	    		$.ajax(
+	    	    		{
+	    	    			
+	    	    			url:"setlike.ajax",
+	    	    			dataType:"text",
+	    	    			data:{
+	    	    				islike:"true",
+	    	    				liker:currentuser,
+	    	    				p_num:${jsonobj.p_num}
+	    	    			},
+	    	    			success:function(responsedata){
+	    	    				
+	    	    				let check = responsedata.trim();
+	    	    				console.log(check);
+	    	    				
+	    	    				if(check == "true"){
+	    	    					
+	    	    					swal("이 상품을 찜했습니다");
+	    	    					
+	    	    					
+	    	    				} else{
+	    	    					
+	    	    					swal("이런, 찜하기 실패했네요");
+	    	    					like.style.background = BASE_COLOR;
+	    	    				}
+	    	    				
+	    	    				
+	    	    			},
+	    	    			error:function(xhr){
+	    	    				
+	    	    				console.log(xhr);
+	    	    			}
+	    	    			
+	    	    		}		
+	    	    	);
+
+	    		
+	    	} else {
+	    		console.log("이 상품의 찜을 해제합니다");
+	    		
+	    		$.ajax(
+	    	    		{
+	    	    			
+	    	    			url:"setlike.ajax",
+	    	    			dataType:"text",
+	    	    			data:{
+	    	    				islike:"false",
+	    	    				liker:currentuser,
+	    	    				p_num:${jsonobj.p_num}
+	    	    			},
+	    	    			success:function(responsedata){
+	    	    				
+	    	    				let check = responsedata.trim();
+	    	    				console.log(check);
+	    	    				
+	    	    				if(check == "false"){
+	    	    					
+	    	    					swal("찜하기 취소되었습니다");
+	    	    					
+	    	    				} else{
+	    	    					
+	    	    					swal("이런, 찜 취소에 실패했네요");
+	    	    					like.style.background = OTHER_COLOR;
+	    	    				}
+	    	    				
+	    	    				
+	    	    			},
+	    	    			error:function(xhr){
+	    	    				
+	    	    				console.log(xhr);
+	    	    			}
+	    	    			
+	    	    		}		
+	    	    	);
+
+	    	}
+	    	
+  	
+	    }	    
+	    
+	    //////////////////////////////////////////////////////
+	    
+	    //연락하기 번호 띄워주기
+	    function contact(){
+	    	
+	    	swal("m_phone을 가져와야하는데 numberformatException...ㅠㅠ");
+	    	
+	    }
+	    //////////////////////////////////////////////////////
+	    
+	   
+	    
+	    //비동기 상점문의(댓글) 목록 가져오기
+	    function getReplyList(){
+	    	
+	    	console.log("상점문의를 가져옵니다");
+	    	
+	    	$.ajax(
+	    		{
+	    			
+	    			url:"getreplylistok.ajax",
+	    			dataType:"json",
+	    			data:{ currentstore:${jsonobj.storename} },
+	    			success:function(responsedata){
+	    				
+	    				console.log("목록 부르기 성공");
+	    				console.log(responsedata);
+	    			},
+	    			error:function(xhr){
+	    				
+	    				console.log(xhr);
+	    				
+	    			}
+	    			
+	    		}		
+	    	);
+	    }
+	    
+	    //비동기 상점문의(댓글) 달기
+	    function writeReply(){
+	    	
+	    	console.log("상점문의를 남깁니다");
+	    	getReplyList();
+	    }
+	    
+	    //비동기 상점문의(댓글) 삭제
+	    function deleteReply(){
+	    	
+	    	console.log("상점문의를 삭제합니다");
+	    	getReplyList();
+	    }
+	    
+    
+    </script>
 </body>
 
 </html>

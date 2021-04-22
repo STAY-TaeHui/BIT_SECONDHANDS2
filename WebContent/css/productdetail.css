@@ -19,6 +19,13 @@
 	margin-top:10px;
 }
 
+#like{
+	margin-right:auto;
+	/*
+	background-color:darkgray;
+*/
+}
+
 #call{
 	background-color:#f69e07;
 	margin-right:auto;
@@ -33,6 +40,62 @@
 	margin-right:auto;
 }
 
+#replyarea table{
+	margin-top:20px;
+	border-top:1px gray solid;
+	width:100%;
+	color:gray;
+}
+
+#replyarea table th{
+	padding:20px;
+	width:100%;
+}
+
+.replaybtn input{
+	border:none;
+	color:gray;
+	padding:5px;
+	background-color:white;
+}
+
 #shopcontainer{
 	border:1px lightgray solid;
+}
+
+#shopinfo{
+	
+	display:flex;
+	flex-wrap:wrap;
+	
+}
+
+#title{
+	width:100%;
+}
+
+.recently_p{
+	width:50%;	
+}
+
+.recently_p img{
+	object-fit:cover;
+}
+
+.pricearea{
+	
+	background-color:black;
+	opacity:70%;
+	position:absolute;
+	bottom:0;
+	height:30px;
+	width:100%;
+	color:white;	
+}
+
+.pricearea p{
+	position:relative;
+	top:40%;
+	text-align:center;
+	font-size:1rem;
 }
