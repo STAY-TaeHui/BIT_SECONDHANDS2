@@ -1035,6 +1035,17 @@ header {
 	border: 1px red solid;
 	padding:7px;
 	
+}.myproductlist {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.myproductlist li {
+	width: 20%;
+	border: 1px red solid;
+	padding:7px;
+	
 }
 
 .imginfo {

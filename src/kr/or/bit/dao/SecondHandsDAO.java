@@ -191,7 +191,6 @@ public class SecondHandsDAO {
 	         pstmt = conn.prepareStatement(sql);
 	         
 	         rs= pstmt.executeQuery();
-	         System.out.println("re next : "+rs.next());
 	         
 	         while(rs.next()) {
 	        	
@@ -206,11 +205,8 @@ public class SecondHandsDAO {
 	            obj.put("storename",rs.getString("storename"));
 	            //시간 자르려고 substring 사용
 	            obj.put("p_wr_time", rs.getString("p_wr_time").substring(0, 11));
-	            
-	            System.out.println(obj);
 	            arr.add(obj);
 	            
-	            System.out.println("배열 담겼나 : " +arr.get(0));
 	         } 
 	         System.out.println(arr);
 	         

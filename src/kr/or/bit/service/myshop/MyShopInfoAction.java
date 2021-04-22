@@ -21,6 +21,9 @@ public class MyShopInfoAction implements Action {
 		SecondHandsDAO dao = new SecondHandsDAO(); 
     	String m_profile =  dao.MyShopProfile(storename);
     	
+    	HttpSession session = request.getSession();
+    	System.out.println("SESION 이름은 : "+session.getAttribute(storename));
+    	
     	request.setAttribute("storename", storename);
     	request.setAttribute("m_profile", m_profile);
     	forward.setRedirect(false);

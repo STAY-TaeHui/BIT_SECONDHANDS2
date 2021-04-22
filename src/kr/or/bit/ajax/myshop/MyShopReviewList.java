@@ -24,6 +24,7 @@ public class MyShopReviewList extends HttpServlet {
     	String storename = request.getParameter("storename");
 		SecondHandsDAO dao = new SecondHandsDAO(); 
 		JSONArray arr =  dao.getMyReviewList(storename);
+		response.setContentType("application/x-json; charset=UTF-8");
 		response.getWriter().print(arr);
 	}
     
