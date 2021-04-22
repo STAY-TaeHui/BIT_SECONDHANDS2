@@ -1006,7 +1006,8 @@ public class SecondHandsDAO {
 					        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_content,p.storename, p.p_num "
 							               +"from product p left join product_img pi "
 							               +"on p.p_num=pi.p_num "
-							               +"where p.p_num=" + p_num;
+							               +"where p.p_num=" + p_num
+							               + " and pi.pimg_num=1";
 					        	 		
 
 
@@ -1269,6 +1270,16 @@ public class SecondHandsDAO {
 
 			
 			return result;
+		}
+		
+		//상품상세 페이지 이동했을 때 현재 유저의 정보 가져오는 함수
+		public JSONObject ChekCurrentUser(String currentuser) {
+			
+			
+			JSONObject obj = new JSONObject();
+			
+			
+			return obj;
 		}
 
 		

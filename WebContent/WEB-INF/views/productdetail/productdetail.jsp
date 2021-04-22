@@ -117,8 +117,8 @@
                                                 <div id="replyarea">
                                                 <c:if test="${not empty replyList}">
                                                 
-													<c:forEach var="reply" items="${replyList}">
-														<table id="replay">
+													<c:forEach var="reply" items="${replyList}" varStatus="index">
+														<table id="replay${reply.index}"><!-- 이거 넘버링 안됨 -->
 															<tr >
 																<th class="replywriter">${jsonobj.storename}</th>
 															</tr>
@@ -365,8 +365,45 @@
     		console.log("카테고리는?");
     		console.log(${categoryarr.t_num});
     	}
-    	
+ 	
     	///////////////////////////////////////////////
+    	
+    	// 현재 접속한 아이디가 이걸 찜했는지 확인
+    	/* 
+    	1. 접속한 아이디가 해당 상품의 아이디와 다른지
+    	2. 찜했는지
+    	3. 댓글 썼는지
+    	
+    	를 확인해야 한다
+    	
+    	*/
+    	
+    	//접속 아이디의 위 세 정보를 가져오는 함수
+    	function getCurrentUser(){
+    		
+    		/*
+    		$.ajax(
+    				
+    				{
+    					
+    					url:"chekcurrentuser.ajax",
+    					dataType:"json",
+    					
+    						
+    				}
+    				
+    				);
+    		*/
+    	}
+    		  
+	    	/*
+	    	if(currentuser === "null"){
+	    		swal("로그인이 필요합니다.")
+	    		
+	    	} 
+    	*/
+    	
+    	
     	//찜 버튼 색깔 바꾸기 위해 선언
 	    const like = document.querySelector("#like");	    
 	    const BASE_COLOR = "darkgray";
@@ -375,6 +412,8 @@
 	     
 	    //색 바뀌는 함수
 	    function handClick(){
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
+			
 		
 	    	const currentColor = like.style.background;
 	    	
@@ -386,11 +425,11 @@
 	        }else{
 	        	
 	        	like.style.background = BASE_COLOR;
-	        	//likeup(currentColor);
 	        }
 	        
-	        likeup(currentColor);
+	        likeup(currentColor, currentuser);
 	        
+	    	
 	    }
 	     
 	    //찜버튼 초기화값
@@ -402,7 +441,13 @@
 	    
 	    
 	    //찜하는 함수
-	    function likeup(currentColor){
+	    function likeup(currentColor, currentuser){
+	    	
+	    	  	
+	    	
+	    	console.log("현재 유저");
+	    	console.log(currentuser);
+
 	    	
 	    	if(currentColor === BASE_COLOR){
 	    		console.log("이 상품을 찜합니다");
@@ -484,7 +529,7 @@
 
 	    	}
 	    	
-	    	
+  	
 	    }	    
 	    
 	    //////////////////////////////////////////////////////

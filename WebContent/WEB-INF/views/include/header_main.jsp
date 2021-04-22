@@ -262,7 +262,16 @@
             	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
+            	<c:choose>
+            	<!-- isLogined 예외 떠서 일단 상점이름으로 대체해둠 -->
+				<c:when test="${sessionScope.storename eq null}">
             	<li><a href="resister.do">회원가입</a></li>
+            	</c:when>
+            	<c:otherwise>
+            	<li style="display:none;"><a href="resister.do">회원가입</a></li>
+            	</c:otherwise>
+            	</c:choose>
+            	
             </ul>
             </div>
                 <div class="row">

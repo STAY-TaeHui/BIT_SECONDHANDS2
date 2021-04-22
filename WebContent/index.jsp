@@ -210,10 +210,38 @@
 	
 	<section class="hero-section">
         <div class="hero-items owl-carousel">
-        <div id="slide">
+        
+        <div >
+                <img src="img/slide/main_slide1.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide2.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide3.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide4.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide5.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide6.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide7.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide8.jpg">
+            </div>
+            <div >
+                <img src="img/slide/main_slide9.jpg">
+            </div>
+        <!--<div id="slide">
         <ul>
         	<li id="img1"><img src="img/slide/main_slide1.jpg"/></li>
-        	<!--  
+        	  
         	<li id="img2"><img src="img/slide/main_slide2.jpg"/></li>
         	<li id="img3"><img src="img/slide/main_slide3.jpg"/></li>
         	<li id="img4"><img src="img/slide/main_slide4.jpg"/></li>
@@ -222,9 +250,9 @@
         	<li id="img7"><img src="img/slide/main_slide7.jpg"/></li>
         	<li id="img8"><img src="img/slide/main_slide8.jpg"/></li>
         	<li id="img9"><img src="img/slide/main_slide9.jpg"/></li>
-        	-->
+        	
         </ul>
-        </div>
+        </div>-->
 
         </div>
     </section>

@@ -1040,11 +1040,35 @@ header {
 }
 
 .productlist li {	
-	width: 300px;	
+	width: 300px;
+	
+	/*
+	
+	영역구분을 위해 만든 테두리
+	중간점검 위해 잠시 주석
+		
 	border: 1px red solid;
+	
+	*/
+	
 	padding:15px;
 
 }
+
+.productlist li a{
+	
+	color:black;
+	text-decoration:none;
+	
+}
+
+.productlist li a:hover{
+	
+	color:#f70000;
+	text-decoration:none;
+	
+}
+
 .thumnail{
 
 	overflow:hidden;
