@@ -255,7 +255,7 @@
             <div id="rightmenu">
             <ul id="loginmenu">
             	<c:choose>
-            	<c:when test="${sessionScope.storename eq null}">
+            	<c:when test="${!sessionScope.isLogined}">
             	<li><a href="login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
@@ -307,7 +307,7 @@
                                 </a>
                                 </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="#?storename=${sessionScope.storename}">
                              <img src="img/sell.gif">
                                 </a>
                              </c:otherwise>
@@ -321,7 +321,7 @@
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="myshop?storename=${sessionScope.storename}">
                                     <img src="img/myshop.gif">
                                 </a>
                              </c:otherwise>

@@ -40,19 +40,11 @@ public class MyShopController extends HttpServlet {
     	
     		//myshop 메인
 		 if(url_Command.equals("/myshop")) {
-//			 session = request.getSession();
-//			 boolean logincheck=(boolean) session.getAttribute("isLogined");
-//			 if(!logincheck) {
-//		    		System.out.println("SESSOION IS NULL");
-//		    		 response.sendRedirect("/WEB-INF/views/member/Login.jsp");
-//		 }
 	    		System.out.println("myshop.jsp VIEW");
 	    		action = new MyShopInfoAction();
 	    		forward = action.execute(request, response);
 		 }
-		 else if(url_Command.equals("/myshop")) {
-			 
-		 }
+		 
     	//////////////////////////////////////////////////////
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

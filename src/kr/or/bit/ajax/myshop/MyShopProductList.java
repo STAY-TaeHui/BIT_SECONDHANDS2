@@ -21,9 +21,12 @@ public class MyShopProductList extends HttpServlet {
     }
  
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println("THIS IS MSPL.ajax");
     	String storename = request.getParameter("storename");
 		SecondHandsDAO dao = new SecondHandsDAO();
 		JSONArray  arr =  dao.getMyProductList(storename);
+
+        response.setContentType("application/x-json; charset=UTF-8");
 		response.getWriter().print(arr);
 	}
     

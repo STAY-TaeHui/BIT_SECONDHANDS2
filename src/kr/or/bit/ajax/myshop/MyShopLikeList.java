@@ -24,6 +24,7 @@ public class MyShopLikeList extends HttpServlet {
     	String storename = request.getParameter("storename");
 		SecondHandsDAO dao = new SecondHandsDAO();
 		JSONArray arr =  dao.getMyLikeList(storename);
+		response.setContentType("application/x-json; charset=UTF-8");
 		response.getWriter().print(arr);
 	}
     

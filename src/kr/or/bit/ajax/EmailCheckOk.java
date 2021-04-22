@@ -1,19 +1,12 @@
 package kr.or.bit.ajax;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import kr.or.bit.action.Action;
-import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.SecondHandsDAO;
 
 @WebServlet("/EmailCheckOk.ajax")
@@ -29,7 +22,6 @@ public class EmailCheckOk extends HttpServlet {
     	System.out.println("This is EmailCheckOk.ajax");
     	
     	String email = request.getParameter("email");
-    	//email="tjxogml@naver.com";
     	SecondHandsDAO dao = new SecondHandsDAO();
     	boolean check = dao.getEmailCheck(email);
     	response.getWriter().print(check);
