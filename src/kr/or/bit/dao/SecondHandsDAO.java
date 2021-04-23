@@ -996,7 +996,7 @@ public class SecondHandsDAO {
 					      try {
 					         conn=ds.getConnection();
 					         
-					         String sql = "select pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_content, p.storename, p.p_num, p.p_addr"
+					         String sql = "select pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_content, p.storename, p.p_num, p.p_addr, p.p_dcharge"
 							               +" from product p left join product_img pi "
 							               +"on p.p_num=pi.p_num "
 							               +"where p.p_num=? and pi.pimg_num=1";
@@ -1016,8 +1016,9 @@ public class SecondHandsDAO {
 					            obj.put("p_content", rs.getString("p_content"));
 					            obj.put("storename", rs.getString("storename"));
 					            obj.put("p_num",rs.getInt("p_num"));
-				
-					            System.out.println("들어오나?");
+					            obj.put("p_dcharge",rs.getInt("p_dcharge"));
+
+					            
 					            System.out.println("obj : "+obj);
 
 
@@ -1317,7 +1318,7 @@ public class SecondHandsDAO {
 		      return false;
 		}
 		
-		//이 상품의 찜 수 구하기
+		//이 상품의 찜 수 구하기 가희
 		public Integer getLikeCounts(int p_num) {
 			
 			  Connection conn = null;

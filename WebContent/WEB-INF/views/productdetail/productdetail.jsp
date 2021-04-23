@@ -41,6 +41,7 @@
 
 <div id="fullwrap">
    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+   <jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
    
    <div id="bodywrap">
 
@@ -65,7 +66,17 @@
                                 <ul>
                                    <li>${jsonobj.storename}</li>
                                    <li><h4>${jsonobj.p_subj}</h4></li>
-                                   <li><h3>${jsonobj.p_price}원</h3></li>
+                                   <li><h3>${jsonobj.p_price}원</h3>
+                                   
+                                   <c:choose>
+                                   	<c:when test="${jsonobj.p_dcharge eq 0}">
+                                   <span> *배송비 미포함</span>
+                                   </c:when>
+                                   <c:otherwise>
+                                   <span> *배송비 포함</span>
+                                   </c:otherwise>
+                                   </c:choose>
+                                   </li>
                                 </ul>
                                 
                                 </div>

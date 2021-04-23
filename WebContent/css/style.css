@@ -727,6 +727,12 @@ header {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	height: 22px;
+	position: fixed;
+	top: 150px;
+	left: 0;
+	z-index: 998;
+	margin:auto;
 }
 
 .nav-item .container{
@@ -783,41 +789,7 @@ header {
 	background: #e7ab3c;
 }
 
-.nav-item .nav-menu li:hover .dropdown {
-	opacity: 1;
-	visibility: visible;
-	top: 52px;
-}
 
-.nav-item .nav-menu li .dropdown {
-	position: absolute;
-	right: 0;
-	top: 82px;
-	width: 200px;
-	z-index: 99;
-	background: #252525;
-	opacity: 0;
-	visibility: hidden;
-	-webkit-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
-}
-
-.nav-item .nav-menu li .dropdown li {
-	display: block;
-	margin-left: 0;
-}
-
-.nav-item .nav-menu li .dropdown li:hover>a {
-	background: transparent;
-	color: #e7ab3c;
-}
-
-.nav-item .nav-menu li .dropdown li a {
-	border-right: 0;
-	padding: 13px 20px 12px 30px;
-	text-transform: capitalize;
-}
 
 .slicknav_menu {
 	display: none;
