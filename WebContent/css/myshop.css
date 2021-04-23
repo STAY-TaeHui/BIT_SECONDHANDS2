@@ -1,0 +1,70 @@
+#productdetailName {
+	margin-top: 200px;
+	margin-left: 60px;
+}
+
+#ProductPhoto {
+	width: 270px;
+	height: 290px;
+	margin-left: 70px;
+	background-color: gray;
+}
+
+#ProductTotal {
+	display: flex;
+}
+
+#Storename {
+	margin: 25px 0px 0px 35px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#editBtn {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#myshopeditBtn {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#nameeditBtn {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#nameText {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#nameCheck {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#updateBtn {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
+
+#cancelBtn {
+	width: 100px;
+	height: 30px;
+	margin: 30px 0px 0px 10px;
+	font-size: 11px;
+}
