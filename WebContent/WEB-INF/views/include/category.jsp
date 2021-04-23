@@ -6,6 +6,15 @@
 
 <script>
 
+
+$(function() {    //화면 다 뜨면 시작
+
+		console.log("함수실행");
+
+		getcategorytop();
+});
+
+
 function getcategorytop(){
 	
 	console.log("카테고리 대");

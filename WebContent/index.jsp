@@ -25,9 +25,8 @@
 
 		console.log("함수실행");
 
-		getcategorytop();
 		
-		console.log("페이지 로딩");
+		console.log("메인페이지 로딩");
 
 		
 		$("#categoryorder").css("display","none");

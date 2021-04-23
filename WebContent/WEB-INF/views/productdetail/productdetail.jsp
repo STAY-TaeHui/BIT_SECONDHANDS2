@@ -35,6 +35,7 @@
     
     <!-- 내가 커스텀한 css -->
     <link rel="stylesheet" href="css/productdetail.css" type="text/css">
+
 </head>
 
 <body>
