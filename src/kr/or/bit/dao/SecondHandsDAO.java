@@ -995,25 +995,21 @@ public class SecondHandsDAO {
 					      
 					      try {
 					         conn=ds.getConnection();
-		
-					         //String sql = "select * from member";
-					         String sql = "";
 					         
-					        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_content,p.storename, p.p_num "
-							               +"from product p left join product_img pi "
+					         String sql = "select pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_content, p.storename, p.p_num, p.p_addr"
+							               +" from product p left join product_img pi "
 							               +"on p.p_num=pi.p_num "
-							               +"where p.p_num=" + p_num
-							               + " and pi.pimg_num=1";
-					        	 		
-
+							               +"where p.p_num=? and pi.pimg_num=1";
 
 					         pstmt = conn.prepareStatement(sql);
+					         pstmt.setInt(1, p_num);
 					         
 					         rs= pstmt.executeQuery();
 					        		         
 					         while(rs.next()) {				        	 
 					            
 					            obj.put("pimg_name",rs.getString("pimg_name"));
+					            obj.put("p_addr",rs.getString("p_addr"));
 					            obj.put("p_subj",rs.getString("p_subj"));
 					            obj.put("p_price",rs.getInt("p_price"));
 					            obj.put("p_wr_time", rs.getString("p_wr_time"));
@@ -1062,13 +1058,14 @@ public class SecondHandsDAO {
 				         	    String sql = "select m.m_profile, p.p_price, pi.pimg_name, p.p_num, p.storename, m.m_phone from product p inner join "
 				                        +"product_img pi on p.p_num = pi.p_num left outer join "
 				                        +"member m on p.storename = m.storename "
-				                        +"where p.storename='"+storename+"' "
+				                        +"where p.storename=? "
 				                        +"and ROWNUM <= 2 "
 				                        +"order by p.p_wr_time desc";
 				         	    
 				         	   System.out.println(storename);
 				         	  System.out.println(sql);
 				         	   pstmt = conn.prepareStatement(sql);
+				         	   pstmt.setString(1,storename);
 						         
 						       rs= pstmt.executeQuery();   
 					         
@@ -1085,7 +1082,8 @@ public class SecondHandsDAO {
 							            obj.put("m_profile", rs.getString("m_profile"));
 							            //연락하기 때문에 넣어주는 전화번호
 							            //근데 타입 에러가 뜬다
-							            //obj.put("m_phone", rs.getString("m_phone"));
+							           // obj.put("m_phone", rs.getString("m_phone"));
+
 							            
 							            System.out.println("obj : "+obj);
 							        
@@ -1215,7 +1213,7 @@ public class SecondHandsDAO {
 		public String setLike(String islike, String liker, String p_num) {
 				
 			
-				String result = "false";
+			  String result = "false";
 			  Connection conn = null;
 		      PreparedStatement pstmt = null;
 		      String sql = "";
@@ -1281,15 +1279,13 @@ public class SecondHandsDAO {
 		      PreparedStatement pstmt = null;
 		      ResultSet rs=null;
 		      
-		      JSONObject obj = new JSONObject();
-		      
 		      System.out.println(currentuser);
 		      System.out.println("상품 상세페이지에 접속한 유저의 정보 불러오기");
 		      
 		      try {
 		         conn=ds.getConnection();				     
 		         	
-	         	    String sql = "select p_num from likelist where storename=? and p_num=?";
+	         	   String sql = "select p_num from likelist where storename=? and p_num=?";
 
 
 	         	   pstmt = conn.prepareStatement(sql);
@@ -1298,14 +1294,10 @@ public class SecondHandsDAO {
 			         
 			       rs= pstmt.executeQuery();   
 		         
-
-		         
 		         while(rs.next()) {				        	 
 
 			        	 return true;
 		         } 
-		         
-		      
 		         
 		      } catch (SQLException e) {
 		         // TODO: handle exception
@@ -1323,6 +1315,58 @@ public class SecondHandsDAO {
 		         }
 		      }
 		      return false;
+		}
+		
+		//이 상품의 찜 수 구하기
+		public Integer getLikeCounts(int p_num) {
+			
+			  Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      ResultSet rs = null;
+	      
+		      System.out.println(p_num);
+		      
+		      System.out.println("찜 개수 불러오기");
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+	         	    String sql = "select storename from likelist where p_num=?";
+
+	         	   pstmt = conn.prepareStatement(sql);
+	         	   pstmt.setInt(1, p_num);
+			         
+			       rs= pstmt.executeQuery();  
+			              
+			      ArrayList<String> likers = new ArrayList<>();
+			      
+			     while(rs.next()) {
+			        	 
+			        	 likers.add(rs.getString("storename"));
+			        	 System.out.println("liker의 수 : " +likers.size()); 
+			        	 
+			      } 
+
+			     return likers.size();
+		         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		    	  
+		         System.out.println("SQLException : " + e.getMessage());
+		       
+		      }catch(Exception e3) {
+		         System.out.println(e3.getMessage());
+		      }
+		      finally {
+		         try {
+		            rs.close();
+		            pstmt.close();
+		            conn.close();//반환하기
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return 0;
 		}
 		
 		
@@ -1413,7 +1457,7 @@ public class SecondHandsDAO {
 		}
 		
 		//댓글 수정 함수 가희
-		public Boolean editReply(int p_num, String storename, int rp_num) {
+		public Boolean editReply(String rp_content, int rp_num) {
 			
 			  Connection conn = null;
 		      PreparedStatement pstmt = null;
@@ -1421,11 +1465,11 @@ public class SecondHandsDAO {
 		      try {
 		         conn=ds.getConnection();				     
 		         	
-	         	    String sql = "update쿼리문 작성할것";
+	         	    String sql = "update reply set rp_content=? where rp_num=?";
 
 
 	         	   pstmt = conn.prepareStatement(sql);
-	         	   pstmt.setString(1, storename);
+	         	   pstmt.setString(1, rp_content);
 	         	   pstmt.setInt(2, rp_num);
 	         	   
 			         

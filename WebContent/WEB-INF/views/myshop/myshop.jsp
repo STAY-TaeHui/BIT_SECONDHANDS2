@@ -20,6 +20,9 @@
 .tab-content > .active {
   display: block;
 }
+#countp{
+	margin-bottom:0;
+}
 </style>
 <html>
 <head>
@@ -100,17 +103,19 @@
 	<div class="tab-content" >
 		<div class="tab-pane fade in active" id="tabmenu_01">
 			<!-- 상품 리스트 뿌려주는곳 -->
-			<div class=counttext>
-			상품
+			<div class="counttext">
+			<p id=countp>
+			상품<span class="count"></span>  개
+			</p>
 			</div>
-			<ul class=myproductlist></ul>
+			<ul class="myproductlist"></ul>
 		</div>
 		<div class="tab-pane fade" id="tabmenu_02">
 			
-			<ul class=mylikelist> likelist </ul>
+			<ul class="mylikelist"> likelist </ul>
 		</div>
 		<div class="tab-pane fade" id="tabmenu_03">
-			<ul class=myreviewlist> review </ul>
+			<ul class="myreviewlist"> review </ul>
 		</div>
 	</div>
 </div>
@@ -134,8 +139,7 @@
 					type:"get",
 					dataType:"json",
 					success:function(responsedata){
-						console.log("바로실행 아약스 안");
-						
+						console.log("바로실행 아약스 안");					
 						$.each(responsedata, function(index, obj){
 								console.log(obj)
 								$(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
@@ -143,11 +147,14 @@
 					    						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
 					    						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
 						});
-						//getlist(responsedata);
+						let count = responsedata.length
+						console.log(count);
+						$('.count').html(count);
+						
 						       					
 					},
 				
-			
+					
 					error:function(xhr){
 						console.log(xhr);
 					}
