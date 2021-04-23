@@ -1411,6 +1411,47 @@ public class SecondHandsDAO {
 		      }
 		      return false;
 		}
+		
+		//댓글 수정 함수 가희
+		public Boolean editReply(int p_num, String storename, int rp_num) {
+			
+			  Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      
+		      try {
+		         conn=ds.getConnection();				     
+		         	
+	         	    String sql = "update쿼리문 작성할것";
+
+
+	         	   pstmt = conn.prepareStatement(sql);
+	         	   pstmt.setString(1, storename);
+	         	   pstmt.setInt(2, rp_num);
+	         	   
+			         
+			       int result = pstmt.executeUpdate();   
+			       
+			       if(result > 0) {
+			    	   return true;
+			       }
+		         
+		      } catch (SQLException e) {
+		         // TODO: handle exception
+		         System.out.println("SQLException : " + e.getMessage());
+		      }catch(Exception e3) {
+		         System.out.println(e3.getMessage());
+		      }
+		      finally {
+		         try {
+
+		            pstmt.close();
+		            conn.close();//반환하기
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return false;
+		}
 
 
 

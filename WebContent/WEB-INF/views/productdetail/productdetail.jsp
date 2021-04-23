@@ -128,7 +128,7 @@
 													<c:forEach var="reply" items="${replylist}">
 														<table id="reply${reply.rp_num}"><!-- 이거 넘버링 안됨 -->
 															<tr >
-																<th class="replywriter">${reply.storename}</th>
+																<th class="replywriter" id="writer${reply.rp_num}">${reply.storename}</th>
 															</tr>
 															<tr class="replaycontent">
 																
@@ -138,9 +138,9 @@
 															</tr>
 															<tr class="replaybtnarea">
 																<td>
-														<input type="button" value="댓글달기" class="replybtn">
+														<input type="button" value="댓글달기" class="replybtn" id="re${reply.rp_num}" onclick="rewrite(${reply.rp_num})">
 														<input type="button" value="삭제하기" class="replybtn" id="del${reply.rp_num}" onclick="deleteReply(${reply.p_num},${reply.rp_num})">
-														<input type="button" value="수정하기" class="replybtn" id="edit${reply.rp_num}">
+														<input type="button" value="수정하기" class="replybtn" id="edit${reply.rp_num}" onclick="editReply(${reply.p_num},${reply.rp_num})">
 																</td>
 															</tr>
 														</table>
@@ -500,11 +500,12 @@
 	    				$.each(responsedata,function(index,obj){
 	    					
 	    					$("#relist").append(
-	    							"<table id='reply"+obj.rp_num+"'><tr ><th class='replywriter'>"+obj.storename+"</th></tr>"
+	    							"<table id='reply"+obj.rp_num+"'><tr ><th class='replywriter' id='writer"+obj.rp_num+"'>"+obj.storename+"</th></tr>"
 									+"<tr class='replaycontent'><td>"+obj.rp_content+"<br></td></tr><tr class='replaybtnarea'><td>"
-								+"<input type='button' value='댓글달기' class='replybtn'><input type='button' value='삭제하기' class='replybtn' id='del"+obj.rp_num+"'"
-								+"onclick='deleteReply("+obj.p_num+","+obj.rp_num+")'><input type='button' value='수정하기' class='replybtn' id='edit"+obj.rp_num+"'>"
-										+"</td></tr></table>");
+								+"<input type='button' value='댓글달기' class='replybtn' id='re"+obj.rp_num+"' onclick='rewrite("+obj.rp_num+")'>"
+								+"<input type='button' value='삭제하기' class='replybtn' id='del"+obj.rp_num+"'"
+								+" onclick='deleteReply("+obj.p_num+","+obj.rp_num+")'><input type='button' value='수정하기' class='replybtn'"
+								+" id='edit"+obj.rp_num+"' onclick='editReply("+obj.p_num+","+obj.rp_num+")'></td></tr></table>");
 	    					
 	    				});
 		
@@ -607,6 +608,69 @@
 
 	    }
 	    
+	  //비동기 상점문의(댓글) 수정
+	    function editReply(p_num,rp_num){
+	    	
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
+   	
+	    	console.log("상점문의를 수정합니다");
+	    	
+	    	let params = {
+	    			storename:currentuser,
+	    			rp_content:$("#replaytext").val();
+	    			p_num:p_num,
+	    			rp_num:rp_num
+	    	}	
+	    	
+
+	    	$.ajax(
+	    	 {
+	    		url:"editreplyok.ajax",
+	    		data:params,
+	    		dataType:"text",
+	    		success:function(responsedata){						
+	    			
+	    			console.log(responsedata);
+  			
+	    			let check = responsedata.trim();
+	    			
+	    			 if(check == "true"){
+	    				  swal("수정 성공");
+	    				  let el = document.getElementById('reply'+params.rp_num);
+	    				  el.remove();
+	    			      getReplyList();
+	    				   
+	    			 }else{
+	    				 swal("수정 실패");
+	    			 }					 
+	    			 
+	    		},
+	    		error:function(error){
+	    			console.log(error);
+	    		}
+	    	 }
+	      );
+
+	    }
+	    
+	    
+	    //대댓글
+	    function rewrite(rp_num){
+	    	
+	    	console.log(rp_num);
+	    	
+	    	console.log("선택이 될까?");
+	    	
+	    	//댓글달기 버튼이 소속된 댓글을 작성한 상점이름
+	    	let store = $("#writer"+rp_num).text();
+	    	console.log(store);
+	    	
+	    	$("#replytext").empty();
+	    	$("#replytext").focus();
+	    	$("#replytext").val("@"+store);
+	    	
+	    	
+	    }
     
     </script>
 </body>
