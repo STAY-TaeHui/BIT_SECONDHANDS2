@@ -129,6 +129,7 @@
                                                 
 
                                            <textarea placeholder="상품문의입력" id="replytext" name="replytext" style="width:100%; height:100px;"></textarea>
+                                           <div id="test_cnt">(0/100)</div>
                                            <input type="button" value="댓글달기" class="replybtn" onclick="reply_check()"> 
 
                                                 <div id="relist">
@@ -488,6 +489,18 @@
           
        }
        //////////////////////////////////////////////////////
+       
+       
+       //글자수 제한
+       $('#replytext').on('keyup', function() {
+        	$('#test_cnt').html("("+$(this).val().length+" / 100)");
+ 
+        	if($(this).val().length > 100) {
+            	$(this).val($(this).val().substring(0, 100));
+            	$('#test_cnt').html("(100 / 100)");
+        	}
+    	});
+       
        
        //댓글 유효성 검사
        function reply_check() {
