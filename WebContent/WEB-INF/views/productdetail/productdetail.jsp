@@ -615,9 +615,11 @@
    	
 	    	console.log("상점문의를 수정합니다");
 	    	
+	    	$("#reply"+rp_num).empty();
+	    	
 	    	let params = {
 	    			storename:currentuser,
-	    			rp_content:$("#replaytext").val();
+	    			rp_content:$("#edittext").val(),
 	    			p_num:p_num,
 	    			rp_num:rp_num
 	    	}	
