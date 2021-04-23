@@ -101,7 +101,18 @@ public class FrontController extends HttpServlet {
     		action = new SearchProductOkAction();
 			forward = action.execute(request, response);
     		
+    	}else if(url_Command.equals("/getselectedproductok.do")) {
+
+    		action = new GetSelectedProductOkAction();
+			forward = action.execute(request, response);
+    		
     	}
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	
 ///////////////////////////////////////////////////////////////////

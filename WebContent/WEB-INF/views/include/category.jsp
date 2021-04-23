@@ -144,49 +144,13 @@ function getcategorybottom(){
 //소분류 정하면 맞는 상품 불러오기
 function getselectedproduct(){
 	
-	$("#bodywrap").empty();
-	$("#bodywrap").append(
-	"<div id='content'><div id='ordermenu'><p>오늘의 추천</p><ul id='defaultorder'>"+
-"<li><input type='button' value='최신순' onclick='orderbytime()' id='timebtn' class='unclickedbtn'></li>"+
-"<li><input type='button' value='가격순' onclick='orderbyprice()' id='pricebtn' class='unclickedbtn'></li></ul>"+
-
-"<ul id='categoryorder'>"+
-"<li><input type='button' value='최신순' onclick='c_orderbytime()' id='timebtn' class='unclickedbtn'></li>"+
-"<li><input type='button' value='가격순' onclick='c_orderbyprice()' id='pricebtn' class='unclickedbtn'></li>"+
-"</ul></div><ul class='productlist'></ul>");
-	
-	console.log("분류에 맞는 상품을 불러옵니다");
-	let index = $("#bottom option:selected").val();
-	console.log(index);
+	console.log("카테고리 검색 실행");
 	
 	$("#defaultorder").css("display","none");
 	$("#categoryorder").css("display","flex");
 	
-	$.ajax(
-			{
-		
-				url:"GetSelectedProductOk.ajax",
-				type:"get",
-				dataType:"json",
-				data:{ c_number : index},
-				success:function(responsedata){
-					
-					console.log("이제 소분류카테고리를 뿌려준다 여긴 다른페이지");
-					console.log(responsedata);
-					
-					$(".productlist").empty();
-					
-					getlist(responsedata);
-				
-					
-				},
-				error:function(xhr){
-					console.log(xhr);
-				}
-				
-		}
-	);
-	
+	location.href="getselectedproductok.do?c_number="+$("#bottom option:selected").val();
+
 }
 //카테고리별 최신순 정렬
 function c_orderbytime(){

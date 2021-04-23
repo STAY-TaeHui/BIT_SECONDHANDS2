@@ -507,7 +507,8 @@ public class SecondHandsDAO {
 		         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename "
 		               +"from product p left join product_img pi "
 		               +"on p.p_num=pi.p_num "
-		               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' ";
+		               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' "
+		               +"and pi.pimg_num=1 ";
 		         pstmt = conn.prepareStatement(sql);
 		         
 		         rs = pstmt.executeQuery();
@@ -565,6 +566,7 @@ public class SecondHandsDAO {
 		               +"from product p left join product_img pi "
 		               +"on p.p_num=pi.p_num "
 		               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' "
+		               +"and pi.pimg_num=1 "
 		               +"order by p.p_wr_time";
 		         pstmt = conn.prepareStatement(sql);
 		         
@@ -622,6 +624,7 @@ public class SecondHandsDAO {
 		               +"from product p left join product_img pi "
 		               +"on p.p_num=pi.p_num "
 		               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' "
+		               +"and pi.pimg_num=1 "
 		               +"order by p.p_price";
 		         pstmt = conn.prepareStatement(sql);
 		         
@@ -930,6 +933,7 @@ public class SecondHandsDAO {
 							               +"from product p left join product_img pi "
 							               +"on p.p_num=pi.p_num "
 							               +"where p.b_num=" + c_num
+							               +" and pi.pimg_num=1 "
 							               +"order by p.p_wr_time";
 					         }else {
 					        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
