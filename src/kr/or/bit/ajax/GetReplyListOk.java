@@ -1,4 +1,4 @@
-package kr.or.bit.ajax.myshop;
+package kr.or.bit.ajax;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,28 +11,43 @@ import org.json.simple.JSONArray;
 
 import kr.or.bit.dao.SecondHandsDAO;
 
-
-@WebServlet("/MyShopLikeList.ajax")
-public class MyShopLikeList extends HttpServlet {
+/**
+ * Servlet implementation class GetReplyListOk
+ */
+@WebServlet("/getreplylistok.ajax")
+public class GetReplyListOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public MyShopLikeList() {
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public GetReplyListOk() {
         super();
+        // TODO Auto-generated constructor stub
     }
- 
+
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String storename = request.getParameter("storename");
-		SecondHandsDAO dao = new SecondHandsDAO();
-		JSONArray arr =  dao.getMyLikeList(storename);
-		response.setContentType("application/x-json; charset=UTF-8");
-		response.getWriter().print(arr);
+    	System.out.println("This is getreplylistok.ajax");
+    	
+	      
+	    String currentstore   = request.getParameter("currentstore");
+    	SecondHandsDAO dao = new SecondHandsDAO();
+    	JSONArray arr = dao.getReplayList(currentstore);
+    	
+    	 //System.out.println("상품문의 보낼 때 : " + arr);
+    	
+        response.setContentType("application/x-json; charset=UTF-8");
+        response.getWriter().print(arr);
+        
+       
+    	
 	}
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}

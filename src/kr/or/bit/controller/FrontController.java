@@ -69,6 +69,7 @@ public class FrontController extends HttpServlet {
     		action = new LoginOkAction();
     		forward = action.execute(request, response);
     	}
+<<<<<<< HEAD
     	//로그아웃 서비스
     	else if(url_Command.equals("/logoutok.do")) {
     		forward = new ActionForward();
@@ -81,6 +82,26 @@ public class FrontController extends HttpServlet {
 			forward = action.execute(request, response);		
     	}
     	else if(url_Command.equals("/productdetail.do")) {
+=======
+
+    	//로그아웃 서비스
+    	else if(url_Command.equals("/logoutok.do")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("WEB-INF/views/member/Logout.jsp");
+    	}
+
+    	//내 상점 페이지
+    	else if(url_Command.equals("/myshop.do")) {
+    		System.out.println("myshop.do");
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("WEB-INF/views/myshop/myshop.jsp");    		
+    	
+    		
+    	// 상품 상세(남의 상점 상품)
+    	}else if(url_Command.equals("/productdetail.do")) {
+>>>>>>> 463c2173a583dd7e2e394be2b480f72cc6357b46
     		
     		String pn = request.getParameter("p_num");
     		System.out.println("pn : " + pn);
@@ -91,11 +112,16 @@ public class FrontController extends HttpServlet {
 			forward = action.execute(request, response);
     		
     	}
+<<<<<<< HEAD
     	else if(url_Command.equals("/editMember.do")) {
     		System.out.println("editMember.do");
     		action = new editMemberAction();
     		forward = action.execute(request, response);
     	}
+=======
+    	
+    	
+>>>>>>> 463c2173a583dd7e2e394be2b480f72cc6357b46
 ///////////////////////////////////////////////////////////////////
     	if(forward != null) {
     		System.out.println("FORWARD");
