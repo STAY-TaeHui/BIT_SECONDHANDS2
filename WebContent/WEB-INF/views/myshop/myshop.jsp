@@ -20,6 +20,9 @@
 .tab-content > .active {
   display: block;
 }
+#countp{
+	margin-bottom:0;
+}
 </style>
 <html>
 <head>
@@ -101,7 +104,9 @@
 		<div class="tab-pane fade in active" id="tabmenu_01">
 			<!-- 상품 리스트 뿌려주는곳 -->
 			<div class="counttext">
-			상품<p class="count"></p>  개
+			<p id=countp>
+			상품<span class="count"></span>  개
+			</p>
 			</div>
 			<ul class="myproductlist"></ul>
 		</div>

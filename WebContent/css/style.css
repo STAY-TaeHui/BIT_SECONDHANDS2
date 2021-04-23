@@ -109,11 +109,11 @@ input:focus, select:focus, button:focus, textarea:focus {
 	outline: none;
 }
 
-a:hover, a:focus {
+/* a:hover, a:focus {
 	text-decoration: none;
 	outline: none;
 	color: #fff;
-}
+} */
 
 
 ul, ol {
@@ -501,10 +501,12 @@ header {
 
 #loginmenu li a{
 	color:gray;
+	
 }
 
 #loginmenu li a:hover{
 	color:gray;
+	text-decoration : none;
 }
 
 .inner-header .logo {
