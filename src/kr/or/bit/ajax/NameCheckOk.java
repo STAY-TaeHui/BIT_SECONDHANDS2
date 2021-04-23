@@ -15,27 +15,32 @@ import kr.or.bit.dao.SecondHandsDAO;
 @WebServlet("/NameCheckOk.ajax")
 public class NameCheckOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
-    public NameCheckOk() {
-        super();
-    }
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    System.out.println("This is NameCheckOk.ajax");
-	       
-	       String storename = request.getParameter("storename");
-	       SecondHandsDAO dao = new SecondHandsDAO();
-	       boolean check = dao.getNameCheck(storename);
-	       System.out.println(check);
-	       
-	       response.getWriter().print(check);
+
+	public NameCheckOk() {
+		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("This is NameCheckOk.ajax");
+
+		String storename = request.getParameter("nameText");
+		System.out.println(storename);
+
+		SecondHandsDAO dao = new SecondHandsDAO();
+		boolean check = dao.getNameCheck(storename);
+		System.out.println(check);
+
+		response.getWriter().print(check);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 
 	}

@@ -1,24 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Template</title>
 
 
-    <!--검색어 자동완성 j쿼리-->
-    <!-- CSS , JS -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--검색어 자동완성 j쿼리-->
+<!-- CSS , JS -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script>
+<script>
 
         
         $(function() {    //화면 다 뜨면 시작
@@ -230,18 +231,18 @@
 <body>
 
 
-<div id="fullwrap">
-	<jsp:include page="WEB-INF/views/include/header.jsp"></jsp:include>
-	
-	<div id="bodywrap">
-	
-	
-	<section class="hero-section">
-        <div class="hero-items owl-carousel">
-        <div id="slide">
-        <ul>
-        	<li id="img1"><img src="img/slide/main_slide1.jpg"/></li>
-        	<!--  
+	<div id="fullwrap">
+		<jsp:include page="WEB-INF/views/include/header.jsp"></jsp:include>
+
+		<div id="bodywrap">
+
+
+			<section class="hero-section">
+				<div class="hero-items owl-carousel">
+					<div id="slide">
+						<ul>
+							<li id="img1"><img src="img/slide/main_slide1.jpg" /></li>
+							<!--  
         	<li id="img2"><img src="img/slide/main_slide2.jpg"/></li>
         	<li id="img3"><img src="img/slide/main_slide3.jpg"/></li>
         	<li id="img4"><img src="img/slide/main_slide4.jpg"/></li>
@@ -251,85 +252,79 @@
         	<li id="img8"><img src="img/slide/main_slide8.jpg"/></li>
         	<li id="img9"><img src="img/slide/main_slide9.jpg"/></li>
         	-->
-        </ul>
-        </div>
+						</ul>
+					</div>
 
-        </div>
-    </section>
-    <!-- Hero Section End -->
-    <div id="content">
-    <div id="ordermenu">
-	<p>오늘의 추천</p>
-	
-	<ul id="defaultorder">
-		<li><input type="button" value="최신순" onclick="orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-	</ul>
-	
-	<ul id="categoryorder">
-		<li><input type="button" value="최신순" onclick="c_orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="c_orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-	</ul>
-	
+				</div>
+			</section>
+			<!-- Hero Section End -->
+			<div id="content">
+				<div id="ordermenu">
+					<p>오늘의 추천</p>
+
+					<ul id="defaultorder">
+						<li><input type="button" value="최신순" onclick="orderbytime()"
+							id="timebtn" class="unclickedbtn"></li>
+						<li><input type="button" value="가격순" onclick="orderbyprice()"
+							id="pricebtn" class="unclickedbtn"></li>
+					</ul>
+
+					<ul id="categoryorder">
+						<li><input type="button" value="최신순"
+							onclick="c_orderbytime()" id="timebtn" class="unclickedbtn"></li>
+						<li><input type="button" value="가격순"
+							onclick="c_orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
+					</ul>
+
+				</div>
+				<ul class="productlist">
+				</ul>
+
+				<!-- Latest Blog Section End -->
+
+			</div>
+			<section>
+
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide2.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide3.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide4.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide5.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide6.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide7.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide8.jpg"></div>
+				<div class="single-hero-items set-bg"
+					data-setbg="img/slide/main_slide9.jpg"></div>
+
+			</section>
+
+
+			<!-- Footer Section Begin -->
+
+			<!-- bodywrap end -->
+		</div>
+		<jsp:include page="WEB-INF/views/include/footer.jsp"></jsp:include>
+
 	</div>
-	<ul class="productlist">
-	</ul>
+	<!-- fullwrap end -->
 
-    <!-- Latest Blog Section End -->
-	
-	</div>
-	<section>
-   
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide2.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide3.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide4.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide5.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide6.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide7.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide8.jpg">
-               
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="img/slide/main_slide9.jpg">
-               
-            </div>
-
-    </section>
-	
-	
-    <!-- Footer Section Begin -->
-
-    <!-- bodywrap end -->
-    </div>
-     <jsp:include page="WEB-INF/views/include/footer.jsp"></jsp:include>
-     
-     </div>
-    <!-- fullwrap end -->
-
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
 
 </body>
-
-<html>
-
+</html>

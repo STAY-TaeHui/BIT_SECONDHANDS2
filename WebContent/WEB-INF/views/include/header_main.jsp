@@ -265,10 +265,10 @@
             	<li>로그인</li>
             	</c:when>
             	<c:otherwise>
-            	<li onclick="logout(${request})">로그아웃</li>
+            	<li><a href="logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
-            	<li><a href="resister.do">회원가입</a></li>
+            	<li><a href="register.do">회원가입</a></li>
             </ul>
             </div>
                 <div class="row">
@@ -318,7 +318,7 @@
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="#?storename="${sessionScope.storename}>
+                             <a href="myshop.do?storename="${sessionScope.storename}>
                                     <img src="img/myshop.gif">
                                 </a>
                              </c:otherwise>
