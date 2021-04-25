@@ -34,7 +34,7 @@ public class ManageShopBuyListAction implements Action {
 		request.setAttribute("reviewlist", reviewarr);
 		
 		forward.setRedirect(false);
-		forward.setPath("/WEB-INF/views/manageshop/managebuylist.jsp");
+		forward.setPath("/WEB-INF/views/manageshops/managebuylist.jsp");
 		
 		
 		

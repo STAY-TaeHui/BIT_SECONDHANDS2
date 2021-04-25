@@ -34,6 +34,7 @@
     <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<div id="bodywrap">
+		
 		 <!-- Shopping Cart Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
@@ -78,7 +79,30 @@
                                     		<c:choose>
                                     			<c:when test="${rvitem.buy_num eq item.buy_num}">
                                     			
-                                    				<button class='reviewbtn' onclick="location.href='${pageContext.request.contextPath}/index.do'">후기작성</button>
+                                    				<button class='reviewbtn'  data-toggle="modal" data-target=#modal${item.buy_num}>후기작성</button>
+                                    				
+                                    				<!-- 후기작성 모달 시작 -->
+                                    				<div class="modal fade" id='modal${item.buy_num}' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    													<div class="modal-dialog modal-dialog-centered" role="document">
+													        <div class="modal-content">
+													            <div class="text-right cross"> <i class="fa fa-times mr-2" data-dismiss="modal"></i> </div>
+													            <div class="card-body text-center"> <img src="${pageContext.request.contextPath}/img/store/${item.pimg_name}" height="100" width="100">
+													                <div class="comment-box text-center">
+													                    <h4>${item.p_subj}</h4>
+													                    <form action='reviewok' method=post>
+													                    <input type="text" name="buy_num" value='${item.buy_num}' style="display:none">
+													                    <input type="text" name="p_num" value='${item.p_num}' style="display:none">
+													                    <input type="text" name="storename_buyer" value='${item.storename_buyer}' style="display:none">
+													                    <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
+													                    <div class="comment-area"> <textarea name="content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div>
+													                    <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send message <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
+													                    </form>
+													                </div>
+													            </div>
+													        </div>
+													    </div>
+													</div>
+													<!-- 후기작성 모달 끝 -->
                                     			</c:when>
                                     			<c:otherwise>
                                     				<span class='reviewspan'>후기작성 완료</span>

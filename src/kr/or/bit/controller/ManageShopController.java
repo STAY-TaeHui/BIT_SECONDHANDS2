@@ -25,7 +25,7 @@ import kr.or.bit.service.manageshop.ManageShopAction;
 /**
  * Servlet implementation class MyShopController
  */
-@WebServlet({"/manageshop","*.list"})
+@WebServlet({"/manageshop/*","*.list"})
 public class ManageShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,6 +36,8 @@ public class ManageShopController extends HttpServlet {
     }
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ManageShopController");
+		
 		String requestURI = request.getRequestURI();
     	String contextPath = request.getContextPath();
     	String url_Command = requestURI.substring(contextPath.length());
@@ -60,7 +62,25 @@ public class ManageShopController extends HttpServlet {
 	    		System.out.println("manageselllist.jsp VIEW");
 	    		action = new ManageShopSellListAction(); 
 	    		forward = action.execute(request, response);
+		 }else if(url_Command.equals("/manageshop/selllist.list")) {
+	    		System.out.println("manageselllist.jsp VIEW");
+	    		action = new ManageShopSellListAction(); 
+	    		forward = action.execute(request, response);
 		 }
+		 else if(url_Command.equals("/manageshop/review")) {
+	    		System.out.println("review.jsp VIEW");
+	    		forward = new ActionForward();
+	    		forward.setRedirect(false);
+	    		forward.setPath("/WEB-INF/views/manageshops/review.jsp");
+		 }
+		 else if(url_Command.equals("/manageshop/reviewok")) {
+	    		System.out.println(request.getParameter("content"));
+	    		System.out.println(request.getParameter("rating"));
+	    		System.out.println(request.getParameter("buy_num"));
+	    		System.out.println(request.getParameter("p_num"));
+	    		System.out.println(request.getParameter("storename_buyer"));
+		 }
+		 
 
 		 
     	//////////////////////////////////////////////////////

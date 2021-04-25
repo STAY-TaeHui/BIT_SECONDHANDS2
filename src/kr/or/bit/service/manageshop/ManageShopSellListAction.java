@@ -29,7 +29,7 @@ public class ManageShopSellListAction implements Action {
 		request.setAttribute("selllist", arr);
 		
 		forward.setRedirect(false);
-		forward.setPath("/WEB-INF/views/manageshop/manageselllist.jsp");
+		forward.setPath("/WEB-INF/views/manageshops/manageselllist.jsp");
 		
 		
 		

@@ -129,7 +129,7 @@ function orderbyprice(){
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="${pageContext.request.contextPath}index.do">
+                            <a href="${pageContext.request.contextPath}/index.do">
                                 <img src="${pageContext.request.contextPath}/img/logo.png" alt="" style="width:140px; height:40px;">
                             </a>
                         </div>
