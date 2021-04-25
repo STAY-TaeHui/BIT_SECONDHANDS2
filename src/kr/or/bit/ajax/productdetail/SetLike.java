@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.SecondHandsDAO;
@@ -40,7 +41,7 @@ public class SetLike extends HttpServlet {
 		System.out.println("찜 서비스 진입 : " + liker);
 		System.out.println("찜 서비스 진입 : " + p_num);
 		
-		
+		JSONObject obj = new JSONObject();
 		
 		PrintWriter out = null;
 		try {

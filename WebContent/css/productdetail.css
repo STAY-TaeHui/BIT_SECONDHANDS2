@@ -5,11 +5,11 @@
 	margin-bottom : 10px;
 }
 
-#contactseller{
+/* #contactseller{
 	position:absolute;	
 	bottom:0;
 	
-}
+} */
 #contactseller input{
 	border:none;
 	width:160px;
@@ -21,9 +21,8 @@
 
 #like{
 	margin-right:auto;
-	/*
 	background-color:darkgray;
-*/
+
 }
 
 #call{
@@ -35,7 +34,9 @@
 	background-color:#f70000;
 	margin-left:auto;
 }
-
+#manageshop{
+	background-color:#f69e07;
+}
 #p_content{
 	margin-right:auto;
 }
@@ -57,7 +58,7 @@
 }
 
 #replyarea table{
-	margin-top:20px;
+	margin:20px 0;
 	border-top:1px gray solid;
 	width:100%;
 	color:gray;
@@ -77,6 +78,10 @@
 
 #shopcontainer{
 	border-left:1px lightgray solid;
+}
+
+#shopcontainer h5{
+	text-align:center;
 }
 
 #shopinfo{

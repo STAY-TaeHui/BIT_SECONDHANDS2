@@ -6,12 +6,10 @@
 	position: fixed;
 	top:140px;
 	z-index: 999;
-	
-	background-color:white;
-	width:100%;
-
 }
-
+#ordermenu{
+	margin-left:auto;
+}
 #manageshop_menu ul{
 	display:flex;
 	margin-bottom:20px;
@@ -64,16 +62,16 @@
 	
 }
 
-#myproductlist th{
+#myproductlist th, #buylist th{
 	text-align:center;
 }
 
-#myproductlist tr{
+#myproductlist tr, #buylist tr{
 	border:1px solid lightgray;
 }
 
 /*상품목록 테이블의 td당 속성*/
-.p_img{
+.p_img, .b_img{
 	width:240px;
 }
 
@@ -88,7 +86,7 @@ p_status{
 p_price{
 	width:120px;
 }
-.p_ed{
+.p_ed, .b_date{
 	width:120px;
 	word-break:all;
 }

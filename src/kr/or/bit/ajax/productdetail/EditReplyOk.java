@@ -29,30 +29,24 @@ public class EditReplyOk extends HttpServlet {
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	System.out.println("This is editreplyok.ajax");
     	
-    	String p_number = request.getParameter("p_num");
-	    int p_num = 0;
-	    
 	    String rp_number = request.getParameter("rp_num");
 	    int rp_num = 0;
     	
     	try {
-    		
-    		p_num = Integer.parseInt(p_number);
+    	
     		rp_num = Integer.parseInt(rp_number);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
     	    
-	    String storename = request.getParameter("storename");
+	    String rp_content = request.getParameter("rp_content");
 
-	    
-	    System.out.println("p_num : " + p_num);
-	    System.out.println("storename : " + storename);
+	    System.out.println("rp_content : " + rp_content);
 	    System.out.println("rp_num : " + rp_num);
 	    
     	SecondHandsDAO dao = new SecondHandsDAO();
-    	Boolean bo = dao.editReply(p_num, storename, rp_num);
+    	Boolean bo = dao.editReply(rp_content, rp_num);
 
     	
     	PrintWriter out = response.getWriter();

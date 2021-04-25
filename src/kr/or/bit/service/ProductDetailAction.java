@@ -27,6 +27,9 @@ public class ProductDetailAction implements Action{
 		//상품 정보 뿌리기
 		request.setAttribute("jsonobj",dao.showProductDetail(p_num));
 		
+		//상품 찜 수 가져오기
+		request.setAttribute("likecounts",dao.getLikeCounts(p_num));
+		
 		//상품 상세페이지의 상점정보 간략히 뿌리기
 		request.setAttribute("jsonarr",dao.showShopInfo(storename));
 		
@@ -35,6 +38,7 @@ public class ProductDetailAction implements Action{
 		
 		//상품 문의 목록 표시하기
 		request.setAttribute("replylist", dao.getReplayList(p_num));
+		
 		
 		System.out.println("서비스에서 제이슨 배열 : " + dao.showShopInfo(storename));
 		

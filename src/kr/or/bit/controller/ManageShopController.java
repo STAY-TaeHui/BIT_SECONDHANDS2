@@ -12,9 +12,13 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
+
 import kr.or.bit.service.LoginOkAction;
 import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.myshop.MyShopInfoAction;
+
+import kr.or.bit.service.manageshop.ManageShopAction;
+
 
 /**
  * Servlet implementation class MyShopController
@@ -45,11 +49,12 @@ public class ManageShopController extends HttpServlet {
 	    		action = new ManageShopAction();
 	    		forward = action.execute(request, response);
 		 }
-		 if(url_Command.equals("/manageshop/buylist")) {
+		 else if(url_Command.equals("/manageshop/buylist")) {
 	    		System.out.println("butlist.jsp VIEW");
 	    		action = new ManageShopAction();
 	    		forward = action.execute(request, response);
 		 }
+
 		 
     	//////////////////////////////////////////////////////
     	if(forward != null) {

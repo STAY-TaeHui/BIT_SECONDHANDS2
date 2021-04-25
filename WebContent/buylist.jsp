@@ -40,22 +40,22 @@
                         <table id=buylist>
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th class="p-name">Product Name</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
+                                    <th>사진</th>
+                                    <th>상품명 / 판매상점이름</th>
+                                    <th>가격</th>
+                                    <th>구매날짜</th>
                                     <th><span>&nbsp;&nbsp;Review&nbsp;&nbsp;</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <!-- [이미지], [상품 제목], [가격], [판매자], [날짜], 후기버튼 -->
                                 <tr>
-                                    <td class="cart-pic"><img src="img/cart-page/product-1.jpg" alt=""></td>
+                                    <td class="b_img"><img src="img/cart-page/product-1.jpg" alt=""></td>
                                     <td class="cart-title">
                                         <h5 >지금까지 이런적은 없었다 이게 상품이냐 걸레냐 </h5>
                                         <h5 class="storename">태희상점</h5>
                                     </td>
-                                    <td class="p-price">10000원</td>
+                                    <td class="p_price">10000원</td>
                                     <td class="date">2021-04-25</td>
                                     <td ><button class='reviewbtn' onclick="location.href='#'">후기작성</button></td>
                                 </tr>
