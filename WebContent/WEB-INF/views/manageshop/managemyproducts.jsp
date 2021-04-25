@@ -1,3 +1,7 @@
+<%@page import="org.json.simple.JSONArray"%>
+<%@page import="kr.or.bit.utils.ThePager"%>
+<%@page import="kr.or.bit.dto.Board"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -82,7 +86,12 @@
 	  
   }
     
-    </script>
+
+  </script>
+
+
+
+
 
 </head>
 
@@ -110,6 +119,7 @@
             <button type="button" onclick="serachmyp()" id="searchmyproductbtn"><i class="ti-search"></i></button>
         </div>
     </li>
+    <!--  
     <li>
     <select id="paging">
     	<option value="10">10개씩</option>
@@ -117,6 +127,7 @@
     	<option value="20">20개씩</option>
     </select>
 	</li>
+	-->
 	<li>
 	    <select id="status" onchange="productlistByStaus()">
     	<option value="2">전체</option>
@@ -185,22 +196,7 @@
                                     	</c:otherwise>
                                     </c:choose>
                                     <td class="p_fnc"><input type="button" value="수정" name="edit_p" id="editbtn"></td>
-                                <!--  
-                                    <td class="cart-pic first-row" class="p_img"><img src="img/cart-page/product-1.jpg" alt=""></td>
-                                    <td class="cart-title first-row">
-                                        <h5>Pure Pineapple</h5>
-                                    </td>
-                                    <td class="p-price first-row">$60.00</td>
-                                    <td class="qua-col first-row">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price first-row">$60.00</td>
-                                    <td class="close-td first-row"><i class="ti-close"></i></td>
-                                    -->
+
                                 </tr>
                                 <!-- 여기까지! -->
                                 </c:forEach>

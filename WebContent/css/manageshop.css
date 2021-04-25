@@ -6,9 +6,12 @@
 	position: fixed;
 	top:140px;
 	z-index: 999;
-	
-	background-color:white;
-	width:100%;
+
+
+}
+
+#ordermenu{
+	margin-left:auto;
 
 }
 
@@ -64,15 +67,40 @@
 	
 }
 
+#myproductlist th{
+	text-align:center;
+}
+
 #myproductlist tr{
 	border:1px solid lightgray;
 }
-/*
-#myproductlist td{
-	width:180px;
-	height:180px;
+
+/*상품목록 테이블의 td당 속성*/
+.p_img{
+	width:240px;
 }
-*/
+
+.p_name{
+	width:160px;
+	word-break:all;
+}
+
+p_status{
+	width:120px;
+}
+p_price{
+	width:120px;
+}
+.p_ed{
+	width:120px;
+	word-break:all;
+}
+
+.p_fnc{
+	width:100px;
+}
+
+
 .p_img img{
 	width:150px;
 	vertical-align:center;

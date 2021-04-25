@@ -11,11 +11,12 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import kr.or.bit.dto.Board;
 
 //CRUD 함수 > ConnectionPool > 함수단위 연결 ,받환 
 public class SecondHandsDAO {
@@ -1521,7 +1522,7 @@ public class SecondHandsDAO {
 	               JSONObject obj = new JSONObject();
 	               
 	               obj.put("pimg_name",rs.getString("pimg_name").trim());
-	               obj.put("p_subj",rs.getString("p_subj"));
+	               obj.put("p_subj", rs.getString("p_subj"));
 	               obj.put("p_price",rs.getInt("p_price"));
 	               obj.put("p_wr_time", rs.getString("p_wr_time"));
 	               obj.put("p_ed_time", rs.getString("p_ed_time"));
@@ -1555,8 +1556,6 @@ public class SecondHandsDAO {
 	         
 	         return arr;
 	      }
-
-
-
-
+		
+	
 }

@@ -13,13 +13,12 @@ import javax.servlet.http.HttpSession;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.LoginOkAction;
-import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.myshop.MyShopInfoAction;
 
 /**
  * Servlet implementation class MyShopController
  */
-@WebServlet("/manageshop/*")
+@WebServlet("/myshop/*")
 public class MyShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,16 +32,16 @@ public class MyShopController extends HttpServlet {
 		String requestURI = request.getRequestURI();
     	String contextPath = request.getContextPath();
     	String url_Command = requestURI.substring(contextPath.length());
-    	System.out.println("THIS IS manageshop");
+    	System.out.println("THIS IS MYSHOP");
     	System.out.println("url_Command : "+url_Command);
     	Action action=null;
     	ActionForward forward=null;
     	HttpSession session =null;;
     	
     		//myshop 메인
-		 if(url_Command.equals("/manageshop")) {
-	    		System.out.println("manageshop.jsp VIEW");
-	    		action = new ManageShopAction();
+		 if(url_Command.equals("/myshop")) {
+	    		System.out.println("myshop.jsp VIEW");
+	    		action = new MyShopInfoAction();
 	    		forward = action.execute(request, response);
 		 }
 		 
