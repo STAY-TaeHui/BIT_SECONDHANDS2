@@ -28,16 +28,9 @@ public class SearchProductOk extends HttpServlet {
     private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	System.out.println("This is SearchProductOk.ajax");
         //PrintWriter out = response.getWriter();
-    	String keyword = request.getParameter("keyword");
     	
-    	System.out.println("서블릿의 k : " + keyword);
     	
-        SecondHandsDAO dao = new SecondHandsDAO();
-        JSONArray arr = dao.searchProduct(keyword);
-        
-        response.setContentType("application/x-json; charset=UTF-8");
-        response.getWriter().print(arr);
-        System.out.println(arr);
+
         
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

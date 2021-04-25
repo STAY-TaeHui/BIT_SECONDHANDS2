@@ -49,10 +49,34 @@
     letter-spacing: 1px;
     margin-bottom: 20px;
 }
-.count{
+.productcount, .likecount, .reviewcount{
 	color: rgb(247, 47, 51);
 	margin: 0px;
     padding: 0px;
     border: 0px;
     vertical-align: baseline;
+}
+.myproductlist{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.myproductlist li {
+	width: 300px;
+	border: 1px red solid;
+	padding:15px;
+	
+}
+.myproductlist li a{
+	
+	color:black;
+	text-decoration:none;
+	
+}
+.myproductlist li a:hover{
+	
+	color:#f70000;
+	text-decoration:none;
+	
 }

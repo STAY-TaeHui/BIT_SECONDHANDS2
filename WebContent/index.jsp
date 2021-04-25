@@ -17,190 +17,66 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	
+	<script>
+	
+	$(function() {    //화면 다 뜨면 시작
 
-    <script>
+		console.log("함수실행");
 
-        
-        $(function() {    //화면 다 뜨면 시작
+		
+		console.log("메인페이지 로딩");
 
-        	console.log("함수실행");
-        	$("#categoryorder").css("display","none"); 
-        		//상품 이미지 리스트 불러오기
-        	$.ajax(
-        			
-        			{	
-        				url:"ProductListOk.ajax",
-        				type:"get",
-        				dataType:"json",
-        				success:function(responsedata){
-        					console.log(responsedata);
-        					
-        					getlist(responsedata);
-        					       					
-        				},
-        			
-       		
-        				error:function(xhr){
-        					console.log(xhr);
-        				}
-        			}        			
-        			
-        		);        	
-            
-        });
-        
-        
-        //최신순 정렬
-        function orderbytime(){
-        	
-        	$("#timebtn").addClass("clickedbtn");
-        	$("#timebtn").removeClass("unclickedbtn");
-        	
-        	$("#pricebtn").removeClass("clickedbtn");
-        	$("#pricebtn").addClass("unclickedbtn");
-        	
-			console.log("최신순정렬");
-        	
-			$.ajax(
-        			
-        			{	
-        				url:"ProductOrderByTime.ajax",
-        				type:"post",
-        				dataType:"json",
-        				data: { keyword : $("#keyword").val()},
-        				success:function(responsedata){
-        					console.log(responsedata);
-        						$(".productlist").empty();
-        					       					
-        						getlist(responsedata);
-								
-        					
-        				},
-        				error:function(xhr){
-        					console.log(xhr);
-        				}
-        			}
-        			
-        		);
-        	
-        }
-        
-        //가격순 정렬
-        function orderbyprice(){
-        	
-        	$("#pricebtn").addClass("clickedbtn");
-        	$("#pricebtn").removeClass("unclickedbtn");
-        	
-        	$("#timebtn").removeClass("clickedbtn");
-        	$("#timebtn").addClass("unclickedbtn"); 
-        	
-			console.log("가격순정렬");
-        	
-			$.ajax(
-        			
-        			{	
-        				url:"ProductOrderByPrice.ajax",
-        				type:"post",
-        				dataType:"json",
-        				data: { keyword : $("#keyword").val()},
-        				success:function(responsedata){
-        					console.log(responsedata);
-        						$(".productlist").empty();
-        					       					
-        						getlist(responsedata);     						
-        					
-        				},
-        				error:function(xhr){
-        					console.log(xhr);
-        				}
-        			}
-        			
-        		);
-			
-        }
-        
-        
-        
-        //카테고리별 최신순 정렬
-        function c_orderbytime(){
-        	
-        	$("#timebtn").addClass("clickedbtn");
-        	$("#timebtn").removeClass("unclickedbtn");
-        	
-        	$("#pricebtn").removeClass("clickedbtn");
-        	$("#pricebtn").addClass("unclickedbtn");
-        	
-			console.log("최신순정렬");
-        	
-			$.ajax(
-        			
-        			{	
-        				url:"C_ProductOrderOk.ajax",
-        				type:"post",
-        				dataType:"json",
-        				data: { keyword : $("#bottom option:selected").val(),
-        						type: "time"},
-        				success:function(responsedata){
-        					console.log(responsedata);
-        						$(".productlist").empty();
-        					       					
-        						getlist(responsedata);
-								
-        					
-        				},
-        				error:function(xhr){
-        					console.log(xhr);
-        				}
-        			}
-        			
-        		);
-        	
-        }
-        
-        //카테고리별 가격순 정렬
-        function c_orderbyprice(){
-        	
-        	$("#pricebtn").addClass("clickedbtn");
-        	$("#pricebtn").removeClass("unclickedbtn");
-        	
-        	$("#timebtn").removeClass("clickedbtn");
-        	$("#timebtn").addClass("unclickedbtn"); 
-        	
-			console.log("가격순정렬");
-        	
-			$.ajax(
-        			
-        			{	
-        				url:"C_ProductOrderOk.ajax",
-        				type:"post",
-        				dataType:"json",
-        				data: { keyword :$("#bottom option:selected").val(),
-        					type:"price"},
-        				success:function(responsedata){
-        					console.log(responsedata);
-        						$(".productlist").empty();
-        					       					
-        						getlist(responsedata);       						
-        					
-        				},
-        				error:function(xhr){
-        					console.log(xhr);
-        				}
-        			}
-        			
-        		);
-			
-        }
-		   
+		
+		$("#categoryorder").css("display","none");
+		
+		//상품 이미지 리스트 불러오기
+		$.ajax(
+				
+				{	
+					url:"ProductListOk.ajax",
+					type:"get",
+					dataType:"json",
+					success:function(responsedata){
+						console.log(responsedata);
+					
+						getlist(responsedata);
+						
+					},
 
-    </script>
-</head>
+					error:function(xhr){
+						console.log(xhr);
+					}
+				}
+				
+				
+			);
+
+	    
+	});
+
+	
+    
+    //기본 상품 리스트 불러오는 함수
+    function getlist(responsedata){
+		$.each(responsedata, function(index, obj){
+      							
+			$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+    				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+    						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+    						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+    		});
+    }
+	</script>
+ </head>
 
 <body>
 
 
 <div id="fullwrap">
-	<jsp:include page="WEB-INF/views/include/header_main.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
 	
 	<div id="bodywrap">
 	
@@ -235,26 +111,13 @@
             <div >
                 <img src="img/slide/main_slide9.jpg">
             </div>
-        <!--<div id="slide">
-        <ul>
-        	<li id="img1"><img src="img/slide/main_slide1.jpg"/></li>
-        	  
-        	<li id="img2"><img src="img/slide/main_slide2.jpg"/></li>
-        	<li id="img3"><img src="img/slide/main_slide3.jpg"/></li>
-        	<li id="img4"><img src="img/slide/main_slide4.jpg"/></li>
-        	<li id="img5"><img src="img/slide/main_slide5.jpg"/></li>
-        	<li id="img6"><img src="img/slide/main_slide6.jpg"/></li>
-        	<li id="img7"><img src="img/slide/main_slide7.jpg"/></li>
-        	<li id="img8"><img src="img/slide/main_slide8.jpg"/></li>
-        	<li id="img9"><img src="img/slide/main_slide9.jpg"/></li>
-        	
-        </ul>
-        </div>-->
+
 
         </div>
     </section>
     <!-- Hero Section End -->
     <div id="content">
+    
     <div id="ordermenu">
 	<p>오늘의 추천</p>
 	
@@ -329,6 +192,5 @@
     <script src="js/main.js"></script>
 
 </body>
-
 <html>
 

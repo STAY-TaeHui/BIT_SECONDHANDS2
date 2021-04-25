@@ -300,7 +300,7 @@
                     <!--  -->
                         <ul class="nav-right">
                             <li class="heart-icon">
-                                <c:choose>
+                             <c:choose>
                             <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
                                     <img src="img/sell.gif">

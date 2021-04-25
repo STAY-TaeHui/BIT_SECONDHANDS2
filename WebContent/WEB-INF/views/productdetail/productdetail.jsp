@@ -9,6 +9,8 @@
 <!-- 상품 문의 목록 -->
 <c:set var="replylist" value="${requestScope.replylist}" />
 
+<c:set var ="jsonarr" value="${requestScope.jsonarr}" />
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -35,12 +37,14 @@
     
     <!-- 내가 커스텀한 css -->
     <link rel="stylesheet" href="css/productdetail.css" type="text/css">
+
 </head>
 
 <body>
 
 <div id="fullwrap">
    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+   <jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
    
    <div id="bodywrap">
 
@@ -65,26 +69,43 @@
                                 <ul>
                                    <li>${jsonobj.storename}</li>
                                    <li><h4>${jsonobj.p_subj}</h4></li>
-                                   <li><h3>${jsonobj.p_price}원</h3></li>
+                                   <li><h3>${jsonobj.p_price}원</h3>
+                                   
+                                   <c:choose>
+                                   	<c:when test="${jsonobj.p_dcharge eq 0}">
+                                   <span> *배송비 미포함</span>
+                                   </c:when>
+                                   <c:otherwise>
+                                   <span> *배송비 포함</span>
+                                   </c:otherwise>
+                                   </c:choose>
+                                   </li>
                                 </ul>
-                                <!--  
-
-                                <div class="pd-desc">-->
                                 
                                 </div>
                                 <hr>
                                 <div id="pd-time">
-
-                                   ${jsonobj.p_wr_time}
-
+                                <p id="likecounts">찜한 사람 <span id="likers" style="color:red;">${likecounts}</span></p>
+								<p id="location">${jsonobj.p_addr}</p>
+								<p id="wr_time">등록 ${jsonobj.p_wr_time}</p>
                                 </div>
                                 <div id="contactseller">
+                                
+                                <c:choose>
+                                	<c:when test="${sessionScope.storename eq jsonobj.storename}">
+                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+                                	<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
+                                	<input type="hidden" value="찜♥" id="like">
+                                	</c:when>
+                                	<c:otherwise>
                                    <input type="button" value="찜♥" id="like">
-                                     <input type="button" value="연락하기" id="call" onclick="contact()">
-                                    <input type="button" value="바로구매" id="buynow">
+                                   <input type="hidden" id="phone_number" value="하하하">			
+                                   <input type="button" value="연락하기" id="call" onclick="contact()">
+                                   <input type="button" value="바로구매" id="buynow">
+                                   </c:otherwise>
+                                  </c:choose>
                                 </div>
-                  <!--  
-                            </div>-->
+
                         </div>
                     </div>
                     <div class="product-tab">
@@ -93,14 +114,6 @@
                                 <li>
                                     <a class="active" data-toggle="tab" href="#tab-1" role="tab">상품정보</a>
                                 </li>
-                                <!--  
-                                <li>
-                                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
-                                </li>
-                                -->
                             </ul>
                         </div>
                         <div class="tab-item-content">
@@ -116,10 +129,11 @@
                                                 
                                                 <!-- 상품 문의 댓글 영역 -->
                                                 <div id="replyarea">
-                                                <p id="replytitle">상품문의<span></span></p>
+                                                <p id="replytitle" style="color:black;">상품문의 <span id="recount" style="color:red;">${fn:length(replylist)}</span></p>
                                                 
 
                                            <textarea placeholder="상품문의입력" id="replytext" name="replytext" style="width:100%; height:100px;"></textarea>
+                                           <div id="test_cnt">(0/100)</div>
                                            <input type="button" value="댓글달기" class="replybtn" onclick="reply_check()"> 
 
                                                 <div id="relist">
@@ -130,13 +144,13 @@
                                              <tr >
                                                 <th class="replywriter" id="writer${reply.rp_num}">${reply.storename}</th>
                                              </tr>
-                                             <tr class="replaycontent">
+                                             <tr >
                                                 
-                                                <td>
+                                                <td class="replycontent" id="replycontent${reply.rp_num}">
                                                 ${reply.rp_content}<br>
                                                 </td>
                                              </tr>
-                                             <tr class="replaybtnarea">
+                                             <tr class="replybtnarea">
                                                 <td>
                                           <input type="button" value="댓글달기" class="replybtn" id="re${reply.rp_num}" onclick="rewrite(${reply.rp_num})">
                                           <input type="button" value="삭제하기" class="replybtn" id="del${reply.rp_num}" onclick="deleteReply(${reply.p_num},${reply.rp_num})">
@@ -227,10 +241,24 @@
           setCategory();
           
           //이 페이지의 상품이 찜한 상품인지 확인
-          checkLike();
-          init();
+          checkLike();     
+	      init();
         
        }
+       
+       
+       
+       //기본 상품 리스트 불러오는 함수
+       function getlist(responsedata){
+   		$.each(responsedata, function(index, obj){
+         							
+   			$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+       				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+       						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+       						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+       		});
+       }
+       
        
        //카테고리 유지 함수
        
@@ -349,6 +377,7 @@
        //찜버튼 초기화
        function init(check, currentuser){
    
+    
              console.log(check);
              
              if(check == false){
@@ -394,6 +423,14 @@
                              
                              swal("이 상품을 찜했습니다");
                              
+                             let likers = $("#likers").text();
+                             
+                             //문자를 숫자로 형변환
+                             likers *= 1;
+                             
+                             console.log(likers);
+                             $("#likers").empty();
+                             $("#likers").append(likers+1);
                              
                           } else{
                              
@@ -433,6 +470,13 @@
                           if(check == "false"){
                              
                              swal("찜하기 취소되었습니다");
+                             let likers = $("#likers").text();
+                             
+                             likers *= 1;
+                             console.log(likers);
+                             
+                             $("#likers").empty();
+                             $("#likers").append(likers-1);
                              
                           } else{
                              
@@ -459,11 +503,23 @@
        
        //연락하기 번호 띄워주기
        function contact(){
-          
-          swal("m_phone을 가져와야하는데 numberformatException...ㅠㅠ");
+    	   let phone = $("#phone_number").val();
+          swal(phone);
           
        }
        //////////////////////////////////////////////////////
+       
+       
+       //글자수 제한
+       $('#replytext').on('keyup', function() {
+        	$('#test_cnt').html("("+$(this).val().length+" / 100)");
+ 
+        	if($(this).val().length > 100) {
+            	$(this).val($(this).val().substring(0, 100));
+            	$('#test_cnt').html("(100 / 100)");
+        	}
+    	});
+       
        
        //댓글 유효성 검사
        function reply_check() {
@@ -497,11 +553,14 @@
                    
                    $("#relist").empty();
                    
+                   $("#recount").empty();
+                   $("#recount").append(responsedata.length);
+                   
                    $.each(responsedata,function(index,obj){
                       
                       $("#relist").append(
                             "<table id='reply"+obj.rp_num+"'><tr ><th class='replywriter' id='writer"+obj.rp_num+"'>"+obj.storename+"</th></tr>"
-                           +"<tr class='replaycontent'><td>"+obj.rp_content+"<br></td></tr><tr class='replaybtnarea'><td>"
+                           +"<tr><td class='replycontent' id='replycontent'"+obj.rp_num+">"+obj.rp_content+"<br></td></tr><tr class='replybtnarea'><td>"
                         +"<input type='button' value='댓글달기' class='replybtn' id='re"+obj.rp_num+"' onclick='rewrite("+obj.rp_num+")'>"
                         +"<input type='button' value='삭제하기' class='replybtn' id='del"+obj.rp_num+"'"
                         +" onclick='deleteReply("+obj.p_num+","+obj.rp_num+")'><input type='button' value='수정하기' class='replybtn'"
@@ -606,23 +665,39 @@
            }
          );
 
-       }
-       
-     //비동기 상점문의(댓글) 수정
-       function editReply(p_num,rp_num){
-          
-          var currentuser = '<%=(String)session.getAttribute("storename")%>';
-      
-          console.log("상점문의를 수정합니다");
-          $()
-          let params = {
-                storename:currentuser,
-                rp_content:$("#edittext").val(),
-                p_num:p_num,
-                rp_num:rp_num
-          }   
-          
-
+	    }
+	    
+	  //비동기 상점문의(댓글) 수정
+	  let tempwriter;
+	    function editReply(p_num,rp_num){
+	    	
+	    	var currentuser = '<%=(String)session.getAttribute("storename")%>';
+   	
+	    	console.log("상점문의를 수정합니다");
+	    	
+	    	let tempcontent = $("#replycontent"+rp_num).text().trim();
+	    	tempwriter = $("#writer"+rp_num).text().trim();
+	    	
+	    	console.log(tempcontent);
+	    	$("#reply"+rp_num).empty();
+	    	
+	    	$("#reply"+rp_num).append(
+	    		"<tr><th>상품문의 수정</th></tr>"
+	    		+"<tr><td><textarea id='edittext' name='edittext' style='width:100%; height:100px;'>"
+	    		+tempcontent+"</textarea></td></tr>"
+	    		+"<tr><td><input type='button' value='댓글수정' class='replybtn' onclick='edit("+p_num+","+rp_num+")'></td></tr>"		
+	    	);
+	    	
+	  }
+	  
+	  function edit(p_num,rp_num){
+		  
+	  
+	    	let params = {
+	    			rp_content:$("#edittext").val(),
+	    			rp_num:rp_num
+	    	}	
+	    	let newcontent = $("#edittext").val();
           $.ajax(
            {
              url:"editreplyok.ajax",
@@ -636,9 +711,17 @@
                 
                  if(check == "true"){
                      swal("수정 성공");
-                     let el = document.getElementById('reply'+params.rp_num);
-                     el.remove();
-                      getReplyList();
+                     
+                     $("#reply"+rp_num).empty();
+                     $("#reply"+rp_num).append(
+                         "<table id='reply"+rp_num+"'><tr ><th class='replywriter' id='writer"+rp_num+"'>"+tempwriter+"</th></tr>"
+                         +"<tr><td class='replycontent' id='replycontent'"+rp_num+">"+newcontent+"<br></td></tr><tr class='replybtnarea'><td>"
+                         +"<input type='button' value='댓글달기' class='replybtn' id='re"+rp_num+"' onclick='rewrite("+rp_num+")'>"
+                         +"<input type='button' value='삭제하기' class='replybtn' id='del"+rp_num+"'"
+                         +" onclick='deleteReply("+p_num+","+rp_num+")'><input type='button' value='수정하기' class='replybtn'"
+                         +" id='edit"+rp_num+"' onclick='editReply("+p_num+","+rp_num+")'></td></tr></table>"	 
+                     );
+                     
                       
                  }else{
                     swal("수정 실패");
@@ -667,7 +750,7 @@
           
           $("#replytext").empty();
           $("#replytext").focus();
-          $("#replytext").val("@"+store);
+          $("#replytext").val("@"+store+" ");
           
           
        }
