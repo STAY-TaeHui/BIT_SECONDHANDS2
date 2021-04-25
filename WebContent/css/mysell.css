@@ -1,0 +1,19 @@
+.drag-over {
+	background-color: #F0EBF0;
+}
+
+.thumb {
+	width: 200px;
+	height: 200px;
+	padding: 5px;
+	float: left;
+}
+
+.thumb>img {
+	width: 100%;
+}
+/* 
+.thumb>.close {
+	position: absolute;
+	cursor: pointer;
+} */

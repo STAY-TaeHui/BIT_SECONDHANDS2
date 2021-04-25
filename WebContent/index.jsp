@@ -200,7 +200,7 @@
 
 
 <div id="fullwrap">
-	<jsp:include page="WEB-INF/views/include/header_main.jsp"></jsp:include>
+	<jsp:include page="WEB-INF/views/include/header.jsp"></jsp:include>
 	
 	<div id="bodywrap">
 	

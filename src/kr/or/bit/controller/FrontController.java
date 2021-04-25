@@ -103,6 +103,19 @@ public class FrontController extends HttpServlet {
     		action = new editMemberAction();
     		forward = action.execute(request, response);
     	}
+    	//판매하기 이동
+        else if(url_Command.equals("/mysell.do")){
+           forward = new ActionForward();
+           forward.setRedirect(false);
+           forward.setPath("WEB-INF/views/mysell/mysell.jsp");
+        }       
+        //상품등록
+        else if(url_Command.equals("/productupload.do")){
+           System.out.println("productupload.do");
+           action = new ProductUploadAction();
+           forward = action.execute(request,response);
+        }
+    	
     	
     	
 ///////////////////////////////////////////////////////////////////
