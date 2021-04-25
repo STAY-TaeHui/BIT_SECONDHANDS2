@@ -1666,5 +1666,156 @@ public class SecondHandsDAO {
 	         return arr;
 	      }
 		
+		// 상품 등록 (상품테이블 insert)-영훈-
+		   public boolean productUpload(String storename, String subj, String b_num, String addr, String price,String content) {
+		      Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      System.out.println("상품 등록 함수 실행");
+
+		      try {
+		         conn = ds.getConnection();
+
+		         // String sql = "select * from member";
+		         String sql = "";
+
+		         sql += "insert into product(p_num, b_num, storename, p_addr, p_subj, p_dcharge, p_price, p_content, p_ed_time, p_status) values(p_num_seq.nextval,?, ?, ?,?,0,?,?,null,0)";
+		         
+		         pstmt = conn.prepareStatement(sql);
+		         pstmt.setString(1, b_num);
+		         pstmt.setString(2, storename);
+		         pstmt.setString(3, addr);
+		         pstmt.setString(4, subj);
+		         pstmt.setString(5, price);
+		         pstmt.setString(6, content);
+		         
+		         System.out.println("insert" + sql);
+		         int result = pstmt.executeUpdate();
+		         
+		         if (result > 0) {
+		            System.out.println("반영된 행 있음");
+		            return true;
+		         } else {
+		            System.out.println("반영된 행 없음");
+		            
+		         }
+		         
+		      }
+		      
+		      
+		      catch (Exception e) {
+		         System.out.println(e.getMessage());
+
+		      } finally {
+		         try {
+		            pstmt.close();
+		            conn.close();// 반환하기
+
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+
+		      return false;
+		   }
+		   
+		   //상품 등록 쿼리문 
+		   public int productQuery() {
+		      Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      ResultSet rs = null;
+		      int p_number = 0;
+		      System.out.println("상품 등록 쿼리문");
+
+		      try {
+		         conn = ds.getConnection();
+
+		         // String sql = "select * from member";
+		         String sql = "";
+
+		         sql += "select p_num from (select p_num from product order by p_num desc) where rownum =1";
+		         
+		         pstmt = conn.prepareStatement(sql);
+		         rs = pstmt.executeQuery();
+		         
+		         System.out.println("select문" + sql);
+		         
+		         while(rs.next()) {
+		            p_number = rs.getInt("p_num");
+		            System.out.println("p_nember" + p_number);
+		         
+		         }
+		         System.out.println(sql);
+		            
+		      }
+		      
+		      
+		      catch (Exception e) {
+		         System.out.println(e.getMessage());
+
+		      } finally {
+		         try {
+		            rs.close();
+		            pstmt.close();
+		            conn.close();// 반환하기
+		            
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+
+		      return p_number;
+		   }
+		   
+		   
+		   //상품등록 이미지 
+		   public boolean productImgUpload(String image_name , int p_num , int pimg_num) {
+		      Connection conn = null;
+		      PreparedStatement pstmt = null;
+		      System.out.println("상품 등록 이미지 함수 실행");
+
+		      try {
+		         conn = ds.getConnection();
+
+		         // String sql = "select * from member";
+		         String sql = "";
+
+		         sql += "insert into product_img(pimg_num, pimg_name, pimg_size, p_num) values (?,?,?,?)";
+		         pstmt = conn.prepareStatement(sql);
+		         pstmt.setInt(1, pimg_num);
+		         pstmt.setString(2, image_name);
+		         pstmt.setInt(3, 100);
+		         pstmt.setInt(4, p_num);
+		         
+		         
+		         int result = pstmt.executeUpdate();
+		         
+		         
+		         if (result > 0) {
+		            System.out.println("반영된 행 있음");
+		            return true;
+		         } else {
+		            System.out.println("반영된 행 없음");
+		            
+		         }
+		         
+		         
+		      }
+		      		      
+		      catch (Exception e) {
+		         System.out.println(e.getMessage());
+
+		      } finally {
+		         try {
+		            pstmt.close();
+		            conn.close();// 반환하기
+
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      
+		      return false;
+		   }
+		
 	
 }
