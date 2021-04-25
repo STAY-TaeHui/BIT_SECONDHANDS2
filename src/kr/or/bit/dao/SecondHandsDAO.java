@@ -447,6 +447,51 @@ public class SecondHandsDAO {
 	         return rs;
 	      }
 	   
+	   //리뷰 내역있는지 체크
+	   public JSONArray getReviewCheck(String storename) { 
+		   // [구매번호], [상품번호], [상품사진], [상품 제목], [가격], [구매자], [판매자], [구매날짜], []
+	         Connection conn = null;
+	         PreparedStatement pstmt = null;
+	         ResultSet rs=null;
+	         JSONArray arr = new JSONArray();
+	         try {
+	            conn=ds.getConnection();
+	            
+	            //String sql = "select * from member";
+	            
+		            String sql =  "select buy_num from review where storename=?";
+	            
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, storename);
+	            
+	            rs= pstmt.executeQuery();	            
+	            while(rs.next()) {
+	            	JSONObject obj = new JSONObject();
+	            	obj.put("buy_num", rs.getInt("buy_num"));
+	            	arr.add(obj);
+	            } 
+	            System.out.println(arr); 
+	         } catch (SQLException e) {
+	            // TODO: handle exception
+	        	 e.printStackTrace();
+	         }catch(Exception e3) {
+	        	 e3.printStackTrace();
+	         }
+	         finally {
+	            try {
+	               rs.close();
+	               pstmt.close();
+	               conn.close();//반환하기
+	            } catch (Exception e2) {
+	            	e2.printStackTrace();
+	            }
+	         }
+	         //내 상품들이 들어가있는 배열.
+	         //상품들의 개수는 배열크기를 통해 알수 있다.
+	         return arr;
+	      }
+	   
+	   //구매내역 뽑기 -태희-
 	   public JSONArray getBuyList(String storename) { 
 		   // [구매번호], [상품번호], [상품사진], [상품 제목], [가격], [구매자], [판매자], [구매날짜], []
 	         Connection conn = null;
@@ -472,20 +517,77 @@ public class SecondHandsDAO {
 	            
 	            rs= pstmt.executeQuery();	            
 	            while(rs.next()) {
-
-	               
 	               JSONObject obj = new JSONObject();
-	               obj.put("buy_num", rs.getInt("rv_num"));
+	               obj.put("buy_num", rs.getInt("buy_num"));
 	               obj.put("p_num", rs.getInt("p_num"));
-	               obj.put("writer", rs.getString("writer"));
-	               obj.put("seller", rs.getString("seller"));
-	               obj.put("m_profile", rs.getString("m_profile"));
-	               obj.put("p_subj", rs.getString("p_subj"));
-	               obj.put("rv_star", rs.getInt("rv_star"));
-	               obj.put("rv_content", rs.getString("rv_content"));
-	               obj.put("rimg_name", rs.getString("rimg_name"));
+	               obj.put("pimg_name", rs.getString("pimg_name")); // 이미지 이름
+	               obj.put("p_subj", rs.getString("p_subj")); // 상품 제목
+	               obj.put("p_price", rs.getInt("p_price")); // 상품 가격
+	               obj.put("storename_buyer", rs.getString("storename_buyer")); // 구매자
+	               obj.put("storename_seller", rs.getString("storename_seller"));// 판매자
 	               //시간 자르려고 substring 사용
-	               obj.put("rv_date",  rs.getString("rv_date").substring(0, 11));
+	               obj.put("buy_date",  rs.getString("buy_date").substring(0, 11));// 구매날짜
+	               
+	               System.out.println(obj);
+	               //상품하나씩 배열에 넣는다.
+	               arr.add(obj);
+	            } 
+	            System.out.println(arr); 
+	         } catch (SQLException e) {
+	            // TODO: handle exception
+	        	 e.printStackTrace();
+	         }catch(Exception e3) {
+	        	 e3.printStackTrace();
+	         }
+	         finally {
+	            try {
+	               rs.close();
+	               pstmt.close();
+	               conn.close();//반환하기
+	            } catch (Exception e2) {
+	            	e2.printStackTrace();
+	            }
+	         }
+	         //내 상품들이 들어가있는 배열.
+	         //상품들의 개수는 배열크기를 통해 알수 있다.
+	         return arr;
+	      }
+	   //판매내역 뽑기 -태희-
+	   public JSONArray getSellList(String storename) { 
+		   // [구매번호], [상품번호], [상품사진], [상품 제목], [가격], [구매자], [판매자], [구매날짜], []
+	         Connection conn = null;
+	         PreparedStatement pstmt = null;
+	         ResultSet rs=null;
+	         JSONArray arr = new JSONArray();
+	         try {
+	            conn=ds.getConnection();
+	            
+	            //String sql = "select * from member";
+	            
+		            String sql =  "select s.sell_num, s.p_num,pi.pimg_name, p.p_subj, nvl(p.p_price,0) as p_price, "
+		            		+"s.storename_buyer, s.storename_seller, s.sell_date "
+		            		+"from selllist s left join product p "
+		            		+"on s.p_num = p.p_num "
+		            		+"join product_img pi "
+		            		+"on p.p_num= pi.p_num "
+		            		+"where pi.pimg_num=1 and s.storename_seller=? "
+		            		+"order by s.sell_num desc";
+	            
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, storename);
+	            
+	            rs= pstmt.executeQuery();	            
+	            while(rs.next()) {
+	               JSONObject obj = new JSONObject();
+	               obj.put("sell_num", rs.getInt("sell_num"));
+	               obj.put("p_num", rs.getInt("p_num"));
+	               obj.put("pimg_name", rs.getString("pimg_name")); // 이미지 이름
+	               obj.put("p_subj", rs.getString("p_subj")); // 상품 제목
+	               obj.put("p_price", rs.getInt("p_price")); // 상품 가격
+	               obj.put("storename_buyer", rs.getString("storename_buyer")); // 구매자
+	               obj.put("storename_seller", rs.getString("storename_seller"));// 판매자
+	               //시간 자르려고 substring 사용
+	               obj.put("sell_date",  rs.getString("sell_date").substring(0, 11));// 구매날짜
 	               
 	               System.out.println(obj);
 	               //상품하나씩 배열에 넣는다.

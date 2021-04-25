@@ -114,6 +114,10 @@ p_price{
 	border-bottom: 1px solid #ebebeb;
 	
 }
+.cart-pic img{
+	width:100px;
+	height:100px;
+}
 .cart-table table tr th.p-name {
     text-align: center!important;
 }
@@ -122,17 +126,44 @@ p_price{
     color: #252525;
     text-align: center;
     font-size:15px!important;
-    
+}
+.cart-title, .cart-pic{
+	cursor: pointer;
+}
+.cart-title a{
+	color:black;
 }
 .cart-table table tr td {
     padding-bottom: 20px!important;
     padding-top: 20px!important;
 }
+.buy_num{
+	font-size: 18px!important;
+    font-weight: 400;
+}
 .reviewbtn{
 	padding: 0px 10px;
     height: 30px;
+    width:74px;
     border: 1px solid rgb(238, 238, 238);
     display: flex;
+    margin: auto;
+    font-weight: 800;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    background: rgb(247 0 0);
+    color: rgb(255 255 255);
+}
+.reviewspan{
+	padding: 0px 10px;
+    height: 30px;
+    width:104px;
+    border: 1px solid rgb(238, 238, 238);
+    display: flex;
+    margin: auto;
     font-weight: 400;
     -webkit-box-align: center;
     align-items: center;
