@@ -1042,30 +1042,7 @@ header {
 	text-decoration:none;
 	
 }
-.myproductlist{
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-}
 
-.myproductlist li {
-	width: 300px;
-	border: 1px red solid;
-	padding:15px;
-	
-}
-.myproductlist li a{
-	
-	color:black;
-	text-decoration:none;
-	
-}
-.myproductlist li a:hover{
-	
-	color:#f70000;
-	text-decoration:none;
-	
-}
 
 .thumnail{
 

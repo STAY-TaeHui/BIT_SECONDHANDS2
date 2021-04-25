@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+#manageshop_menu {
+	
+	height:90px;
+	position: fixed;
+	top:140px;
+	z-index: 999;
+	
+	background-color:white;
+	width:100%;
+
+}
+
+#manageshop_menu ul{
+	display:flex;
+	margin-bottom:20px;
+	color:gray;
+	padding-left:100px;
+	padding:0;
+	
+}
+
+.deco::after{
+	content:" | ";
+	margin:20px;
+}
+
+#filter_menu li{
+	margin-right:20px;
+}
+
+#filter_menu li input, select{
+	height:40px;
+	padding:10px;
+	border:1px solid lightgray;
+	color:gray;
+}
+
+/*이렇게 따로 지정해줘야 헤더에 있는 메인 검색버튼이 영향을 안 받는다*/
+#searchmyproductbtn{
+	width:40px;
+	height:40px;
+	padding:10px;
+	border:1px solid gray;
+}
+
+#filter_menu button{
+	background-color:white;
+	color:gray;
+}
+
+#ordermenu{
+	margin-bottom:20px;	
+}
+
+#currentpage{
+	color:red;
+}
+
+/*style.css에도 기본 설정값 있으니 참고*/
+.shopping-cart{
+	margin-top:30px;
+	
+}
+
+#myproductlist th{
+	text-align:center;
+}
+
+#myproductlist tr{
+	border:1px solid lightgray;
+}
+
+/*상품목록 테이블의 td당 속성*/
+.p_img{
+	width:240px;
+}
+
+.p_name{
+	width:160px;
+	word-break:all;
+}
+
+p_status{
+	width:120px;
+}
+p_price{
+	width:120px;
+}
+.p_ed{
+	width:120px;
+	word-break:all;
+}
+
+.p_fnc{
+	width:100px;
+}
+
+
+.p_img img{
+	width:150px;
+	vertical-align:center;
+	height:150px;
+}
+
+#editbtn{
+	width:60px;
+	height:40px;
+	border:1px solid gray;
+	background-color:white;
+	text-align:center;
+	color:#0072e6;
+}
+#buylist tbody tr{
+	border-bottom: 1px solid #ebebeb;
+	
+}
+.cart-table table tr th.p-name {
+    text-align: center!important;
+}
+
+.cart-table table tr td.cart-title h5 {
+    color: #252525;
+    text-align: center;
+    font-size:15px!important;
+    
+}
+.cart-table table tr td {
+    padding-bottom: 20px!important;
+    padding-top: 20px!important;
+}
+.reviewbtn{
+	padding: 0px 10px;
+    height: 30px;
+    border: 1px solid rgb(238, 238, 238);
+    display: flex;
+    font-weight: 400;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    background: rgb(255, 255, 255);
+    color: rgb(102, 102, 102);
+}
+.storename{
+	margin-top:10px;
+	padding: 0px 10px;
+    height: 30px;
+    border: 1px solid rgb(238, 238, 238);
+    display: flex;
+    font-weight: 400;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    background: rgb(255, 255, 255);
+    color: rgb(102, 102, 102);
+}
+.cart-table table tr td.date{
+	color: #4c4c4c;
+    font-size: 13px;
+    font-weight: 400;
+}
