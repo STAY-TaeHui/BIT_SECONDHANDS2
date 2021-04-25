@@ -78,18 +78,19 @@
         //session = request.getSession();
         //out.print(""+session.getAttribute("isLogined"));	
 %>
+<input type="button" value="상품관리 가기(임시)" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
 </div>
 
 	<c:choose>
 		<c:when test="${session.storename == storename}">
 			<input id="editBtn" type="button" value="수정하기">
 			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="">
-			<div>외 안되?</div>
+			<div>외 안되??????</div>
 		</c:when>
 		<c:otherwise>
 			<input id="editBtn" type="button" value="수정하기" style="display:none;">
 			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="" style="display:none;">
-			<div>외 안되?</div>
+			<div>외 안되...?</div>
 		</c:otherwise>
 	</c:choose>
 </div>

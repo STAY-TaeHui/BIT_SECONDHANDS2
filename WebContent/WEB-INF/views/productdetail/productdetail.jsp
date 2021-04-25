@@ -9,6 +9,8 @@
 <!-- 상품 문의 목록 -->
 <c:set var="replylist" value="${requestScope.replylist}" />
 
+<c:set var ="jsonarr" value="${requestScope.jsonarr}" />
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -88,10 +90,20 @@
 								<p id="wr_time">등록 ${jsonobj.p_wr_time}</p>
                                 </div>
                                 <div id="contactseller">
+                                
+                                <c:choose>
+                                	<c:when test="${sessionScope.storename eq jsonobj.storename}">
+                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+                                	<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
+                                	<input type="hidden" value="찜♥" id="like">
+                                	</c:when>
+                                	<c:otherwise>
                                    <input type="button" value="찜♥" id="like">
-                                   <input type="hidden" id="phone_number">			
+                                   <input type="hidden" id="phone_number" value="하하하">			
                                    <input type="button" value="연락하기" id="call" onclick="contact()">
                                    <input type="button" value="바로구매" id="buynow">
+                                   </c:otherwise>
+                                  </c:choose>
                                 </div>
 
                         </div>
@@ -102,14 +114,6 @@
                                 <li>
                                     <a class="active" data-toggle="tab" href="#tab-1" role="tab">상품정보</a>
                                 </li>
-                                <!--  
-                                <li>
-                                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
-                                </li>
-                                -->
                             </ul>
                         </div>
                         <div class="tab-item-content">
@@ -237,10 +241,24 @@
           setCategory();
           
           //이 페이지의 상품이 찜한 상품인지 확인
-          checkLike();
-          init();
+          checkLike();     
+	      init();
         
        }
+       
+       
+       
+       //기본 상품 리스트 불러오는 함수
+       function getlist(responsedata){
+   		$.each(responsedata, function(index, obj){
+         							
+   			$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
+       				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+       						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
+       						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
+       		});
+       }
+       
        
        //카테고리 유지 함수
        
@@ -359,6 +377,7 @@
        //찜버튼 초기화
        function init(check, currentuser){
    
+    
              console.log(check);
              
              if(check == false){

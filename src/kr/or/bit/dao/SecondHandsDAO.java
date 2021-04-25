@@ -193,10 +193,7 @@ public class SecondHandsDAO {
 	         rs= pstmt.executeQuery();
 	         
 	         while(rs.next()) {
-	        	
-	        	 SimpleDateFormat date = new SimpleDateFormat ( "yyyy.MM.dd");
-
-	        	 
+	        	       	 
 	            JSONObject obj = new JSONObject();
 	            obj.put("pimg_name",rs.getString("pimg_name"));
 	            obj.put("p_subj",rs.getString("p_subj"));
@@ -1087,12 +1084,11 @@ public class SecondHandsDAO {
 							            obj.put("m_profile", rs.getString("m_profile"));
 							            //연락하기 때문에 넣어주는 전화번호
 							            //근데 타입 에러가 뜬다
-							           // obj.put("m_phone", rs.getString("m_phone"));
-
-							            
+							            //obj.put("m_phone", Long.toString(rs.getLong("m_phone")));
+							            obj.put("m_phone",rs.getString("m_phone").trim());
+							            							            
 							            System.out.println("obj : "+obj);
-							        
-							            
+							        							            
 							            arr.add(obj);
 
 					         } 
@@ -1380,10 +1376,7 @@ public class SecondHandsDAO {
 			
 			Connection conn = null;
 		      PreparedStatement pstmt = null;
-   
-
-		      System.out.println("상품 상세페이지에 접속한 유저의 정보 불러오기");
-		      
+   	      
 		      try {
 		         conn=ds.getConnection();				     
 		         	
@@ -1501,6 +1494,68 @@ public class SecondHandsDAO {
 		      }
 		      return false;
 		}
+		
+		//상품 관리에서 내 상품 전체 목록 불러오는 함수
+		public JSONArray getmyproductslist(String storename) {
+			
+			 Connection conn = null;
+	         PreparedStatement pstmt = null;
+	         ResultSet rs=null;
+	         JSONArray arr = new JSONArray();
+	         
+	         try {
+	            conn=ds.getConnection();
+	            
+	            String sql = "select pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_status, p.p_ed_time "
+	            		 +"from product p left join product_img pi "
+	            		 +"on p.p_num=pi.p_num "
+	            		 +"where pi.pimg_num=1 and p.storename=?";
+	            
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, storename);
+	            
+	            rs= pstmt.executeQuery();	            
+
+	            while(rs.next()) {
+	               
+	               JSONObject obj = new JSONObject();
+	               
+	               obj.put("pimg_name",rs.getString("pimg_name").trim());
+	               obj.put("p_subj",rs.getString("p_subj"));
+	               obj.put("p_price",rs.getInt("p_price"));
+	               obj.put("p_wr_time", rs.getString("p_wr_time"));
+	               obj.put("p_ed_time", rs.getString("p_ed_time"));
+	               obj.put("p_status", rs.getString("p_status"));
+	               
+	               System.out.println(obj);
+	               //상품하나씩 배열에 넣는다.
+	               arr.add(obj);
+	            } 
+	            
+	            System.out.println(arr); 
+	         
+	         } catch (SQLException e) {
+	            // TODO: handle exception
+	        	 e.printStackTrace();
+	         
+	         }catch(Exception e3) {
+	        	 e3.printStackTrace();
+	         
+	         }
+	         finally {
+	         
+	        	 try {
+	               //rs.close();
+	               pstmt.close();
+	               conn.close();//반환하기
+	            } catch (Exception e2) {
+	            	e2.printStackTrace();
+	            }
+	         }
+	         
+	         return arr;
+	      }
+
 
 
 

@@ -27,7 +27,19 @@
         	console.log("함수실행");
         	$("#categoryorder").css("display","none"); 
 	       	getcategorytop();
-        	
+	       	
+	       	//let t_val;
+	       	//let m_val;
+	       	//let b_val;
+	       	
+	       	//console.log(t_val);
+	       	
+	       	if(t_number != undefined && m_number != undefined && c_number != undefined){
+	       		$("#top").val(t_number).prop("selected", true);
+		       	$("#middle").val(m_number).prop("selected", true);
+		       	$("#bottom").val(c_number).prop("selected", true);
+	       	}
+	             	
 
             
         });

@@ -21,9 +21,8 @@
 
 #like{
 	margin-right:auto;
-	/*
 	background-color:darkgray;
-*/
+
 }
 
 #call{
@@ -35,7 +34,9 @@
 	background-color:#f70000;
 	margin-left:auto;
 }
-
+#manageshop{
+	background-color:#f69e07;
+}
 #p_content{
 	margin-right:auto;
 }

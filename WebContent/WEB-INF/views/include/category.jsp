@@ -36,7 +36,8 @@ function getcategorytop(){
 					$.each(responsedata,function(index,obj){
 						
 						$("#top").append(
-        						"<option id='category_t"+obj.t_num+"' value="+obj.t_num+">"+obj.t_name + "</option>"	
+        					"<option id='category_t"+obj.t_num+"' value="+obj.t_num+">"
+        					+obj.t_name + "</option>"	
         				);
 						
 					}); 					
@@ -129,6 +130,7 @@ function getcategorybottom(){
         				);
 					
 					});
+									
 					
 				},
 				error:function(xhr){
@@ -149,7 +151,63 @@ function getselectedproduct(){
 	$("#defaultorder").css("display","none");
 	$("#categoryorder").css("display","flex");
 	
-	location.href="getselectedproductok.do?c_number="+$("#bottom option:selected").val();
+	let t_val = $("#top option:selected").val();
+	let m_val = $("#middle option:selected").val();
+	let b_val = $("#bottom option:selected").val();
+	
+	
+	
+	$("#bodywrap").empty();
+	
+	
+	$("#test").append(
+			"<p>"+ $("#bottom option:selected").text() +"</p>"		
+		);
+	
+	
+	$("#bodywrap").append(
+	"<div id='content'><div id='ordermenu'><p>오늘의 추천 </p><ul id='defaultorder'>"+
+"<li><input type='button' value='최신순' onclick='orderbytime()' id='timebtn' class='unclickedbtn'></li>"+
+"<li><input type='button' value='가격순' onclick='orderbyprice()' id='pricebtn' class='unclickedbtn'></li></ul>"+
+
+"<ul id='categoryorder'>"+
+"<li><input type='button' value='최신순' onclick='c_orderbytime()' id='timebtn' class='unclickedbtn'></li>"+
+"<li><input type='button' value='가격순' onclick='c_orderbyprice()' id='pricebtn' class='unclickedbtn'></li>"+
+"</ul></div><ul class='productlist'></ul>");
+	
+	console.log("분류에 맞는 상품을 불러옵니다");
+	let index = $("#bottom option:selected").val();
+	console.log(index);
+	
+	$("#defaultorder").css("display","none");
+	$("#categoryorder").css("display","flex");
+	
+	$.ajax(
+			{
+		
+				url:"GetSelectedProductOk.ajax",
+				type:"get",
+				dataType:"json",
+				data:{ c_number : index},
+				success:function(responsedata){
+					
+					console.log("이제 소분류카테고리를 뿌려준다 여긴 다른페이지");
+					console.log(responsedata);
+					
+					$(".productlist").empty();
+					
+					getlist(responsedata);
+				
+					
+				},
+				error:function(xhr){
+					console.log(xhr);
+				}
+				
+		}
+	);
+	
+
 
 }
 //카테고리별 최신순 정렬
@@ -223,74 +281,7 @@ function c_orderbyprice(){
 	
 }
 
-//최신순 정렬
-function orderbytime(){
-	
-	$("#timebtn").addClass("clickedbtn");
-	$("#timebtn").removeClass("unclickedbtn");
-	
-	$("#pricebtn").removeClass("clickedbtn");
-	$("#pricebtn").addClass("unclickedbtn");
-	
-	console.log("최신순정렬");
-	
-	$.ajax(
-			
-			{	
-				url:"ProductOrderByTime.ajax",
-				type:"post",
-				dataType:"json",
-				data: { keyword : $("#keyword").val()},
-				success:function(responsedata){
-					console.log(responsedata);
-						$(".productlist").empty();
-					       					
-						getlist(responsedata);	
-						
-					
-				},
-				error:function(xhr){
-					console.log(xhr);
-				}
-			}
-			
-		);
-	
-}
 
-//가격순 정렬
-function orderbyprice(){
-	
-	$("#pricebtn").addClass("clickedbtn");
-	$("#pricebtn").removeClass("unclickedbtn");
-	
-	$("#timebtn").removeClass("clickedbtn");
-	$("#timebtn").addClass("unclickedbtn"); 
-	
-	console.log("가격순정렬");
-	
-	$.ajax(
-			
-			{	
-				url:"ProductOrderByPrice.ajax",
-				type:"post",
-				dataType:"json",
-				data: { keyword : $("#keyword").val()},
-				success:function(responsedata){
-					console.log(responsedata);
-						$(".productlist").empty();
-					       					
-						getlist(responsedata);        						
-					
-				},
-				error:function(xhr){
-					console.log(xhr);
-				}
-			}
-			
-		);
-	
-}
    
 </script>
 

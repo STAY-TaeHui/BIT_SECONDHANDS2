@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="css/nice-select.css" type="text/css">
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    
+    <!-- 모든 페이지에 적용될 css, 메인페이지에서만 적용되는 css -->
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <!--j쿼리 cdn-->
@@ -23,6 +25,78 @@
 <script type="text/javascript">
 console.log("현재 세션은 : " + '${sessionScope.storename}');
 console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
+
+
+//최신순 정렬
+function orderbytime(){
+	
+	$("#timebtn").addClass("clickedbtn");
+	$("#timebtn").removeClass("unclickedbtn");
+	
+	$("#pricebtn").removeClass("clickedbtn");
+	$("#pricebtn").addClass("unclickedbtn");
+	
+	console.log("최신순정렬");
+	
+	$.ajax(
+			
+			{	
+				url:"ProductOrderByTime.ajax",
+				type:"post",
+				dataType:"json",
+				data: { keyword : $("#keyword").val()},
+				success:function(responsedata){
+					console.log(responsedata);
+						$(".productlist").empty();
+					       					
+						getlist(responsedata);	
+						
+					
+				},
+				error:function(xhr){
+					console.log(xhr);
+				}
+			}
+			
+		);
+	
+}
+
+//가격순 정렬
+function orderbyprice(){
+	
+	$("#pricebtn").addClass("clickedbtn");
+	$("#pricebtn").removeClass("unclickedbtn");
+	
+	$("#timebtn").removeClass("clickedbtn");
+	$("#timebtn").addClass("unclickedbtn"); 
+	
+	console.log("가격순정렬");
+	
+	$.ajax(
+			
+			{	
+				url:"ProductOrderByPrice.ajax",
+				type:"post",
+				dataType:"json",
+				data: { keyword : $("#keyword").val()},
+				success:function(responsedata){
+					console.log(responsedata);
+						$(".productlist").empty();
+					       					
+						getlist(responsedata);        						
+					
+				},
+				error:function(xhr){
+					console.log(xhr);
+				}
+			}
+			
+		);
+	
+}
+
+
 
 </script>
 
@@ -56,7 +130,7 @@ console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
                             <a href="index.jsp">
-                                <img src="img/logo.png" alt="">
+                                <img src="img/logo.png" alt="" style="width:140px; height:40px;">
                             </a>
                         </div>
                     </div>
@@ -75,8 +149,12 @@ console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
                         </div>
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
-                    <!--  -->
-                        <ul class="nav-right">
+                    <!-- 판매하기, 내 상점 -->
+                    	<!--  화면 좁아지면 변하는 아이콘 
+                    		
+                        <input type="checkbox" id="toggle"><label for="toggle" id="togglelabel">&#8801;</label>
+                    -->
+                        <ul class="nav-right"  id="shop_icons"> 
                             <li class="heart-icon">
                                 <c:choose>
                             <c:when test="${!sessionScope.isLogined}">
@@ -90,9 +168,9 @@ console.log("현재 상태는 : " + '${!sessionScope.isLogined}');
                                 </a>
                              </c:otherwise>
                              </c:choose>
-                            </li>
+                            </li>                        
                             
-                            <li class="cart-icon">
+                            <li class="cart-icon" id="shop_icons">
                             <c:choose>
                             <c:when test="${!sessionScope.isLogined}">
                             <a href="login.do">
