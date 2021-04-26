@@ -15,7 +15,6 @@
 <script>
 	window.onload = function() {
 		setcategorytop();
-
 	}
 
 	//상품 등록 영역에 카테고리 넣어줄 함수
@@ -142,9 +141,10 @@
 			<form action="productupload.do" id="frm" method="post">
 
 				<div class="content">
-					상품이미지 <input type="button" id="btnSubmit" value="업로드" />
+					상품이미지 ( 최대 12 장 , 이미지 등록 구간에 드래그 & 드롭해주세요! )
 					<div id="drop"
-						style="width: 1000px; height: 300px; padding: 3px; overflow: auto;">
+						style="border:1px solid black; min-width: 400px; height: 300px; padding: 3px; overflow: auto;">
+
 						이미지 등록
 						<div id="thumbnails"></div>
 						<input type="hidden" id="imgs_name" name="imgs_name">
@@ -304,10 +304,11 @@
 				reader.readAsDataURL(file);
 			}
 
-			$("#btnSubmit").on("click", function() {
+			//전체파일 한번에 업로드
+			function groupUpload() {
 				var formData = new FormData();
 				$.each(uploadFiles, function(i, file) {
-					if (file.upload != 'disable') //삭제하지 않은 이미지만 업로드 항목으로 추가
+					if (file.upload != 'disable')
 						formData.append('upload-file', file, file.name);
 				});
 				$.ajax({
@@ -320,7 +321,10 @@
 						alert("완료");
 					}
 				});
-			});
+			}
+
+			$("#btnSubmit").click(groupUpload());
+
 
 			$("#thumbnails").on("click", ".close", function(e) {
 				var $target = $(e.target);

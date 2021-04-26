@@ -1,9 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+String currentStorename = (String) session.getAttribute("storename");
+String storename = (String) request.getAttribute("storename");
+String profile = (String) request.getAttribute("profile");
+String realPath = application.getRealPath("fileUpload");
 
+if (profile == null) {
+	profile = "default.png";
+}
+
+System.out.println("-------------------------------");
+System.out.println("(Session)storename : " + currentStorename);
+System.out.println("storename : " + storename);
+System.out.println("profile : " + profile);
+System.out.println("realPath : " + realPath);
+System.out.println("-------------------------------");
+%>
 <!DOCTYPE html>
-
+<html>
+<head>
 <style>
 .fadetb {
   opacity: 0;
@@ -24,11 +41,8 @@
    margin-bottom:0;
 }
 </style>
-<html>
-<head>
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Insert title here</title> 
  <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 <link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
@@ -57,44 +71,41 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div id="bodywrap">
 <div id="productdetailName">
-<h4>상점정보</h4>
+				<h4>상점정보</h4>
+			</div>
+			<hr>
+			<form method="post" action="editMember.do" id="submit"
+				enctype="multipart/form-data">
+				<div id="ProductTotal">
+					<div id="ProductPhoto">
+						<div class="box">
+							<img src="" id="img" width="300px" height="300px"> <input
+								type="file" id="file" name="file" style="display: none;">
+							<input id="storename" name="storename" value="<%=storename%>"
+								type="hidden"> <input name="originalPath"
+								value="<%=profile%>" type="hidden">
+							<c:choose>
+								<c:when test="${sessionScope.storename eq storename}">
+									<input type="button" value="상품관리 가기"
+										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+									<input type="button" value="수정하기" id="editBtn" name="">
+								</c:when>
+								<c:otherwise>
+									<input type="button" value="상품관리 가기"
+										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<div id="Storename">
+						<%
+						out.print("" + storename + "<br>");
+						%>
+					</div>
+					<br>
+				</div>
+			</form>
 
-</div>
-<hr>
-<div id="ProductTotal">
-<div id="ProductPhoto">
-
-<input type="button" value="내 상점 관리" id="myshopeditBtn" name="">
-
-
-</div>
-<div id="Storename">
-   
-<%
-      String storename = request.getParameter("storename");
-      //out.print(storename);
-        session = request.getSession();
-        out.print(""+ session.getAttribute("storename") + "<br>");
-        //session = request.getSession();
-        //out.print(""+session.getAttribute("isLogined"));   
-%>
-<input type="button" value="상품관리 가기(임시)" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
-</div>
-
-
-	<c:choose>
-		<c:when test="${session.storename == storename}">
-			<input id="editBtn" type="button" value="수정하기">
-			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="">
-			<div>외 안되??????</div>
-		</c:when>
-		<c:otherwise>
-			<input id="editBtn" type="button" value="수정하기" style="display:none;">
-			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="" style="display:none;">
-			<div>외 안되...?</div>
-		</c:otherwise>
-	</c:choose>
-</div>
    
 <div style='width:100%;margin:0 auto;margin-top:50px;'>
    <ul class="nav nav-tabs">
@@ -192,7 +203,13 @@
    
    
     function productlist(){
-       
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = "${requestScope.storename}";
+    	let reqscopestorename = '${requestScope.storename}';
+    	
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
+    	console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -225,7 +242,10 @@
            );
      }
     function likelist(){
-       
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = '${requestScope.storename}';
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopLikeList.ajax",
@@ -260,8 +280,10 @@
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-    	let storename = '${sessionScope.storename}';
-    	
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = '${requestScope.storename}';
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",

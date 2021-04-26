@@ -15,6 +15,8 @@ import kr.or.bit.action.ActionForward;
 
 import kr.or.bit.service.LoginOkAction;
 import kr.or.bit.service.manageshop.ManageShopAction;
+import kr.or.bit.service.manageshop.ManageShopBuyListAction;
+import kr.or.bit.service.manageshop.ManageShopSellListAction;
 import kr.or.bit.service.myshop.MyShopInfoAction;
 
 import kr.or.bit.service.manageshop.ManageShopAction;
@@ -23,7 +25,7 @@ import kr.or.bit.service.manageshop.ManageShopAction;
 /**
  * Servlet implementation class MyShopController
  */
-@WebServlet("/manageshop/*")
+@WebServlet({"/manageshop/*","*.list"})
 public class ManageShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,6 +36,8 @@ public class ManageShopController extends HttpServlet {
     }
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ManageShopController");
+		
 		String requestURI = request.getRequestURI();
     	String contextPath = request.getContextPath();
     	String url_Command = requestURI.substring(contextPath.length());
@@ -49,11 +53,25 @@ public class ManageShopController extends HttpServlet {
 	    		action = new ManageShopAction();
 	    		forward = action.execute(request, response);
 		 }
-		 else if(url_Command.equals("/manageshop/buylist")) {
-	    		System.out.println("butlist.jsp VIEW");
-	    		action = new ManageShopAction();
+		 else if(url_Command.equals("/manageshop/buylist.list")) {
+	    		System.out.println("managebuylist.jsp VIEW");
+	    		action = new ManageShopBuyListAction();
 	    		forward = action.execute(request, response);
 		 }
+		 else if(url_Command.equals("/manageshop/selllist.list")) {
+	    		System.out.println("manageselllist.jsp VIEW");
+	    		action = new ManageShopSellListAction(); 
+	    		forward = action.execute(request, response);
+		 }
+		 else if(url_Command.equals("/manageshop/reviewok")) {
+	    		System.out.println(request.getParameter("rv_content"));
+	    		System.out.println(request.getParameter("rating"));
+	    		System.out.println(request.getParameter("buy_num"));
+	    		System.out.println(request.getParameter("p_num"));
+	    		System.out.println(request.getParameter("storename_buyer"));
+	    		
+		 }
+		 
 
 		 
     	//////////////////////////////////////////////////////
@@ -67,6 +85,7 @@ public class ManageShopController extends HttpServlet {
    			//UI
     			//UI + 로직
     			//forward url 주소 변환 없어 View 내용을 받을 수 있다
+    			System.out.println(forward.getPath());
     			RequestDispatcher dis  = request.getRequestDispatcher(forward.getPath());
     			dis.forward(request, response);
     		}
