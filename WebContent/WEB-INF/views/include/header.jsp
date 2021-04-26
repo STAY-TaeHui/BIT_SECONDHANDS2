@@ -6,17 +6,17 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slicknav.min.css" type="text/css">
     
     <!-- 모든 페이지에 적용될 css, 메인페이지에서만 적용되는 css -->
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 
     <!--j쿼리 cdn-->
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,10 +41,10 @@ function orderbytime(){
 	$.ajax(
 			
 			{	
-				url:"ProductOrderByTime.ajax",
+				url:"getproductlistbyorder.ajax",
 				type:"post",
 				dataType:"json",
-				data: { keyword : $("#keyword").val()},
+				data: { keyword : "p.p_wr_time"},
 				success:function(responsedata){
 					console.log(responsedata);
 						$(".productlist").empty();
@@ -76,10 +76,10 @@ function orderbyprice(){
 	$.ajax(
 			
 			{	
-				url:"ProductOrderByPrice.ajax",
+				url:"getproductlistbyorder.ajax",
 				type:"post",
 				dataType:"json",
-				data: { keyword : $("#keyword").val()},
+				data: { keyword : "p.p_price"},
 				success:function(responsedata){
 					console.log(responsedata);
 						$(".productlist").empty();
@@ -97,7 +97,6 @@ function orderbyprice(){
 }
 
 
-
 </script>
 
 
@@ -109,19 +108,19 @@ function orderbyprice(){
             <ul id="loginmenu">
             	<c:choose>
             	<c:when test="${!sessionScope.isLogined}">
-            	<li><a href="login.do">로그인</a></li>
+            	<li><a href="${pageContext.request.contextPath}/login.do">로그인</a></li>
             	</c:when>
             	<c:otherwise>
-            	<li><a href="logoutok.do">로그아웃</a></li>
+            	<li><a href="${pageContext.request.contextPath}/logoutok.do">로그아웃</a></li>
             	</c:otherwise>
             	</c:choose>
             	
             	<c:choose>
             	<c:when test="${!sessionScope.isLogined}">
-            	<li><a href="register.do">회원가입</a></li>
+            	<li><a href="${pageContext.request.contextPath}/register.do">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
-				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				<li style="display:none;"><a href="${pageContext.request.contextPath}/register.do">회원가입</a></li>
 				</c:otherwise>
 				</c:choose>
             </ul>
@@ -129,8 +128,8 @@ function orderbyprice(){
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="index.jsp">
-                                <img src="img/logo.png" alt="" style="width:140px; height:40px;">
+                            <a href="${pageContext.request.contextPath}/index.do">
+                                <img src="${pageContext.request.contextPath}/img/logo.png" alt="" style="width:140px; height:40px;">
                             </a>
                         </div>
                     </div>
@@ -138,7 +137,7 @@ function orderbyprice(){
                        
                         <div class="advanced-search">
 
-                        <form method="post" action="searchproductok.do">
+                        <form method="post" action="${pageContext.request.contextPath}/searchproductok.do">
                             <div class="input-group" id="header_search">                         
                                 <input type="text" id="keyword" name="keyword" onkeyup="if(window.event.keyCode==13)this.submit()}">
                                 <button type="submit"><i class="ti-search"></i></button>
@@ -158,13 +157,14 @@ function orderbyprice(){
                             <li class="heart-icon">
                                 <c:choose>
                             <c:when test="${!sessionScope.isLogined}">
-                            	<a href="login.do">
-                                    <img src="img/sell.gif">
+                            	<a href="${pageContext.request.contextPath}/login.do">
+                                    <img src="${pageContext.request.contextPath}/img/sell.gif">
                                 </a>
                               </c:when>
                              <c:otherwise>
-	                             <a href="mysell.do?storename=${sessionScope.storename}">
-	                             <img src="img/sell.gif">
+			                     <a href="${pageContext.request.contextPath}/mysell.do?storename=${sessionScope.storename}">
+	                             <img src="${pageContext.request.contextPath}/img/sell.gif">
+
                                 </a>
                              </c:otherwise>
                              </c:choose>
@@ -173,13 +173,14 @@ function orderbyprice(){
                             <li class="cart-icon" id="shop_icons">
                             <c:choose>
                             <c:when test="${!sessionScope.isLogined}">
-                            <a href="login.do">
-                                    <img src="img/myshop.gif">
+                            <a href="${pageContext.request.contextPath}/login.do">
+                                    <img src="${pageContext.request.contextPath}/img/myshop.gif">
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="myshop.do?storename=${sessionScope.storename}">
-                                    <img src="img/myshop.gif">
+                             <a href="${pageContext.request.contextPath}/myshop.do?storename=${sessionScope.storename}">
+                                    <img src="${pageContext.request.contextPath}/img/myshop.gif">
+
                                 </a>
                              </c:otherwise>
                              </c:choose>

@@ -19,7 +19,8 @@ System.out.println("realPath : " + realPath);
 System.out.println("-------------------------------");
 %>
 <!DOCTYPE html>
-
+<html>
+<head>
 <style>
 .fadetb {
 	opacity: 0;
@@ -44,9 +45,6 @@ System.out.println("-------------------------------");
 	margin-bottom: 0;
 }
 </style>
-<html>
-<head>
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Google Font -->
@@ -67,10 +65,7 @@ System.out.println("-------------------------------");
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/tab.css" type="text/css">
 <link rel="stylesheet" href="css/reviews.css" type="text/css">
-<link rel="stylesheet" href="css/myshop.css" type="text/css">
-
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
@@ -100,12 +95,12 @@ System.out.println("-------------------------------");
 							<c:choose>
 								<c:when test="${sessionScope.storename eq storename}">
 									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+										onclick="location.href='manageshop.manage'">
 									<input type="button" value="수정하기" id="editBtn" name="">
 								</c:when>
 								<c:otherwise>
 									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+										onclick="location.href='manageshop.manage'">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -119,6 +114,7 @@ System.out.println("-------------------------------");
 				</div>
 			</form>
 
+
 			<div style='width: 100%; margin: 0 auto; margin-top: 100px;'>
 				<ul class="nav nav-tabs">
 					<li class='active'><a href="#tabmenu_01"
@@ -127,7 +123,6 @@ System.out.println("-------------------------------");
 						data-toggle="tab"> 찜 </a></li>
 					<li><a href="#tabmenu_03" onclick="reviewlist()"
 						data-toggle="tab"> 거래 후기 </a></li>
-					<li><a href="#tabmenu_04" data-toggle="tab">찜 차트</a></li>
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane fade in active" id="tabmenu_01">
@@ -148,7 +143,6 @@ System.out.println("-------------------------------");
 						</div>
 						<ul class="myproductlist"></ul>
 					</div>
-
 					<div class="tab-pane fade" id="tabmenu_03">
 						<!-- 찜 리스트 뿌려주는곳 -->
 						<div class="counttext">
@@ -170,25 +164,14 @@ System.out.println("-------------------------------");
 						<!-- //////////////// REVIEW CARD EMD////////////////// -->
 						<!-- <ul class="productlist"></ul> -->
 					</div>
-					<div class="tab-pane fade" id="tabmenu_04">
-						<select id="type">
-							<option>Bar</option>
-							<option>Line</option>
-							<option>Pie</option>
-						</select> <input type="button" id="search" value="변경하기">
-						<!-- chart 캔버스 body의 div를 하나 만들고, 안에 canvas를 통해 chart를 불러온다 id값은 임의 설정.-->
-						<canvas id="myChart" width="700" height="500"></canvas>
-
-					</div>
 				</div>
 			</div>
 			<!-- Footer Section Begin -->
 			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 			<!-- Footer Section End -->
 		</div>
+	</div>
 </body>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
       console.log("WHO IS FIRST");
@@ -231,7 +214,13 @@ System.out.println("-------------------------------");
    
    
     function productlist(){
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = "${requestScope.storename}";
+       let reqscopestorename = '${requestScope.storename}';
        
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
+       console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -264,10 +253,13 @@ System.out.println("-------------------------------");
            );
      }
     function likelist(){
-       
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
-                    url:"myshopchartlist.ajax",
+                    url:"MyShopLikeList.ajax",
                     data:{storename : '${requestScope.storename}'},
                     type:"get",
                     dataType:"json",
@@ -299,8 +291,10 @@ System.out.println("-------------------------------");
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-    	let storename = '${sessionScope.storename}';
-    	
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
@@ -326,7 +320,7 @@ System.out.println("-------------------------------");
                               }
                            }
                            if(storename === obj.writer){
-                        	   display="";
+                              display="";
                            }
                            
                            $(".myreviewlist").append(
@@ -352,11 +346,11 @@ System.out.println("-------------------------------");
                                  +"</div>"
                                  +"<div class='row text-left'>"
                                  +"<p class='content'>"+obj.rv_content+"</p>"
-                                 +"</div>"	
+                                 +"</div>"   
                                  +"<div class='row text-left'>"
                                  +"<a class='thumbnail' href='#'>"
                                  +"<img class='img-responsive' src='${pageContext.request.contextPath}/img/review/"+obj.rimg_name+"'>"
-                               	 +"</a>"
+                                   +"</a>"
                                  +"</div>"
                                  +"<div class='row text-left mt-4'>"
                                  +"<div class='like mr-3 vote' style='display:"+display+";'>"
@@ -373,9 +367,9 @@ System.out.println("-------------------------------");
                                     $("#imgmodal").modal('show');
                                });
                            $('span[name=delete]').click(function(){
-                        	   console.log("DELETE CLICK클릭이새끼야");
-                        	   console.log($(this).attr('id'));
-                        	    $.ajax(
+                              console.log("DELETE CLICK클릭이새끼야");
+                              console.log($(this).attr('id'));
+                               $.ajax(
                                        {   
                                           url:"MyShopReviewDelete.ajax",
                                           data:{rv_num : $(this).attr('id')},
@@ -383,19 +377,19 @@ System.out.println("-------------------------------");
                                           async:false,
                                           dataType:"text",
                                           success:function(responsedata){
-                                        	  console.log("데이터반환 성공");
-                                        	  if(responsedata>0){
-                                        		  console.log("DELTE 성공");
-                                        	  }
-                                        	  else{
-                                        		  console.log("DELTE 실패");
-                                        	  }
+                                             console.log("데이터반환 성공");
+                                             if(responsedata>0){
+                                                console.log("DELTE 성공");
+                                             }
+                                             else{
+                                                console.log("DELTE 실패");
+                                             }
                                           },
                                           error:function(){
-                                        	  console.log("데이터 반환 실패");
+                                             console.log("데이터 반환 실패");
                                           }
                                        }); 
-                        	   
+                              
                            })
                       });
                         let count = responsedata.length
@@ -415,7 +409,6 @@ System.out.println("-------------------------------");
               );
        
         }
-
  	let currentStorename = '<%=currentStorename%>';
 	let storename = '<%=storename%>';
 	let profile = '<%=profile%>';
@@ -426,33 +419,35 @@ System.out.println("-------------------------------");
 	console.log(storename);
 	console.log(profilePath);
 
-	$('#img').attr("src", profilePath);
+		$('#img').attr("src", profilePath);
 
-	$('#img').click(function(e) {
-		$('#file').click();
-	});
+		$('#img').click(function(e) {
+			$('#file').click();
+		});
 
-	$('#file').change(
-			function(event) {
-				var reader = new FileReader();
-				reader.onload = function(event) {
-					var img = document.createElement("img");
-					document.getElementById('img').setAttribute("src",
-							event.target.result);
-				};
-				reader.readAsDataURL(event.target.files[0]);
-			});
+		$('#file').change(
+				function(event) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						var img = document.createElement("img");
+						document.getElementById('img').setAttribute("src",
+								event.target.result);
+					};
+					reader.readAsDataURL(event.target.files[0]);
+				});
 
-	$('#editBtn').click(function() {
-		if ($('#file').val() == '') {
-			swal({
-				title : "내용이 바뀌지 않았습니다",
-				icon : "error"
-			});
-			return;
-		}
+		$('#editBtn').click(function() {
+			if ($('#file').val() == '') {
+				swal({
+					title : "내용이 바뀌지 않았습니다",
+					icon : "error"
+				});
+				return;
+			}
 
-		$('#submit').submit();
-	});
+			$('#submit').submit();
+		});
 </script>
+
+
 </html>

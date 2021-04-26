@@ -27,6 +27,7 @@ public class FrontController extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("FrontController");
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url_Command = requestURI.substring(contextPath.length());
@@ -47,7 +48,7 @@ public class FrontController extends HttpServlet {
 		else if (url_Command.equals("/register.do")) {
 			System.out.println("member DAO 진입");
 			forward = new ActionForward();
-			forward.setPath("WEB-INF/views/member/Register.jsp");
+			forward.setPath("/WEB-INF/views/member/Register.jsp");
 			forward.setRedirect(false);
 
 			// 회원가입 서비스
@@ -61,7 +62,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("LOGIN.DO");
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("WEB-INF/views/member/Login.jsp");
+			forward.setPath("/WEB-INF/views/member/Login.jsp");
 		}
 		// 로그인 서비스
 		else if (url_Command.equals("/loginok.do")) {
@@ -73,22 +74,22 @@ public class FrontController extends HttpServlet {
 		else if (url_Command.equals("/logoutok.do")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("WEB-INF/views/member/Logout.jsp");
-		} 
-		//내 상점
+			forward.setPath("/WEB-INF/views/member/Logout.jsp");
+		}
+
+		// 내 상점 페이지
 		else if (url_Command.equals("/myshop.do")) {
 			System.out.println("myshop.do");
 			action = new MyShopAction();
 			forward = action.execute(request, response);
-		}
-		// 상품 상세(남의 상점 상품)
-		else if (url_Command.equals("/productdetail.do")) {
+
+			// 상품 상세(남의 상점 상품)
+		} else if (url_Command.equals("/productdetail.do")) {
 
 			String pn = request.getParameter("p_num");
 			System.out.println("pn : " + pn);
 
 			request.setAttribute(pn, forward);
-
 			action = new ProductDetailAction();
 			forward = action.execute(request, response);
 
@@ -121,7 +122,9 @@ public class FrontController extends HttpServlet {
 			action = new editMemberAction();
 			forward = action.execute(request, response);
 		}
+
 ///////////////////////////////////////////////////////////////////
+
 		if (forward != null) {
 			System.out.println("FORWARD");
 			if (forward.isRedirect()) { // true
@@ -132,6 +135,7 @@ public class FrontController extends HttpServlet {
 				// UI
 				// UI + 로직
 				// forward url 주소 변환 없어 View 내용을 받을 수 있다
+				System.out.println(forward.getPath());
 				RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
 				dis.forward(request, response);
 			}

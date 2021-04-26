@@ -29,7 +29,7 @@ public class LoginOkAction implements Action {
 		HttpSession session = request.getSession(true);
 		
 		if(storename==null) {
-			System.out.println("로그인실 패");
+			System.out.println("로그인실패");
 			session.setAttribute("isLogined", false);
 			
 			msg="로그인 실패 : 아이디/비밀번호가 일치하지 않습니다.";

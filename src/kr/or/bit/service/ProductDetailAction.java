@@ -27,6 +27,9 @@ public class ProductDetailAction implements Action{
 		//상품 정보 뿌리기
 		request.setAttribute("jsonobj",dao.showProductDetail(p_num));
 		
+		//상품 이미지 리스트 가져오기
+		request.setAttribute("imgs", dao.getImagelist(p_num));
+		
 		//상품 찜 수 가져오기
 		request.setAttribute("likecounts",dao.getLikeCounts(p_num));
 		
