@@ -11,6 +11,13 @@
 
 <c:set var ="jsonarr" value="${requestScope.jsonarr}" />
 
+<c:set var="imgs" value="${requestScope.imgs}"/>
+
+<!-- 제이슨 배열에서 폰번호 뽑아내기 -->
+<c:forEach var="arr" items="${jsonarr}">
+<c:set var="phone" value="${arr.m_phone}"/>
+</c:forEach>
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -23,7 +30,9 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <!-- 로딩이미지
+    <script src="https://codepen.io/fbrz/pen/9a3e4ee2ef6dfd479ad33a2c85146fc1.js"></script>
+ -->
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -36,7 +45,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     
     <!-- 내가 커스텀한 css -->
-    <link rel="stylesheet" href="css/productdetail.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productdetail.css" type="text/css">
 
 </head>
 
@@ -45,6 +54,10 @@
 <div id="fullwrap">
    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
    <jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
+   
+          <!-- 모달을 위한 탭 부트스트랩  -->
+    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    
    <div id="bodywrap">
 
@@ -67,7 +80,7 @@
                             <div class="product-details">
                                 <div class="pd-title">
                                 <ul>
-                                   <li>${jsonobj.storename}</li>
+                                   <li id="shopname">${jsonobj.storename}</li>
                                    <li><h4>${jsonobj.p_subj}</h4></li>
                                    <li><h3>${jsonobj.p_price}원</h3>
                                    
@@ -99,15 +112,30 @@
                                 	</c:when>
                                 	<c:otherwise>
                                    <input type="button" value="찜♥" id="like">
-                                   <input type="hidden" id="phone_number" value="하하하">			
-                                   <input type="button" value="연락하기" id="call" onclick="contact()">
-                                   <input type="button" value="바로구매" id="buynow">
+                                   <input type="hidden" id="phone_number" value="${phone}">			
+                                   <input type="button" value="연락하기" id="call" onclick="contact()">                                  
+                                   <input type="button" value="바로구매" id="buynow" onclick="buy()">
+
+                                   
                                    </c:otherwise>
                                   </c:choose>
                                 </div>
 
                         </div>
                     </div>
+                    
+                    <!-- 사진 더 표시할 div -->
+                    <c:choose>
+                    
+                    <c:when test="${not empty imgs}">
+                    <div id="moreimgs">
+                    	<c:forEach var="imgs" items="${imgs}">
+                    	<div class="sub_imgs"><img src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
+                    	</c:forEach>
+                    </div>
+                    </c:when>
+
+                    </c:choose>
                     <div class="product-tab">
                         <div class="tab-item">
                             <ul class="nav" role="tablist">
@@ -215,7 +243,13 @@
         </div>
         </div>
     </section>
-    
+    <!-- 모달창 -->
+             <div class="modal fade" role="dialog" id="imgmodal">
+                     <div class="modal-dialog">
+                    <div class="modal-content"></div>          
+                       <img class="img-responsive" src="" id="show-img">         
+                    </div>
+                </div>
  
     
     <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
@@ -503,8 +537,10 @@
        
        //연락하기 번호 띄워주기
        function contact(){
-    	   let phone = $("#phone_number").val();
-          swal(phone);
+
+    	  let phone = $("#phone_number").val();
+    	     	  
+          swal("📞 " + phone);
           
        }
        //////////////////////////////////////////////////////
@@ -721,8 +757,7 @@
                          +" onclick='deleteReply("+p_num+","+rp_num+")'><input type='button' value='수정하기' class='replybtn'"
                          +" id='edit"+rp_num+"' onclick='editReply("+p_num+","+rp_num+")'></td></tr></table>"	 
                      );
-                     
-                      
+                                          
                  }else{
                     swal("수정 실패");
                  }                
@@ -754,6 +789,81 @@
           
           
        }
+       
+       
+function buy(){
+    	  
+    	   
+    	   var currentuser = '<%=(String)session.getAttribute("storename")%>'; 
+    	   //swal("⏳");
+    	   
+    	  // setTimeout(function(){
+   		   
+    		   
+    	   //},5000);
+    	  console.log("구매버튼 누르기");
+    	  console.log(${param.p_num});
+    	  console.log($("#shopname").text());
+    	  console.log(currentuser);
+    	 
+    	   $.ajax(
+    		
+    			 {   				 
+    				 url:"PayNowOk",
+    				 data :{
+    					 buyer:currentuser,
+    					 seller:$("#shopname").text(),
+    					 p_num:${param.p_num}
+    				 },
+    				 traditional:true,
+    				 type:"post",
+    				 dataType:"text",
+    				 success:function(responsedata){
+    					 
+    					 console.log(responsedata);
+    					 
+    					 let check = responsedata.split(",");
+    					 
+    					 $.each(check, function(index, item){
+    						 
+    						 if(check[index] == "true"){
+    							 
+    							 swal("구매 성공했습니다");
+    							 
+    						 }else{
+    							 swal("구매에 실패했습니다");
+    							 console.log(check[index]);
+    							 //0은 판매상태, 1은 구매내역, 2는 판매내역 쿼리
+    						 }
+    						 
+
+    						 
+    					 });
+							
+    					 //location.href="구매내역 url";
+    					 
+    				 },
+    				 error:function(xhr){
+    					 
+    					 console.log(xhr);
+    					 
+    				 }
+  				 
+    			 }  			 
+    			  
+    	  ); 
+	   
+    	   
+       }
+       
+       //상세 이미지 모달
+        $('img').click(function(){
+                                  console.log("img function");
+                                  var img=$(this).attr('src');
+                                    $("#show-img").attr('src',img);
+                                    $("#imgmodal").modal('show');
+                               });
+
     
     </script>
 </body>
