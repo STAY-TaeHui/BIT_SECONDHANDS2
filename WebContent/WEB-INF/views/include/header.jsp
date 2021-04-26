@@ -163,7 +163,7 @@ function orderbyprice(){
                                 </a>
                               </c:when>
                              <c:otherwise>
-	                             <a href="#?storename=${sessionScope.storename}">
+	                             <a href="mysell.do?storename=${sessionScope.storename}">
 	                             <img src="img/sell.gif">
                                 </a>
                              </c:otherwise>
@@ -178,7 +178,7 @@ function orderbyprice(){
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="myshop?storename=${sessionScope.storename}">
+                             <a href="myshop.do?storename=${sessionScope.storename}">
                                     <img src="img/myshop.gif">
                                 </a>
                              </c:otherwise>
