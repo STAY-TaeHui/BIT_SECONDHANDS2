@@ -114,6 +114,10 @@ p_price{
 	border-bottom: 1px solid #ebebeb;
 	
 }
+.cart-pic img{
+	width:100px;
+	height:100px;
+}
 .cart-table table tr th.p-name {
     text-align: center!important;
 }
@@ -122,17 +126,44 @@ p_price{
     color: #252525;
     text-align: center;
     font-size:15px!important;
-    
+}
+.cart-title, .cart-pic{
+	cursor: pointer;
+}
+.cart-title a{
+	color:black;
 }
 .cart-table table tr td {
     padding-bottom: 20px!important;
     padding-top: 20px!important;
 }
+.buy_num{
+	font-size: 18px!important;
+    font-weight: 400;
+}
 .reviewbtn{
 	padding: 0px 10px;
     height: 30px;
+    width:74px;
     border: 1px solid rgb(238, 238, 238);
     display: flex;
+    margin: auto;
+    font-weight: 800;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    background: rgb(247 0 0);
+    color: rgb(255 255 255);
+}
+.reviewspan{
+	padding: 0px 10px;
+    height: 30px;
+    width:104px;
+    border: 1px solid rgb(238, 238, 238);
+    display: flex;
+    margin: auto;
     font-weight: 400;
     -webkit-box-align: center;
     align-items: center;
@@ -161,4 +192,100 @@ p_price{
 	color: #4c4c4c;
     font-size: 13px;
     font-weight: 400;
+}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    display: grid;
+    place-items: center;
+    font-family: 'Manrope', sans-serif;
+    background: #000
+}
+
+.cross {
+    padding: 10px;
+    color: #d6312d;
+    cursor: pointer;
+    font-size: 23px
+}
+
+.cross i {
+    margin-top: -5px;
+    cursor: pointer
+}
+
+.comment-box {
+    padding: 5px
+}
+
+.comment-area textarea {
+    resize: none;
+    border: 1px solid #ff0000
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ffffff;
+    outline: 0;
+    box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+}
+
+.send {
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #ff0000
+}
+
+.send:hover {
+    color: #fff;
+    background-color: #f50202;
+    border-color: #f50202
+}
+
+.rating {
+    display: inline-flex;
+    margin-top: -10px;
+    flex-direction: row-reverse
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 28px;
+    font-size: 35px;
+    color: #ff0000;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+.btn-success {
+    color: #fff;
+    background-color: #ff0000!important;
+    border-color: #ff7878!important;
 }

@@ -144,6 +144,7 @@
 					상품이미지 ( 최대 12 장 , 이미지 등록 구간에 드래그 & 드롭해주세요! )
 					<div id="drop"
 						style="border:1px solid black; min-width: 400px; height: 300px; padding: 3px; overflow: auto;">
+
 						이미지 등록
 						<div id="thumbnails"></div>
 						<input type="hidden" id="imgs_name" name="imgs_name">

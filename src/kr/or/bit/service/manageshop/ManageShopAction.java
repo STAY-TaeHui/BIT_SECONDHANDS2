@@ -34,7 +34,7 @@ public class ManageShopAction implements Action {
     	request.setAttribute("m_profile", m_profile);
     	
     	forward.setRedirect(false);
-    	forward.setPath("WEB-INF/views/manageshop/managemyproducts.jsp");
+    	forward.setPath("WEB-INF/views/manageshops/managemyproducts.jsp");
     	
 		return forward;
 	}

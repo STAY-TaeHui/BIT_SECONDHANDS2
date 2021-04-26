@@ -23,7 +23,6 @@ public class ProductUploadAction implements Action {
 		String addr = request.getParameter("addr");
 		String price = request.getParameter("price");
 		String content = request.getParameter("content");
-
 		String url = "";
 		String icon = "";
 		String msg = "";
@@ -71,7 +70,6 @@ public class ProductUploadAction implements Action {
 		request.setAttribute("url", url);
 		request.setAttribute("icon", icon);
 		request.setAttribute("msg", msg);
-
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("WEB-INF/views/redirect/redirect.jsp");
