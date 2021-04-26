@@ -1756,7 +1756,7 @@ public class SecondHandsDAO {
 			String sql = "select l.p_num, l.mycount from (select p_num, count(*) as mycount from likelist group by p_num) l "
 					+ "join" + "(select p_num from product where storename = ? ) p" + "on l.p_num = p.p_num"
 					+ "order by l.mycount desc";
-
+			//푸시를 위한 주석
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, storename);
 			rs = pstmt.executeQuery();
