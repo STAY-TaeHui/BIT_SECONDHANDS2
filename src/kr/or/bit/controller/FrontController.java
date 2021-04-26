@@ -102,6 +102,7 @@ public class FrontController extends HttpServlet {
 			action = new GetSelectedProductOkAction();
 			forward = action.execute(request, response);
 
+
 		}
 		// 판매하기 이동
 		else if (url_Command.equals("/mysell.do")) {
@@ -121,6 +122,7 @@ public class FrontController extends HttpServlet {
 			action = new editMemberAction();
 			forward = action.execute(request, response);
 		}
+
 ///////////////////////////////////////////////////////////////////
 
     	if(forward != null) {

@@ -41,10 +41,10 @@ function orderbytime(){
 	$.ajax(
 			
 			{	
-				url:"ProductOrderByTime.ajax",
+				url:"getproductlistbyorder.ajax",
 				type:"post",
 				dataType:"json",
-				data: { keyword : $("#keyword").val()},
+				data: { keyword : "p.p_wr_time"},
 				success:function(responsedata){
 					console.log(responsedata);
 						$(".productlist").empty();
@@ -76,10 +76,10 @@ function orderbyprice(){
 	$.ajax(
 			
 			{	
-				url:"ProductOrderByPrice.ajax",
+				url:"getproductlistbyorder.ajax",
 				type:"post",
 				dataType:"json",
-				data: { keyword : $("#keyword").val()},
+				data: { keyword : "p.p_price"},
 				success:function(responsedata){
 					console.log(responsedata);
 						$(".productlist").empty();
@@ -95,7 +95,6 @@ function orderbyprice(){
 		);
 	
 }
-
 
 
 </script>
@@ -163,8 +162,9 @@ function orderbyprice(){
                                 </a>
                               </c:when>
                              <c:otherwise>
-	                             <a href="${pageContext.request.contextPath}/mysell.do?storename=${sessionScope.storename}">
+			                     <a href="${pageContext.request.contextPath}/mysell.do?storename=${sessionScope.storename}">
 	                             <img src="${pageContext.request.contextPath}/img/sell.gif">
+
                                 </a>
                              </c:otherwise>
                              </c:choose>

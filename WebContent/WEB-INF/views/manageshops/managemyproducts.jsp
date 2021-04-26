@@ -80,10 +80,31 @@
 		 });
     }
   
-  function searchmyp(){
-	  
+  
+	//검색하기 함수
+    function searchmyp(){
+	
 	  console.log("내 상품 검색");
+	  console.log($("#mykeyword").val());
+	  let keyword = $("#mykeyword").val();
 	  
+	  let td = document.getElementsByClassName("sbj");
+	  console.log(td);
+	  
+	  $.each(td, function(index,item){
+		  
+		  //console.log(td[index].innerText);
+		  td[index].parentNode.parentNode.style.display="";
+		  
+		  if(!td[index].innerText.includes(keyword)){
+			  //td[index].style.display="none";
+			  console.log(td[index].parentNode.parentNode);
+			  td[index].parentNode.parentNode.style.display="none";
+		  }
+		  
+	  });
+
+  	
   }
     
 
@@ -115,8 +136,8 @@
 	<ul id="filter_menu">
 	<li>
 		<div class="input-group" id="search_myproducts">                         
-        	<input type="text" id="keyword" name="keyword" onkeyup="if(window.event.keyCode==13){searchmyp()}" placeholder="내 상품 검색">
-            <button type="button" onclick="serachmyp()" id="searchmyproductbtn"><i class="ti-search"></i></button>
+        	<input type="text" id="mykeyword" name="mykeyword" onkeyup="if(window.event.keyCode==13){searchmyp()}" placeholder="내 상품 검색">
+            <button type="button" onclick="searchmyp()" id="searchmyproductbtn"><i class="ti-search"></i></button>
         </div>
     </li>
     <!--  
@@ -145,11 +166,6 @@
 		<li><input type="button" value="가격순" onclick="orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
 	</ul>
 	
-	<ul id="categoryorder">
-		<li><input type="button" value="최신순" onclick="c_orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="c_orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-	</ul>
-	
 	</div>
         	
             <div class="row">
@@ -166,7 +182,7 @@
                                     <th class="p_fnc">기능</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody">
 								
 								<!-- foreach문 돌릴 영역 -->
                                
@@ -175,7 +191,7 @@
                                 <c:forEach items="${myproducts}" var="myproducts" begin="0" varStatus="status" end="${fn:length(myproducts)}">
                                 <tr class="product">
                                		<td class="p_img"><img src="${pageContext.request.contextPath}/img/store/${myproducts.pimg_name}"/></th>
-                                    <td class="p_name"><p>${myproducts.p_subj}</p></td>
+                                    <td class="p_name"><p class="sbj">${myproducts.p_subj}</p></td>
                                     <td class="p_status">
                                     <c:choose>
                                     	<c:when test="${myproducts.p_status eq 0}">
