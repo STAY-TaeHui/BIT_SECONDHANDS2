@@ -121,7 +121,7 @@ function orderbyprice(){
             	<li><a href="${pageContext.request.contextPath}/register.do">회원가입</a></li>
 				</c:when>
 				<c:otherwise>
-				<li style="display:none;"><a href="register.do">회원가입</a></li>
+				<li style="display:none;"><a href="${pageContext.request.contextPath}/register.do">회원가입</a></li>
 				</c:otherwise>
 				</c:choose>
             </ul>
@@ -138,7 +138,7 @@ function orderbyprice(){
                        
                         <div class="advanced-search">
 
-                        <form method="post" action="${pageContext.request.contextPath}searchproductok.do">
+                        <form method="post" action="${pageContext.request.contextPath}/searchproductok.do">
                             <div class="input-group" id="header_search">                         
                                 <input type="text" id="keyword" name="keyword" onkeyup="if(window.event.keyCode==13)this.submit()}">
                                 <button type="submit"><i class="ti-search"></i></button>
@@ -163,7 +163,7 @@ function orderbyprice(){
                                 </a>
                               </c:when>
                              <c:otherwise>
-	                             <a href="#?storename=${sessionScope.storename}">
+	                             <a href="${pageContext.request.contextPath}/mysell.do?storename=${sessionScope.storename}">
 	                             <img src="${pageContext.request.contextPath}/img/sell.gif">
                                 </a>
                              </c:otherwise>
@@ -178,8 +178,9 @@ function orderbyprice(){
 							</a>
                              </c:when>
                              <c:otherwise>
-                             <a href="${pageContext.request.contextPath}/myshop?storename=${sessionScope.storename}">
+                             <a href="${pageContext.request.contextPath}/myshop.do?storename=${sessionScope.storename}">
                                     <img src="${pageContext.request.contextPath}/img/myshop.gif">
+
                                 </a>
                              </c:otherwise>
                              </c:choose>

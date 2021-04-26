@@ -16,11 +16,9 @@ import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.SecondHandsDAO;
 import kr.or.bit.service.*;
 
-
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     public FrontController() {
         super();
 
@@ -81,10 +79,8 @@ public class FrontController extends HttpServlet {
     	//내 상점 페이지
     	else if(url_Command.equals("/myshop.do")) {
     		System.out.println("myshop.do");
-    		forward = new ActionForward();
-    		forward.setRedirect(false);
-    		forward.setPath("/WEB-INF/views/myshop/myshop.jsp");    		
-    	
+    		action = new MyShopAction();
+    		forward = action.execute(request, response);
     		
     	// 상품 상세(남의 상점 상품)
     	}else if(url_Command.equals("/productdetail.do")) {
@@ -93,30 +89,40 @@ public class FrontController extends HttpServlet {
     		System.out.println("pn : " + pn);
     		
     		request.setAttribute(pn, forward);
-    		
 			action = new ProductDetailAction();
 			forward = action.execute(request, response);
-    		
-    	} else if(url_Command.equals("/searchproductok.do")) {
 
-    		action = new SearchProductOkAction();
-			forward = action.execute(request, response);
-    		
-    	}else if(url_Command.equals("/getselectedproductok.do")) {
+		} else if (url_Command.equals("/searchproductok.do")) {
 
-    		action = new GetSelectedProductOkAction();
+			action = new SearchProductOkAction();
 			forward = action.execute(request, response);
-    		
-    	}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+
+		} else if (url_Command.equals("/getselectedproductok.do")) {
+
+			action = new GetSelectedProductOkAction();
+			forward = action.execute(request, response);
+
+		}
+		// 판매하기 이동
+		else if (url_Command.equals("/mysell.do")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("WEB-INF/views/mysell/mysell.jsp");
+		}
+		// 상품등록
+		else if (url_Command.equals("/productupload.do")) {
+			System.out.println("productupload.do");
+			action = new ProductUploadAction();
+			forward = action.execute(request, response);
+		}
+		// 멤버 정보 수정
+		else if (url_Command.equals("/editMember.do")) {
+			System.out.println("editMember.do");
+			action = new editMemberAction();
+			forward = action.execute(request, response);
+		}
 ///////////////////////////////////////////////////////////////////
+
     	if(forward != null) {
     		System.out.println("FORWARD");
     		if(forward.isRedirect()) { //true 
@@ -135,13 +141,14 @@ public class FrontController extends HttpServlet {
     	
     	
     }
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 

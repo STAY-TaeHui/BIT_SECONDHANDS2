@@ -8976,7 +8976,7 @@
     }
   }
 
-  input {
+    input {
       margin-right : 10px;
   }
 
@@ -8989,9 +8989,35 @@
     border-radius: 5px;
   }
   
+    #emailCheckBtn {
+    width:80px; 
+    font-size: 12px;
+    color:white;
+    border: none;
+    background-color:#f70000;
+    border-radius: 5px;
+  }
+	
+  #nameCheckBtn {
+  	width:80px; 
+    font-size: 12px;
+    color:white;
+    border: none;
+    background-color:#f70000;
+    border-radius: 5px;
+  }
+  
+  #phoneCheckBtn {
+  	width:80px; 
+    font-size: 12px;
+    color:white;
+    border: none;
+    background-color:#f70000;
+    border-radius: 5px;
+  }
+  
   #submitBtn {
   color:white;
   border: none;
   background-color:#f70000;
   }
-  /*# sourceMappingURL=bootstrap.css.map */
