@@ -39,6 +39,7 @@ public class ProductUploadAction implements Action {
 				b = dao.productImgUpload(imgs[i], p_num, i + 1);
 				if (b) {
 					System.out.println("이미지 insert 성공");
+					
 				} else {
 					System.out.println("이미지 insert 실패");
 				}

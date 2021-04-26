@@ -189,46 +189,6 @@ System.out.println("-------------------------------");
 </body>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
-<script>
-$.ajax({	
-	
-			url:"myshopchartlist.ajax",
-			type:"post",
-			dataType:"json",
-			data: { storename : '${requestScope.storename}'},
-			success:function(responsedata){
-				console.log(responsedata);
-				
-				
-			},
-			error:function(xhr){
-				console.log(xhr);
-			}
-		});
-let ctx = document.getElementById('myChart').getContext('2d');
-let config = 		
-{
-	type: 'bar', //line, bar, pie
-	data: {
-		labels: [],
-		datasets: [{
-			label: '내 상품 찜 수',
-			data: [],
-			backgroundColor: ['#93DAFF', "#96A5FF", "#86A5FF", "#6495ED", "#0078FF", "#78EAFF", "#6482FF", "#14D3FF", "#32AAFF", "#64D6FF"],
-			borderColor: ['#93DAFF', "#96A5FF", "#86A5FF", "#6495ED", "#0078FF", "#78EAFF", "#6482FF", "#14D3FF", "#32AAFF", "#64D6FF"],
-			borderWidth: 1
-		}]
-	},
-	options: {
-		scales: {
-			y: {
-				beginAtZero: true,
-			}
-		}
-	}
-}
-let myChart = new Chart(ctx,config);
-</script>
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
       console.log("WHO IS FIRST");

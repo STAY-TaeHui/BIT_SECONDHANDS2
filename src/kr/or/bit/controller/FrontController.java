@@ -74,7 +74,9 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/views/member/Logout.jsp");
-		} else if (url_Command.equals("/myshop.do")) {
+		} 
+		//내 상점
+		else if (url_Command.equals("/myshop.do")) {
 			System.out.println("myshop.do");
 			action = new MyShopAction();
 			forward = action.execute(request, response);

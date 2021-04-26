@@ -139,15 +139,9 @@
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 		<div id="bodywrap">
 			<form action="productupload.do" id="frm" method="post">
-
 				<div class="content">
-					상품이미지 ( 최대 12 장 , 이미지 등록 구간에 드래그 & 드롭해주세요! )
-					<div id="drop"
-						style="border:1px solid black; min-width: 400px; height: 300px; padding: 3px; overflow: auto;">
-						이미지 등록
-						<div id="thumbnails"></div>
-						<input type="hidden" id="imgs_name" name="imgs_name">
-					</div>
+					상품이미지 ( 최대 12 장 )
+                            <input id="fileupload" type="file" name="file" accept="image/*" onchange="preview(this)" >
 				</div>
 				<hr>
 				<div class="form-group row">
@@ -236,7 +230,7 @@
 				</div>
 				<hr>
 				<div class="form-group row">
-					<label class="col-sm-1" name="content">설명</label>
+					<label class="col-sm-1">설명</label>
 					<div class="col-sm-2">
 						<textarea rows="8" cols="100" style="resize: none"
 							placeholder="내용을 입력하세요" id="content" name="content"></textarea>
@@ -256,74 +250,31 @@
 	</div>
 	<script>
 		$(function() {
-			console.log($('#storename').val());
-			var uploadFiles = [];
-			let count = 0;
-			var $drop = $("#drop");
-			$drop.on("dragenter", function(e) { //드래그 요소가 들어왔을떄
-				$(this).addClass('drag-over');
-			}).on("dragleave", function(e) { //드래그 요소가 나갔을때
-				$(this).removeClass('drag-over');
-			}).on("dragover", function(e) {
-				e.stopPropagation();
-				e.preventDefault();
-			}).on('drop', function(e) { //드래그한 항목을 떨어뜨렸을때
-				e.preventDefault();
-				$(this).removeClass('drag-over');
-				var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
-				for (var i = 0; i < files.length; i++) {
-					var file = files[i];
-					var size = uploadFiles.push(file.name); //업로드 목록에 추가
-					preview(file, size - 1); //미리보기 만들기
-				}
-			});
+		    function preview(e) {
 
-			function preview(file, idx) {
-				var reader = new FileReader();
-				reader.onload = (function(f, idx) {
-					return function(e) {
-						var div = '<div class="thumb"> \ <div class="close" data-idx="' + idx + '">X</div> \ <img src="'
-								+ e.target.result
-								+ '" title="'
-								+ escape(f.name)
-								+ '" width="150px" height="150px"/> \ </div>';
-						if (count <= 12) {
-							$('#thumbnails').append(div);
-							count++;
+		        let file = e.files;
+		        console.log(file);
+		        
+		        if(!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)){
+		            swal({
+		            		title : "이미지 파일만 선택해 주세요.",
+		            		icon : "error"
+		            	});
+		            }
+		        }else {
+		                
+		            let reader = new FileReader();
 
-						} else {
-							swal({
-								title : "사진은 최대 12장까지 가능합니다",
-								icon : "error"
-							});
-						}
+		            reader.onload = function(e2) {
+		                let img = document.createElement('img');
+		                img.src= e2.target.result;
+		                let gallery = document.getElementById('gallery');
+		                gallery.appendChild(img);
+		            }
 
-					};
-				})(file, idx);
-				reader.readAsDataURL(file);
-			}
-
-			//전체파일 한번에 업로드
-			function groupUpload() {
-				var formData = new FormData();
-				$.each(uploadFiles, function(i, file) {
-					if (file.upload != 'disable')
-						formData.append('upload-file', file, file.name);
-				});
-				$.ajax({
-					url : '/api/etc/file/upload',
-					data : formData,
-					type : 'post',
-					contentType : false,
-					processData : false,
-					success : function(ret) {
-						alert("완료");
-					}
-				});
-			}
-
-			$("#btnSubmit").click(groupUpload());
-
+		            reader.readAsDataURL(file[0]); // start reading the file data.
+		        }
+		    }
 
 			$("#thumbnails").on("click", ".close", function(e) {
 				var $target = $(e.target);
