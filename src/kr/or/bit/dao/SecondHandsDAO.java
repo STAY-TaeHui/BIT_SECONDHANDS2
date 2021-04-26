@@ -613,6 +613,48 @@ public class SecondHandsDAO {
 	         //상품들의 개수는 배열크기를 통해 알수 있다.
 	         return arr;
 	      }
+	   
+	   public int insertReview(int buy_num, int p_num, String rv_content, int rv_star,  String storename_buyer) {
+		     Connection conn = null;
+	         PreparedStatement pstmt = null;
+	         int rs=0;
+	         try {
+				conn=ds.getConnection();
+				
+				//String sql = "select * from member";
+				
+				String sql = "insert into review(rv_num, buy_num, p_num, rv_content, rv_star,storename) "
+				+ "values (rv_num_seq.nextval,?,?,?,?,?)"; 
+				    
+				    pstmt = conn.prepareStatement(sql);
+				    pstmt.setInt(1, buy_num);
+				    pstmt.setInt(2, p_num);
+				    pstmt.setString(3, rv_content);
+				    pstmt.setInt(4, rv_star);
+				    pstmt.setString(5, storename_buyer);
+				    
+				    rs= pstmt.executeUpdate();	            
+				    return rs;
+				    
+	         } catch (SQLException e) {
+	            // TODO: handle exception
+	        	 e.printStackTrace();
+	         }catch(Exception e3) {
+	        	 e3.printStackTrace();
+	         }
+	         finally {
+	            try {
+	               pstmt.close();
+	               conn.close();//반환하기
+	            } catch (Exception e2) {
+	            	e2.printStackTrace();
+	            }
+	         }
+	         //내 상품들이 들어가있는 배열.
+	         //상품들의 개수는 배열크기를 통해 알수 있다.
+	         return 0;
+	     
+	   }
 	
 	//연결 테스트 함수
 	public void member() {

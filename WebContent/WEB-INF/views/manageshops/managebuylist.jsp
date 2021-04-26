@@ -17,6 +17,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manageshop.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css" type="text/css">
 
 </head>
 <body>
@@ -94,7 +95,8 @@
 													                    <input type="text" name="p_num" value='${item.p_num}' style="display:none">
 													                    <input type="text" name="storename_buyer" value='${item.storename_buyer}' style="display:none">
 													                    <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
-													                    <div class="comment-area"> <textarea name="content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div>
+													                    <!-- <div class="comment-area" style="display:none"> <textarea name="rv_content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div> -->
+													                    <div class="comment-area"> <textarea  id="summernote" name="rv_content" class="form-control" placeholder="거 쉬ㅠ펄것" rows="4"></textarea> </div>
 													                    <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send message <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
 													                    </form>
 													                </div>
@@ -151,13 +153,32 @@
     <script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+	<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
 		</div>
 	</div>
     
    
 </body>
 <script type="text/javascript">
-
+$(document).ready(function() {
+	//여기 아래 부분
+	$('#summernote').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+			callbacks:{
+        	  onImageUpload: function(){
+        		  console.log("Thisis onImageUpload")
+        	  }
+          }
+        	 
+	
+	});
+});
 </script>
 
 </html>
