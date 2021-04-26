@@ -33,13 +33,13 @@
 	       	//let b_val;
 	       	
 	       	//console.log(t_val);
-	       	
+	       	/*
 	       	if(t_number != undefined && m_number != undefined && c_number != undefined){
 	       		$("#top").val(t_number).prop("selected", true);
 		       	$("#middle").val(m_number).prop("selected", true);
 		       	$("#bottom").val(c_number).prop("selected", true);
 	       	}
-	             	
+	          */   	
 
             
         });
