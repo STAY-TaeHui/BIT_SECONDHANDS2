@@ -1,27 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+String currentStorename = (String) session.getAttribute("storename");
+String storename = (String) request.getAttribute("storename");
+String profile = (String) request.getAttribute("profile");
+String realPath = application.getRealPath("fileUpload");
 
+if (profile == null) {
+	profile = "default.png";
+}
+
+System.out.println("-------------------------------");
+System.out.println("(Session)storename : " + currentStorename);
+System.out.println("storename : " + storename);
+System.out.println("profile : " + profile);
+System.out.println("realPath : " + realPath);
+System.out.println("-------------------------------");
+%>
 <!DOCTYPE html>
 
 <style>
 .fadetb {
-  opacity: 0;
-  -webkit-transition: opacity .15s linear;
-       -o-transition: opacity .15s linear;
-          transition: opacity .15s linear;
+	opacity: 0;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
+	transition: opacity .15s linear;
 }
+
 .fade.in {
-  opacity: 1 !important;
+	opacity: 1 !important;
 }
-.tab-content > .tab-pane {
-  display: none;
+
+.tab-content>.tab-pane {
+	display: none;
 }
-.tab-content > .active {
-  display: block;
+
+.tab-content>.active {
+	display: block;
 }
-.countp{
-   margin-bottom:0;
+
+.countp {
+	margin-bottom: 0;
 }
 </style>
 <html>
@@ -29,127 +49,186 @@
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/myshop.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/tab.css" type="text/css">
-     <link rel="stylesheet" href="css/reviews.css" type="text/css">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
+<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
+	rel='stylesheet'>
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/myshop.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/tab.css" type="text/css">
+<link rel="stylesheet" href="css/reviews.css" type="text/css">
+<link rel="stylesheet" href="css/myshop.css" type="text/css">
 
-    
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 <body>
-   <div id="fullwrap" >
-   <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-       <!--  탭 부트스트랩  -->
-    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div id="bodywrap">
-<div id="productdetailName">
-<h4>상점정보</h4>
+	<div id="fullwrap">
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<!--  탭 부트스트랩  -->
+		<script type='text/javascript'
+			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<div id="bodywrap">
+			<div id="productdetailName">
+				<h4>상점정보</h4>
+			</div>
+			<hr>
+			<form method="post" action="editMember.do" id="submit"
+				enctype="multipart/form-data">
+				<div id="ProductTotal">
+					<div id="ProductPhoto">
+						<div class="box">
+							<img src="" id="img" width="300px" height="300px"> <input
+								type="file" id="file" name="file" style="display: none;">
+							<input id="storename" name="storename" value="<%=storename%>"
+								type="hidden"> <input name="originalPath"
+								value="<%=profile%>" type="hidden">
+							<c:choose>
+								<c:when test="${sessionScope.storename eq storename}">
+									<input type="button" value="상품관리 가기"
+										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+									<input type="button" value="수정하기" id="editBtn" name="">
+								</c:when>
+								<c:otherwise>
+									<input type="button" value="상품관리 가기"
+										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<div id="Storename">
+						<%
+						out.print("" + storename + "<br>");
+						%>
+					</div>
+					<br>
+				</div>
+			</form>
 
-</div>
-<hr>
-<div id="ProductTotal">
-<div id="ProductPhoto">
+			<div style='width: 100%; margin: 0 auto; margin-top: 100px;'>
+				<ul class="nav nav-tabs">
+					<li class='active'><a href="#tabmenu_01"
+						onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
+					<li><a href="#tabmenu_02" onclick="likelist()"
+						data-toggle="tab"> 찜 </a></li>
+					<li><a href="#tabmenu_03" onclick="reviewlist()"
+						data-toggle="tab"> 거래 후기 </a></li>
+					<li><a href="#tabmenu_04" data-toggle="tab">찜 차트</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="tabmenu_01">
+						<!-- 상품 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								상품 <span class="productcount"></span> 개
+							</p>
+						</div>
+						<ul class="myproductlist"></ul>
+					</div>
+					<div class="tab-pane fade" id="tabmenu_02">
+						<!-- 찜 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								찜 <span class="likecount"></span> 개
+							</p>
+						</div>
+						<ul class="myproductlist"></ul>
+					</div>
 
-<input type="button" value="내 상점 관리" id="myshopeditBtn" name="">
+					<div class="tab-pane fade" id="tabmenu_03">
+						<!-- 찜 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								거래후기 <span class="reviewcount"></span> 개
+							</p>
+						</div>
+						<!-- //////////////// REVIEW CARD START////////////////// -->
+						<!-- 모달창 -->
+						<div class="modal fade" role="dialog" id="imgmodal">
+							<div class="modal-dialog">
+								<div class="modal-content"></div>
+								<img class="img-responsive" src="" id="show-img">
+							</div>
+						</div>
+						<ul class="myreviewlist">
 
+						</ul>
+						<!-- //////////////// REVIEW CARD EMD////////////////// -->
+						<!-- <ul class="productlist"></ul> -->
+					</div>
+					<div class="tab-pane fade" id="tabmenu_04">
+						<select id="type">
+							<option>Bar</option>
+							<option>Line</option>
+							<option>Pie</option>
+						</select> <input type="button" id="search" value="변경하기">
+						<!-- chart 캔버스 body의 div를 하나 만들고, 안에 canvas를 통해 chart를 불러온다 id값은 임의 설정.-->
+						<canvas id="myChart" width="700" height="500"></canvas>
 
-</div>
-<div id="Storename">
-   
-<%
-      String storename = request.getParameter("storename");
-      //out.print(storename);
-        session = request.getSession();
-        out.print(""+ session.getAttribute("storename") + "<br>");
-        //session = request.getSession();
-        //out.print(""+session.getAttribute("isLogined"));   
-%>
-<input type="button" value="상품관리 가기(임시)" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
-</div>
-
-
-	<c:choose>
-		<c:when test="${session.storename == storename}">
-			<input id="editBtn" type="button" value="수정하기">
-			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="">
-			<div>외 안되??????</div>
-		</c:when>
-		<c:otherwise>
-			<input id="editBtn" type="button" value="수정하기" style="display:none;">
-			<input type="button" value="내 상점 관리" id="myshopeditBtn" name="" style="display:none;">
-			<div>외 안되...?</div>
-		</c:otherwise>
-	</c:choose>
-</div>
-   
-<div style='width:100%;margin:0 auto;margin-top:50px;'>
-   <ul class="nav nav-tabs">
-      <li class='active'><a href="#tabmenu_01" onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
-      <li><a href="#tabmenu_02" onclick="likelist()" data-toggle="tab"> 찜 </a></li>
-      <li><a href="#tabmenu_03" onclick="reviewlist()" data-toggle="tab"> 거래 후기 </a></li>
-   </ul>
-   <div class="tab-content" >
-      <div class="tab-pane fade in active" id="tabmenu_01">
-         <!-- 상품 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         상품  <span class="productcount"></span> 개
-         </p>
-         </div>
-         <ul class="myproductlist"></ul>
-      </div>
-      <div class="tab-pane fade" id="tabmenu_02">
-         <!-- 찜 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         찜  <span class="likecount"></span> 개
-         </p>
-         </div>
-         <ul class="myproductlist"></ul>
-      </div>
-      <div class="tab-pane fade" id="tabmenu_03">
-         <!-- 찜 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         거래후기  <span class="reviewcount"></span> 개
-         </p>
-         </div>
-         <!-- //////////////// REVIEW CARD START////////////////// -->
-         <!-- 모달창 -->
-         <div class="modal fade" role="dialog" id="imgmodal">
-                     <div class="modal-dialog">
-                    <div class="modal-content"></div>          
-                       <img class="img-responsive" src="" id="show-img">         
-                    </div>
-                </div>
-         <ul class="myreviewlist">
-         
-         </ul>
-            <!-- //////////////// REVIEW CARD EMD////////////////// -->
-         <!-- <ul class="productlist"></ul> -->
-      </div>
-   </div>
-</div>
-<!-- Footer Section Begin -->
-    <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-<!-- Footer Section End -->
-</div>
-</div>
+					</div>
+				</div>
+			</div>
+			<!-- Footer Section Begin -->
+			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+			<!-- Footer Section End -->
+		</div>
 </body>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+<script>
+$.ajax({	
+	
+			url:"myshopchartlist.ajax",
+			type:"post",
+			dataType:"json",
+			data: { storename : '${requestScope.storename}'},
+			success:function(responsedata){
+				console.log(responsedata);
+				
+				
+			},
+			error:function(xhr){
+				console.log(xhr);
+			}
+		});
+let ctx = document.getElementById('myChart').getContext('2d');
+let config = 		
+{
+	type: 'bar', //line, bar, pie
+	data: {
+		labels: [],
+		datasets: [{
+			label: '내 상품 찜 수',
+			data: [],
+			backgroundColor: ['#93DAFF', "#96A5FF", "#86A5FF", "#6495ED", "#0078FF", "#78EAFF", "#6482FF", "#14D3FF", "#32AAFF", "#64D6FF"],
+			borderColor: ['#93DAFF', "#96A5FF", "#86A5FF", "#6495ED", "#0078FF", "#78EAFF", "#6482FF", "#14D3FF", "#32AAFF", "#64D6FF"],
+			borderWidth: 1
+		}]
+	},
+	options: {
+		scales: {
+			y: {
+				beginAtZero: true,
+			}
+		}
+	}
+}
+let myChart = new Chart(ctx,config);
+</script>
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
       console.log("WHO IS FIRST");
@@ -228,7 +307,7 @@
        
            $.ajax(
                  {   
-                    url:"MyShopLikeList.ajax",
+                    url:"myshopchartlist.ajax",
                     data:{storename : '${requestScope.storename}'},
                     type:"get",
                     dataType:"json",
@@ -376,50 +455,44 @@
               );
        
         }
-    
 
-/*
-$('#target_img').click(function (e) {
-    document.signform.target_url.value = document.getElementById( 'target_img' ).src;
-    e.preventDefault();
-    $('#file').click();
-});    
+ 	let currentStorename = '<%=currentStorename%>';
+	let storename = '<%=storename%>';
+	let profile = '<%=profile%>';
+	let nameCan = false;
+	let profilePath = "fileUpload/" + profile;
+	console.log(profile);
+	console.log(currentStorename);
+	console.log(storename);
+	console.log(profilePath);
 
-function changeValue(obj){
-      document.signform.submit();
+	$('#img').attr("src", profilePath);
 
-   }
-*/
-/*
-$('#btnUpload').on('click', function(event) {
-    event.preventDefault();
-    
-    var form = $('#uploadForm')[0]
-    var data = new FormData(form);
-    
-    $('#btnUpload').prop('disabled', true);
-   
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "upload",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-           $('#btnUpload').prop('disabled', false);
-           alert('success')
-        },
-        error: function (e) {
-            $('#btnUpload').prop('disabled', false);
-            alert('fail');
-        }
-    });
-})
-*/
+	$('#img').click(function(e) {
+		$('#file').click();
+	});
+
+	$('#file').change(
+			function(event) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					var img = document.createElement("img");
+					document.getElementById('img').setAttribute("src",
+							event.target.result);
+				};
+				reader.readAsDataURL(event.target.files[0]);
+			});
+
+	$('#editBtn').click(function() {
+		if ($('#file').val() == '') {
+			swal({
+				title : "내용이 바뀌지 않았습니다",
+				icon : "error"
+			});
+			return;
+		}
+
+		$('#submit').submit();
+	});
 </script>
-
-
 </html>
