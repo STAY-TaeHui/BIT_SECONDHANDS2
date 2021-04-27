@@ -137,7 +137,7 @@
    <div id="fullwrap">
 
       <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-      <div id="bodywrap">
+      <div id="bodywrap" style="padding-top:230px;">
       <div id="manageshop_menu">
       <ul id="ms_menu">
 		<li class="deco"><span id="currentpage">상품등록</span></li>
@@ -382,7 +382,22 @@
            
          //유효성검사
          $('#validation').click(function() {
-
+			
+        	 if($("#att_zone").html() == ""){
+        		 swal({
+                     title : "이미지를 한 장 이상 등록해주세요",
+                     icon : "error"
+                  });
+                  return;
+        	 }
+        	 
+        	 if($("#att_zone").find("div").length >12){
+        		 swal({
+                     title : "이미지는 12장까지만 등록 가능합니다",
+                     icon : "error"
+                  });
+                  return;
+        	 }
             //function check(){
             if ($('#subj').val() == '') {
                swal({

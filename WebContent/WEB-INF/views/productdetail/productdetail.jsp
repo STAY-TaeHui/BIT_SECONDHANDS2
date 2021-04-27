@@ -106,7 +106,7 @@
                                 
                                 <c:choose>
                                 	<c:when test="${sessionScope.storename eq jsonobj.storename}">
-                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
                                 	<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
                                 	<input type="hidden" value="찜♥" id="like">
                                 	</c:when>
@@ -130,7 +130,7 @@
                     <c:when test="${not empty imgs}">
                     <div id="moreimgs">
                     	<c:forEach var="imgs" items="${imgs}">
-                    	<div class="sub_imgs"><img class="sub_img" src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
+                    	<div class="sub_imgs"><img class="sub_img" src="${pageContext.request.contextPath}/fileUpload/${imgs}"/></div>
                     	</c:forEach>
                     </div>
                     </c:when>
@@ -214,7 +214,7 @@
                                                   <c:forEach var="arr" items="${jsonarr}">
                                                   
                                                    <div class ="recently_p" >
-                                                   <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
+                                                   <img src="${pageContext.request.contextPath}/fileUpload/${arr.pimg_name}">
                                                       
                                                    </div>
                                                    
@@ -224,7 +224,7 @@
                                                    </c:choose>
                                                    
                                                    <div id="more">
-                                                      <input type="button" value="더보기" id="moreinfo">
+                                                      <input type="button" value="더보기" id="moreinfo" onclick="location.href='myshop.do?storename=${jsonobj.storename}'">
                                                       </div>
                                                   
                                                 </div>

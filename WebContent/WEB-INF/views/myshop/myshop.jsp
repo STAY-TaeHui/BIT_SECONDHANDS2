@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String currentStorename = (String) session.getAttribute("storename");
@@ -8,7 +8,7 @@ String profile = (String) request.getAttribute("profile");
 String realPath = application.getRealPath("fileUpload");
 
 if (profile == null) {
-   profile = "default.png";
+	profile = "default.png";
 }
 
 System.out.println("-------------------------------");
@@ -23,172 +23,162 @@ System.out.println("-------------------------------");
 <head>
 <style>
 .fadetb {
-   opacity: 0;
-   -webkit-transition: opacity .15s linear;
-   -o-transition: opacity .15s linear;
-   transition: opacity .15s linear;
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+       -o-transition: opacity .15s linear;
+          transition: opacity .15s linear;
 }
-
 .fade.in {
-   opacity: 1 !important;
+  opacity: 1 !important;
 }
-
-.tab-content>.tab-pane {
-   display: none;
+.tab-content > .tab-pane {
+  display: none;
 }
-
-.tab-content>.active {
-   display: block;
+.tab-content > .active {
+  display: block;
 }
-
-.countp {
-   margin-bottom: 0;
+.countp{
+   margin-bottom:0;
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- Google Font -->
-<link
-   href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
-   rel="stylesheet">
-<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
-   rel='stylesheet'>
-<!-- Css Styles -->
-<link rel="stylesheet" href="css/myshop.css" type="text/css">
-<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/tab.css" type="text/css">
-<link rel="stylesheet" href="css/reviews.css" type="text/css">
+<title>Insert title here</title> 
+ <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/myshop.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/tab.css" type="text/css">
+     <link rel="stylesheet" href="css/reviews.css" type="text/css">
+     
+     
 
-<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    
+
+     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 <body>
-   <div id="fullwrap">
-      <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-      <!--  탭 부트스트랩  -->
-      <script type='text/javascript'
-         src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-      <script
-         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <div id="fullwrap" >
+   <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+       <!--  탭 부트스트랩  -->
+   <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
+       <!-- summernote js -->
+   <script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+   <script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
+	
+<div id="bodywrap">
+<div id="productdetailName">
+				<h4>상점정보</h4>
+			</div>
+			<hr>
+			<form method="post" action="editMember.do" id="submit"
+				enctype="multipart/form-data">
+				<div id="ProductTotal">
+					<div id="ProductPhoto">
+						<div class="box">
+							<img src="" id="img" width="300px" height="300px"> <input
+								type="file" id="file" name="file" style="display: none;">
+							<input id="storename" name="storename" value="<%=storename%>"
+								type="hidden"> <input name="originalPath"
+								value="<%=profile%>" type="hidden">
+								<div id="shopbtn">
+							<c:choose>
+								<c:when test="${sessionScope.storename eq storename}">
+									<input id="leftbtn" type="button" value="상품관리 가기"
+										onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
+									<input type="button" value="수정하기" id="editBtn" name="">
+								</c:when>
+								<c:otherwise>
+									<input type="button" value="상품관리 가기"
+										onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
+								</c:otherwise>
+							</c:choose>
+							</div>
+						</div>
+					</div>
+					<div id="Storename">
+						<%
+						out.print("" + storename + "<br>");
+						%>
+					</div>
+					<br>
+				</div>
+			</form>
 
-      <!-- summernote js -->
-      <script
-         src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
-      <script
-         src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
-
-      <div id="bodywrap">
-         <div id="productdetailName">
-            <h4>상점정보</h4>
+   
+<div style='width:100%;margin:0 auto;margin-top:100px;'>
+   <ul class="nav nav-tabs">
+      <li class='active'><a href="#tabmenu_01" onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
+      <li><a href="#tabmenu_02" onclick="likelist()" data-toggle="tab"> 찜 </a></li>
+      <li><a href="#tabmenu_03" onclick="reviewlist()" data-toggle="tab"> 거래 후기 </a></li>
+   </ul>
+   <div class="tab-content" >
+      <div class="tab-pane fade in active" id="tabmenu_01">
+         <!-- 상품 리스트 뿌려주는곳 -->
+         <div class="counttext">
+         <p class=countp>
+         상품  <span class="productcount"></span> 개
+         </p>
          </div>
-         <hr>
-         <form method="post" action="editMember.do" id="submit"
-            enctype="multipart/form-data">
-            <div id="ProductTotal">
-               <div id="ProductPhoto">
-                  <div class="box">
-                     <img src="" id="img" width="300px" height="300px"> <input
-                        type="file" id="file" name="file" style="display: none;">
-                     <input id="storename" name="storename" value="<%=storename%>"
-                        type="hidden"> <input name="originalPath"
-                        value="<%=profile%>" type="hidden">
-                     <c:choose>
-                        <c:when test="${sessionScope.storename eq storename}">
-                           <input type="button" value="상품관리 가기"
-                              onclick="location.href='manageshop.manage'">
-                           <input type="button" value="수정하기" id="editBtn" name="">
-                        </c:when>
-                        <c:otherwise>
-                           <input type="button" value="상품관리 가기"
-                              onclick="location.href='manageshop.manage'">
-                        </c:otherwise>
-                     </c:choose>
-                  </div>
-               </div>
-               <div id="Storename">
-                  <%
-                           out.print("" + storename + "<br>");
-                           %>
-               </div>
-               <br>
-            </div>
-         </form>
-
-         <div style='width: 100%; margin: 0 auto; margin-top: 100px;'>
-            <ul class="nav nav-tabs">
-               <li class='active'><a href="#tabmenu_01"
-                  onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
-               <li><a href="#tabmenu_02" onclick="likelist()"
-                  data-toggle="tab"> 찜 </a></li>
-               <li><a href="#tabmenu_03" onclick="reviewlist()"
-                  data-toggle="tab"> 거래 후기 </a></li>
-            </ul>
-            <div class="tab-content">
-               <div class="tab-pane fade in active" id="tabmenu_01">
-                  <!-- 상품 리스트 뿌려주는곳 -->
-                  <div class="counttext">
-                     <p class=countp>
-                        상품 <span class="productcount"></span> 개
-                     </p>
-                  </div>
-                  <ul class="myproductlist"></ul>
-               </div>
-               <div class="tab-pane fade" id="tabmenu_02">
-                  <!-- 찜 리스트 뿌려주는곳 -->
-                  <div class="counttext">
-                     <p class=countp>
-                        찜 <span class="likecount"></span> 개
-                     </p>
-                  </div>
-                  <ul class="myproductlist"></ul>
-               </div>
-               <div class="tab-pane fade" id="tabmenu_03">
-                  <!-- 찜 리스트 뿌려주는곳 -->
-                  <div class="counttext">
-                     <p class=countp>
-                        거래후기 <span class="reviewcount"></span> 개
-                     </p>
-                  </div>
-                  <!-- //////////////// REVIEW CARD START////////////////// -->
-                  <!-- 모달창 -->
-                  <div class="modal fade" role="dialog" id="imgmodal">
+         <ul class="myproductlist"></ul>
+      </div>
+      <div class="tab-pane fade" id="tabmenu_02">
+         <!-- 찜 리스트 뿌려주는곳 -->
+         <div class="counttext">
+         <p class=countp>
+         찜  <span class="likecount"></span> 개
+         </p>
+         </div>
+         <ul class="myproductlist"></ul>
+      </div>
+      <div class="tab-pane fade" id="tabmenu_03">
+         <!-- 찜 리스트 뿌려주는곳 -->
+         <div class="counttext">
+         <p class=countp>
+         거래후기  <span class="reviewcount"></span> 개
+         </p>
+         </div>
+         <!-- //////////////// REVIEW CARD START////////////////// -->
+         <!-- 모달창 -->
+         <div class="modal fade" role="dialog" id="imgmodal">
                      <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                        <img class="img-responsive" src="" id="show-img">
-                     </div>
-                  </div>
-                  <ul class="myreviewlist">
-
-                  </ul>
-                  <!-- //////////////// REVIEW CARD EMD////////////////// -->
-                  <!-- <ul class="productlist"></ul> -->
-               </div>
-            </div>
-         </div>
-         <!-- Footer Section Begin -->
-         <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-         <!-- Footer Section End -->
+                    <div class="modal-content"></div>          
+                       <img class="img-responsive" src="" id="show-img">         
+                    </div>
+                </div>
+         <ul class="myreviewlist">
+         
+         </ul>
+            <!-- //////////////// REVIEW CARD EMD////////////////// -->
+         <!-- <ul class="productlist"></ul> -->
       </div>
    </div>
+</div>
+<!-- Footer Section Begin -->
+    <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+<!-- Footer Section End -->
+</div>
+</div>
 </body>
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
       console.log("WHO IS FIRST");
-      
-      /* $("#categoryorder").css("display","none"); */
-         //상품 이미지 리스트 불러오기
        
       
       $.ajax(
             {   
                url:"MyShopProductList.ajax",
-               data:{storename :'${requestScope.storename}'},
+               data:{storename : '${requestScope.storename}'},
                type:"get",
                dataType:"json",
                success:function(responsedata){
@@ -216,34 +206,34 @@ System.out.println("-------------------------------");
       
       /* summernote initialize */
       $('#summernote').summernote({
-        height: 300,                 // 에디터 높이
-        minHeight: null,             // 최소 높이
-        maxHeight: null,             // 최대 높이
-        focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-        lang: "ko-KR",               // 한글 설정
-        placeholder: '최대 2048자까지 쓸 수 있습니다',   //placeholder 설정
-        callbacks: { // 콜백을 사용
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+		  callbacks: { // 콜백을 사용
               // 이미지를 업로드할 경우 이벤트를 발생
-             onImageUpload: function(files, editor, welEditable) {
-                sendFile(files[0], this);
-            }
+			    onImageUpload: function(files, editor, welEditable) {
+				    sendFile(files[0], this);
+				}
           }
-            
-   
-   });
+        	 
+	
+	});
       
      
    });
    
    
     function productlist(){
-       let sessionstorename = '${sessionScope.storename}';
-       let reqstorename = "${requestScope.storename}";
-       let reqscopestorename = '${requestScope.storename}';
-       
-       console.log("sessionstorename : " + sessionstorename);
-       console.log("reqstorename : " + reqstorename);
-       console.log("reqscopestorename : " + reqscopestorename);
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = "${requestScope.storename}";
+    	let reqscopestorename = '${requestScope.storename}';
+    	
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
+    	console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -256,7 +246,7 @@ System.out.println("-------------------------------");
                      $.each(responsedata, function(index, obj){
                         
                         $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                               +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                               +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                      "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                      "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                    });
@@ -276,10 +266,10 @@ System.out.println("-------------------------------");
            );
      }
     function likelist(){
-       let sessionstorename = '${sessionScope.storename}';
-       let reqstorename = '${requestScope.storename}';
-       console.log("sessionstorename : " + sessionstorename);
-       console.log("reqstorename : " + reqstorename);
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = '${requestScope.storename}';
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopLikeList.ajax",
@@ -292,7 +282,7 @@ System.out.println("-------------------------------");
                         $.each(responsedata, function(index, obj){
                            
                            $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                                  +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                                  +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                         "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                         "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                       });
@@ -314,25 +304,25 @@ System.out.println("-------------------------------");
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-       let sessionstorename = '${sessionScope.storename}';
-       let reqstorename = '${requestScope.storename}';
-       console.log("sessionstorename : " + sessionstorename);
-       console.log("reqstorename : " + reqstorename);
+    	let sessionstorename = '${sessionScope.storename}';
+    	let reqstorename = '${requestScope.storename}';
+    	console.log("sessionstorename : " + sessionstorename);
+    	console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
-                    data:{storename : '${requestScope.storename}'},
+                    data:{storename : reqstorename},
                     type:"get",
                     dataType:"json",
                     async:false,
                     success:function(responsedata){
-                       console.log("MyShopReviewList 개개기");
+                       console.log("MyShopReviewList");
                        $('.productlist').empty();
                        
                       
                        
                         $.each(responsedata, function(index, obj){
-                           console.log("INEX : " + index)
+                        	console.log("INDEX : " + index)
                            let starstring="";
                            let display="none";
                            for(let i=2; i<=5; i++){
@@ -343,9 +333,8 @@ System.out.println("-------------------------------");
                                  starstring+="<span class='fa fa-star star-inactive'></span>";
                               }
                            }
-                           
                            if(sessionstorename === obj.writer){
-                              display="";
+                        	   display="";
                            }
                            
                            $(".myreviewlist").append(
@@ -353,7 +342,7 @@ System.out.println("-------------------------------");
                                  +"<div class='rv_card'>"
                                  +"<div class='row d-flex'>"
                                  +"<div class=''>"
-                                 +"<img class='profile-pic' src='${pageContext.request.contextPath}/img/store/"+obj.m_profile+"'>"
+                                 +"<img class='profile-pic' src='${pageContext.request.contextPath}/fileUpload/"+obj.m_profile+"'>"
                                  +"</div>"
                                  +"<div class='d-flex flex-column'>"
                                  +"<h3 id='subj' class='mt-2 mb-0' >"+obj.writer+"</h3>"
@@ -369,15 +358,9 @@ System.out.println("-------------------------------");
                                  +"<p class='text-muted pt-5 pt-sm-3'>"+obj.rv_date+"</p>"
                                  +"</div>"
                                  +"</div>"
-                                 +"<div class='row text-left'>"
-                                 +"<p class='content'>"+obj.rv_content+"</p>"
-                                 +"</div>"   
-                                 +"<div class='row text-left'>"
-                                 +"<a class='thumbnail' href='#'>"
-                                 +"<img class='img-responsive' src='${pageContext.request.contextPath}/img/review/"+obj.rimg_name+"'>"
-                                   +"</a>"
                                  +"<div class='row text-left' id=summernote>"
                                  +obj.rv_content
+                                
                                  +"</div>"
                                  +"<div class='row text-left mt-4'>"
                                  +"<div class='like mr-3 vote' style='display:"+display+";'>"
@@ -394,9 +377,9 @@ System.out.println("-------------------------------");
                                     $("#imgmodal").modal('show');
                                });
                            $('span[name=delete]').click(function(){
-                              console.log("DELETE CLICK클릭이새끼야");
-                              console.log($(this).attr('id'));
-                               $.ajax(
+                        	   console.log("DELETE CLICK클릭이새끼야");
+                        	   console.log($(this).attr('id'));
+                        	    $.ajax(
                                        {   
                                           url:"MyShopReviewDelete.ajax",
                                           data:{rv_num : $(this).attr('id')},
@@ -404,19 +387,19 @@ System.out.println("-------------------------------");
                                           async:false,
                                           dataType:"text",
                                           success:function(responsedata){
-                                             console.log("데이터반환 성공");
-                                             if(responsedata>0){
-                                                console.log("DELTE 성공");
-                                             }
-                                             else{
-                                                console.log("DELTE 실패");
-                                             }
+                                        	  console.log("데이터반환 성공");
+                                        	  if(responsedata>0){
+                                        		  console.log("DELTE 성공");
+                                        	  }
+                                        	  else{
+                                        		  console.log("DELTE 실패");
+                                        	  }
                                           },
                                           error:function(){
-                                             console.log("데이터 반환 실패");
+                                        	  console.log("데이터 반환 실패");
                                           }
                                        }); 
-                              
+                        	   
                            })
                       });
                         let count = responsedata.length
@@ -436,67 +419,71 @@ System.out.println("-------------------------------");
               );
        
         }
+     /* summernote  */
+     function sendFile(file, editor) {
+    	    // 파일 전송을 위한 폼생성
+    			data = new FormData();
+    		    data.append("uploadFile", file);
+    		    $.ajax({ // ajax를 통해 파일 업로드 처리
+    		        data : data,
+    		        type : "POST",
+    		        url : "imgupload.manage",
+    		        cache : false,
+    		        contentType : false,
+    		        processData : false,
+    		        success : function(data) { // 처리가 성공할 경우
+    	            // 에디터에 이미지 출력
+    	            	console.log("성공시 콜백펑션");
+    		        	$(editor).summernote('editor.insertImage', data.url);
+    		        	$('#rimg_name').val(data.rimg_name);
+    		        	$('#rimg_size').val(data.rimg_size);
+    		        	
+    		        }
+    		    });
+    		}
+    
 
-    let currentStorename = '<%=currentStorename%>';
-   let storename = '<%=storename%>';
-   let profile = '<%=profile%>';
-   let nameCan = false;
-   let profilePath = "fileUpload/" + profile;
-   console.log(profile);
-   console.log(currentStorename);
-   console.log(storename);
-   console.log(profilePath);
-   /* summernote  */
-   function sendFile(file, editor) {
-      // 파일 전송을 위한 폼생성
-      data = new FormData();
-      data.append("uploadFile", file);
-      $.ajax({ // ajax를 통해 파일 업로드 처리
-         data : data,
-         type : "POST",
-         url : "imgupload.manage",
-         cache : false,
-         contentType : false,
-         processData : false,
-         success : function(data) { // 처리가 성공할 경우
-            // 에디터에 이미지 출력
-            console.log("성공시 콜백펑션");
-            $(editor).summernote('editor.insertImage', data.url);
-            $('#rimg_name').val(data.rimg_name);
-            $('#rimg_size').val(data.rimg_size);
+/*
+$('#target_img').click(function (e) {
+    document.signform.target_url.value = document.getElementById( 'target_img' ).src;
+    e.preventDefault();
+    $('#file').click();
+});    
 
-         }
-      });
+function changeValue(obj){
+      document.signform.submit();
+
    }
-
-   $('#img').attr("src", profilePath);
-
-   $('#img').click(function(e) {
-      $('#file').click();
-   });
-
-   $('#file').change(
-         function(event) {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-               var img = document.createElement("img");
-               document.getElementById('img').setAttribute("src",
-                     event.target.result);
-            };
-            reader.readAsDataURL(event.target.files[0]);
-         });
-
-   $('#editBtn').click(function() {
-      if ($('#file').val() == '') {
-         swal({
-            title : "내용이 바뀌지 않았습니다",
-            icon : "error"
-         });
-         return;
-      }
-
-      $('#submit').submit();
-   });
+*/
+/*
+$('#btnUpload').on('click', function(event) {
+    event.preventDefault();
+    
+    var form = $('#uploadForm')[0]
+    var data = new FormData(form);
+    
+    $('#btnUpload').prop('disabled', true);
+   
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "upload",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+           $('#btnUpload').prop('disabled', false);
+           alert('success')
+        },
+        error: function (e) {
+            $('#btnUpload').prop('disabled', false);
+            alert('fail');
+        }
+    });
+})
+*/
 </script>
 
 

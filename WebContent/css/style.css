@@ -129,6 +129,9 @@ a:hover{
 /*---------------------
   Helper CSS
 -----------------------*/
+#currentpage{
+	color:#f70000;
+}
 .section-title {
 	margin-bottom: 40px;
 	text-align: center;
