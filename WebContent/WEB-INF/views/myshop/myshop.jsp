@@ -91,9 +91,10 @@ System.out.println("-------------------------------");
 							<input id="storename" name="storename" value="<%=storename%>"
 								type="hidden"> <input name="originalPath"
 								value="<%=profile%>" type="hidden">
+								<div id="shopbtn">
 							<c:choose>
 								<c:when test="${sessionScope.storename eq storename}">
-									<input type="button" value="상품관리 가기"
+									<input id="leftbtn" type="button" value="상품관리 가기"
 										onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
 									<input type="button" value="수정하기" id="editBtn" name="">
 								</c:when>
@@ -102,6 +103,7 @@ System.out.println("-------------------------------");
 										onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
 								</c:otherwise>
 							</c:choose>
+							</div>
 						</div>
 					</div>
 					<div id="Storename">
@@ -171,9 +173,6 @@ System.out.println("-------------------------------");
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
       console.log("WHO IS FIRST");
-      
-      /* $("#categoryorder").css("display","none"); */
-         //상품 이미지 리스트 불러오기
        
       
       $.ajax(
@@ -187,7 +186,7 @@ System.out.println("-------------------------------");
                   $.each(responsedata, function(index, obj){
                         console.log(obj)
                         $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                               +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                               +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                      "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                      "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                   });
@@ -247,7 +246,7 @@ System.out.println("-------------------------------");
                      $.each(responsedata, function(index, obj){
                         
                         $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                               +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                               +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                      "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                      "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                    });
@@ -283,7 +282,7 @@ System.out.println("-------------------------------");
                         $.each(responsedata, function(index, obj){
                            
                            $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                                  +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                                  +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                         "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                         "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                       });
@@ -317,13 +316,13 @@ System.out.println("-------------------------------");
                     dataType:"json",
                     async:false,
                     success:function(responsedata){
-                       console.log("MyShopReviewList 개개기");
+                       console.log("MyShopReviewList");
                        $('.productlist').empty();
                        
                       
                        
                         $.each(responsedata, function(index, obj){
-                        	console.log("INEX : " + index)
+                        	console.log("INDEX : " + index)
                            let starstring="";
                            let display="none";
                            for(let i=2; i<=5; i++){
@@ -343,7 +342,7 @@ System.out.println("-------------------------------");
                                  +"<div class='rv_card'>"
                                  +"<div class='row d-flex'>"
                                  +"<div class=''>"
-                                 +"<img class='profile-pic' src='${pageContext.request.contextPath}/img/store/"+obj.m_profile+"'>"
+                                 +"<img class='profile-pic' src='${pageContext.request.contextPath}/fileUpload/"+obj.m_profile+"'>"
                                  +"</div>"
                                  +"<div class='d-flex flex-column'>"
                                  +"<h3 id='subj' class='mt-2 mb-0' >"+obj.writer+"</h3>"

@@ -63,7 +63,7 @@
 		$.each(responsedata, function(index, obj){
       							
 			$(".productlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-    				+"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+    				+"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
     						"</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
     						"<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
     		});

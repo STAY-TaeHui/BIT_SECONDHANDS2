@@ -106,7 +106,23 @@
 
   	
   }
-    
+	/*
+	$(".editbtn").click(function(){
+		
+		console.log($(this));
+		console.log("수정");
+		
+	});
+	
+	*/
+   function edit_p(num){
+	   
+	   console.log("수정");
+	   console.log(num);
+	   location.href="editproduct.manage?p_num="+num;
+	   
+   }
+
 
   </script>
 
@@ -127,10 +143,10 @@
         <div class="container">
      	<div id="manageshop_menu">
 	<ul id="ms_menu">
-		<li class="deco">상품등록</li>
+		<li class="deco"><a href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
 		<li class="deco"><span id="currentpage">상품관리</span></li>
-		<li class="deco">구매내역</li>
-		<li >판매내역</li>
+		<li class="deco"><a href="buylist.manage">구매내역</a></li>
+		<li><a href="selllist.manage">판매내역</a></li>
 	</ul>
 	
 	<ul id="filter_menu">
@@ -158,15 +174,6 @@
 	</li>
 	</ul>
 	</div>
-	
-	   	
-    <div id="ordermenu">
-	<ul id="defaultorder">
-		<li><input type="button" value="최신순" onclick="orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-	</ul>
-	
-	</div>
         	
             <div class="row">
                 <div class="col-lg-12">
@@ -190,7 +197,11 @@
                                 <c:when test="${not empty myproducts}">
                                 <c:forEach items="${myproducts}" var="myproducts" begin="0" varStatus="status" end="${fn:length(myproducts)}">
                                 <tr class="product">
-                               		<td class="p_img"><img src="${pageContext.request.contextPath}/img/store/${myproducts.pimg_name}"/></th>
+                               		<td class="p_img">
+                               		<a href='productdetail.do?p_num=${myproducts.p_num}&storename=${sessionScope.storename}'>
+                               		<img src="${pageContext.request.contextPath}/fileUpload/${myproducts.pimg_name}"/>
+                               		</a>
+                               		</td>
                                     <td class="p_name"><p class="sbj">${myproducts.p_subj}</p></td>
                                     <td class="p_status">
                                     <c:choose>
@@ -211,7 +222,8 @@
                                     	<td class="p_ed">${myproducts.p_ed_date}</td>
                                     	</c:otherwise>
                                     </c:choose>
-                                    <td class="p_fnc"><input type="button" value="수정" name="edit_p" id="editbtn"></td>
+                                    <td class="p_fnc" id="${myproducts.p_num}"><input type="button" value="수정" name="edit_p" class="editbtn" onclick="edit_p(${myproducts.p_num})">
+                                    <input type="button" value="삭제" name="delte_p" class="deletebtn" onclick="delete_p(${myproducts.p_num})"></td>
 
                                 </tr>
                                 <!-- 여기까지! -->

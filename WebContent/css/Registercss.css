@@ -1,4 +1,12 @@
 @charset "UTF-8";
+ 
+ #emailCheckBtn, #nameCheckBtn, #phoneCheckBtn{
+ 	border:1px solid lightgray;
+ 	color:#f70000;
+ 	background-color:white;
+ 	width:100px;
+ }
+ 
  :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -8976,7 +8984,7 @@
     }
   }
 
-    input {
+  input {
       margin-right : 10px;
   }
 
@@ -8989,35 +8997,9 @@
     border-radius: 5px;
   }
   
-    #emailCheckBtn {
-    width:80px; 
-    font-size: 12px;
-    color:white;
-    border: none;
-    background-color:#f70000;
-    border-radius: 5px;
-  }
-	
-  #nameCheckBtn {
-  	width:80px; 
-    font-size: 12px;
-    color:white;
-    border: none;
-    background-color:#f70000;
-    border-radius: 5px;
-  }
-  
-  #phoneCheckBtn {
-  	width:80px; 
-    font-size: 12px;
-    color:white;
-    border: none;
-    background-color:#f70000;
-    border-radius: 5px;
-  }
-  
   #submitBtn {
   color:white;
   border: none;
   background-color:#f70000;
   }
+  /*# sourceMappingURL=bootstrap.css.map */

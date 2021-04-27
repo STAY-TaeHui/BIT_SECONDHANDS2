@@ -1,15 +1,17 @@
 @charset "UTF-8";
-
+#ordermenu{
+	margin-left:auto;
+}
 #manageshop_menu {
 	
 	height:90px;
 	position: fixed;
 	top:140px;
 	z-index: 999;
+	background-color:white;
+	width: 100%
 }
-#ordermenu{
-	margin-left:auto;
-}
+
 #manageshop_menu ul{
 	display:flex;
 	margin-bottom:20px;
@@ -102,14 +104,25 @@ p_price{
 	height:150px;
 }
 
-#editbtn{
+.editbtn{
 	width:60px;
 	height:40px;
-	border:1px solid gray;
+	border:1px solid lightgray;
 	background-color:white;
 	text-align:center;
 	color:#0072e6;
+	margin-bottom:5px;
 }
+
+.deletebtn{
+	width:60px;
+	height:40px;
+	border:1px solid lightgray;
+	background-color:white;
+	text-align:center;
+	color:#f70000;
+}
+
 #buylist tbody tr{
 	border-bottom: 1px solid #ebebeb;
 	

@@ -8,19 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 
-import kr.or.bit.service.LoginOkAction;
+import kr.or.bit.service.manageshop.EditProductAction;
 import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.manageshop.ManageShopBuyListAction;
 import kr.or.bit.service.manageshop.ManageShopSellListAction;
 import kr.or.bit.service.manageshop.ReviewOkAction;
-import kr.or.bit.service.myshop.MyShopInfoAction;
+import kr.or.bit.service.manageshop.ProductEditOkAction;
 
-import kr.or.bit.service.manageshop.ManageShopAction;
 
 
 /**
@@ -47,6 +45,7 @@ public class ManageShopController extends HttpServlet {
     	Action action=null;
     	ActionForward forward=null;
     	
+
         //myshop 메인
 	     if(url_Command.equals("/manageshop.manage")) {
 	           System.out.println("manageshop.jsp VIEW");
@@ -63,23 +62,37 @@ public class ManageShopController extends HttpServlet {
 	           action = new ManageShopSellListAction(); 
 	           forward = action.execute(request, response);
 	     }
+	     //후기작성 INSERT
 	     else if(url_Command.equals("/reviewok.manage")) {
-	           System.out.println(request.getParameter("rv_content"));
-	           System.out.println(request.getParameter("rating"));
-	           System.out.println(request.getParameter("buy_num"));
-	           System.out.println(request.getParameter("p_num"));
-	           System.out.println(request.getParameter("storename_buyer"));
-	           System.out.println(request.getParameter("rimg_name"));
-	           System.out.println(request.getParameter("rimg_size"));
 	           action = new ReviewOkAction(); 
 	           forward = action.execute(request, response);
 	           
 	     }
+	     //summernote에 업로드된 이미지 처리
 	     else if(url_Command.equals("/imgupload.manage")) {
 	           forward=new ActionForward();
 	           forward.setPath("/WEB-INF/views/manageshops/summernote_imageUpload.jsp");
 	           forward.setRedirect(false);
 	     }
+		//상품 수정할 때 필요한 UI, 정보 가져오기
+		  else if (url_Command.equals("/editproduct.manage")) {
+			  	
+			  	action = new EditProductAction();
+				forward = action.execute(request, response);
+				/*
+				 * forward = new ActionForward(); forward.setRedirect(false);
+				 * forward.setPath("WEB-INF/views/manageshops/editproduct.jsp");
+				 */
+		 
+		  } //상품 수정하기 로직
+		  else if(url_Command.equals("/producteditok.manage")) {
+			    
+			    System.out.println("producteditok.manage");
+				action = new ProductEditOkAction();
+				forward = action.execute(request, response);
+		 }
+		 
+
     	//////////////////////////////////////////////////////
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

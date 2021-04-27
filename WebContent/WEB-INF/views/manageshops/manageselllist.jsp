@@ -22,14 +22,7 @@
 <body>
 	<div id="fullwrap">
 	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	  <div id="manageshop_menu">
-   		<ul id="ms_menu">
-	      <li class="deco">상품등록</li>
-	      <li class="deco"><span id="currentpage">상품관리</span></li>
-	      <li class="deco">구매내역</li>
-	      <li >판매내역</li>
-	   </ul>
-	   </div>
+	  
        <!--  탭 부트스트랩  -->
     <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,6 +30,16 @@
 		 <!-- Shopping Cart Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
+        
+        <div id="manageshop_menu">
+   		<ul id="ms_menu">
+	      <li class="deco"><a href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
+	      <li class="deco"><a href="manageshop.manage">상품관리</a></li>
+	      <li class="deco"><a href="buylist.manage">구매내역</a></li>
+	      <li ><span id="currentpage">판매내역</span></li>
+	   </ul>
+	   </div>
+        
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart-table">
@@ -59,7 +62,7 @@
                                     	<c:out value="${item.sell_num}"/>
                                     </td>
                                     <td class="cart-pic" onclick="location.href='${pageContext.request.contextPath}/productdetail.do?p_num=${item.p_num}&storename=${itme.storename_seller}'">
-                                    	<img src="${pageContext.request.contextPath}/img/store/${item.pimg_name}">
+                                    	<img src="${pageContext.request.contextPath}/fileUpload/${item.pimg_name}">
                                     </td>
                                     <td class="cart-title" onclick="location.href='${pageContext.request.contextPath}/productdetail.do?p_num=${item.p_num}&storename=${itme.storename_seller}'">
                                         <h5><c:out value="${item.p_subj}"/></h5>

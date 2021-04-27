@@ -23,6 +23,8 @@ public class NameCheckOk extends HttpServlet {
 	    System.out.println("This is NameCheckOk.ajax");
 	       
 	       String storename = request.getParameter("storename");
+	       System.out.println(storename);
+	       
 	       SecondHandsDAO dao = new SecondHandsDAO();
 	       boolean check = dao.getNameCheck(storename);
 	       System.out.println(check);

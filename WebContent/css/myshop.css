@@ -80,3 +80,25 @@
 	text-decoration:none;
 	
 }
+
+#shopbtn{
+	
+	width:100%;
+	
+}
+
+#shopbtn input{
+	border:1px solid lightgray;
+	background-color:white;
+	color:#0072e6;
+	width:120px;
+	padding:10px;
+	height:40px;
+	margin:10px auto;
+	font-size:12px;
+
+}
+
+#leftbtn{
+	margin-right:auto;
+}
