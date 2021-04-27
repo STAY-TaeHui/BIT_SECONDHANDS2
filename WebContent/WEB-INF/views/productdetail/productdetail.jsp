@@ -294,7 +294,7 @@
        }
        
        
-       //카테고리 유지 함수
+/*        //카테고리 유지 함수
        
        function setCategory(){
           
@@ -313,11 +313,11 @@
           $("#top").val(t).prop("selected", true);
           $("#middle").val(m).prop("selected", true);
           $("#bottom").val(b).prop("selected", true);
-          */
+          
           console.log("카테고리는?");
           console.log(${categoryarr.t_num});
        }
-    
+     
        ///////////////////////////////////////////////
        
        // 현재 접속한 아이디가 이걸 찜했는지 확인
