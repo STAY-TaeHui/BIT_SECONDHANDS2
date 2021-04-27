@@ -312,7 +312,7 @@ System.out.println("-------------------------------");
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
-                    data:{storename : '${requestScope.storename}'},
+                    data:{storename : reqstorename},
                     type:"get",
                     dataType:"json",
                     async:false,

@@ -21,7 +21,7 @@
 		maxActive="100"
 		password="1004" 
 		username="boarduser"
-		url="jdbc:oracle:thin:@localhost:1521:XE"
+		url="jdbc:oracle:thin:@bit-secondhands.iptime.org:1521:XE"
 		driverClassName="oracle.jdbc.OracleDriver" 
 		type="javax.sql.DataSource"
 		auth="Container" 
