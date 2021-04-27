@@ -70,7 +70,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="${pageContext.request.contextPath}/img/store/${jsonobj.pimg_name}" alt="">
+                                <img class="product-big-img" src="${pageContext.request.contextPath}/fileUpload/${jsonobj.pimg_name}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -106,7 +106,7 @@
                                 
                                 <c:choose>
                                 	<c:when test="${sessionScope.storename eq jsonobj.storename}">
-                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop.manage?storename=${sessionScope.storename}'">
                                 	<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
                                 	<input type="hidden" value="찜♥" id="like">
                                 	</c:when>
@@ -130,7 +130,7 @@
                     <c:when test="${not empty imgs}">
                     <div id="moreimgs">
                     	<c:forEach var="imgs" items="${imgs}">
-                    	<div class="sub_imgs"><img src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
+                    	<div class="sub_imgs"><img class="sub_img" src="${pageContext.request.contextPath}/fileUpload/${imgs}"/></div>
                     	</c:forEach>
                     </div>
                     </c:when>
@@ -214,7 +214,7 @@
                                                   <c:forEach var="arr" items="${jsonarr}">
                                                   
                                                    <div class ="recently_p" >
-                                                   <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
+                                                   <img src="${pageContext.request.contextPath}/fileUpload/${arr.pimg_name}">
                                                       
                                                    </div>
                                                    
@@ -224,7 +224,7 @@
                                                    </c:choose>
                                                    
                                                    <div id="more">
-                                                      <input type="button" value="더보기" id="moreinfo">
+                                                      <input type="button" value="더보기" id="moreinfo" onclick="location.href='myshop.do?storename=${jsonobj.storename}'">
                                                       </div>
                                                   
                                                 </div>
@@ -244,9 +244,9 @@
         </div>
     </section>
     <!-- 모달창 -->
-             <div class="modal fade" role="dialog" id="imgmodal">
+             <div class="modal fade" role="dialog" id="imgmodal" style="top:25%; margin:auto;">
                      <div class="modal-dialog">
-                    <div class="modal-content"></div>          
+                    <!-- <div class="modal-content"></div>   -->        
                        <img class="img-responsive" src="" id="show-img">         
                     </div>
                 </div>
@@ -272,7 +272,7 @@
        window.onload=function(){
         
           //카테고리 유지시키기(미완)
-          setCategory();
+          //setCategory();
           
           //이 페이지의 상품이 찜한 상품인지 확인
           checkLike();     
@@ -294,7 +294,7 @@
        }
        
        
-       //카테고리 유지 함수
+/*        //카테고리 유지 함수
        
        function setCategory(){
           
@@ -313,11 +313,11 @@
           $("#top").val(t).prop("selected", true);
           $("#middle").val(m).prop("selected", true);
           $("#bottom").val(b).prop("selected", true);
-          */
+          
           console.log("카테고리는?");
           console.log(${categoryarr.t_num});
        }
-    
+     
        ///////////////////////////////////////////////
        
        // 현재 접속한 아이디가 이걸 찜했는지 확인
@@ -857,7 +857,7 @@ function buy(){
        }
        
        //상세 이미지 모달
-        $('img').click(function(){
+        $('.sub_img').click(function(){
                                   console.log("img function");
                                   var img=$(this).attr('src');
                                     $("#show-img").attr('src',img);

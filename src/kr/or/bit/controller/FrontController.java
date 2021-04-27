@@ -93,11 +93,13 @@ public class FrontController extends HttpServlet {
 			action = new ProductDetailAction();
 			forward = action.execute(request, response);
 
-		} else if (url_Command.equals("/searchproductok.do")) {
+		}//검색
+    	else if (url_Command.equals("/searchproductok.do")) {
 
 			action = new SearchProductOkAction();
 			forward = action.execute(request, response);
-
+		
+			//카테고리에 맞는 상품 불러오기
 		} else if (url_Command.equals("/getselectedproductok.do")) {
 
 			action = new GetSelectedProductOkAction();

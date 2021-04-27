@@ -220,7 +220,7 @@ System.out.println(random);
 			dataType : "html",
 			success : function() {
 				swal({
-					title : "해당 번호로 인증번호 6자리를 보냈습니다. \n3분 이내에 입력해주세요.",
+					title : "해당 번호로 인증번호 6자리를 보냈습니다. 3분 이내에 입력해주세요.",
 					icon : "success"
 				});
 			},

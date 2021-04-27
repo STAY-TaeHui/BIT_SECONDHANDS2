@@ -32,7 +32,7 @@ public class ProductOrderByTime extends HttpServlet {
         //PrintWriter out = response.getWriter();
     	String keyword = request.getParameter("keyword");
     	
-    	System.out.println("서블릿의 k : " + keyword);
+    	System.out.println("최신순 서블릿의 k : " + keyword);
     	
         SecondHandsDAO dao = new SecondHandsDAO();
         JSONArray arr = dao.ProductOderByTime(keyword);

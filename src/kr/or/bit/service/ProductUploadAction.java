@@ -18,90 +18,92 @@ import kr.or.bit.dao.SecondHandsDAO;
 
 public class ProductUploadAction implements Action {
 
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 
-		SecondHandsDAO dao = new SecondHandsDAO();
-		String storename = "";
-		String imgs = "";
-		String subj = "";
-		String b_num = "";
-		String addr = "";
-		String price = "";
-		String content = "";
-		String filenames = "";
-		String url = "";
-		String icon = "";
-		String msg = "";
-		boolean b = false;
+   @Override
+   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 
-		String encType = "UTF-8";
-		int maxFilesize = 5 * 1024 * 1024;
-		String pathName = request.getServletContext().getRealPath("fileUpload");
+      SecondHandsDAO dao = new SecondHandsDAO();
+      String storename = "";
+      String imgs = "";
+      String subj = "";
+      String b_num = "";
+      String addr = "";
+      String price = "";
+      String content = "";
+      String filenames = "";
+      String url = "";
+      String icon = "";
+      String msg = "";
+      boolean b = false;
 
-		try {
-			File f = new File(pathName);
-			if (!f.exists()) {
-				f.mkdirs();
-			}
+      String encType = "UTF-8";
+      int maxFilesize = 5 * 1024 * 1024;
+      String pathName = request.getServletContext().getRealPath("fileUpload");
 
-			MultipartRequest mr = new MultipartRequest(request, pathName, maxFilesize, encType,
-					new DefaultFileRenamePolicy());
+      try {
+         File f = new File(pathName);
+         if (!f.exists()) {
+            f.mkdirs();
+         }
 
-			storename = mr.getParameter("storename");
-			subj = mr.getParameter("subj");
-			b_num = mr.getParameter("bottom");
-			addr = mr.getParameter("addr");
-			price = mr.getParameter("price");
-			content = mr.getParameter("content");
-			filenames = mr.getParameter("filenames");
+         MultipartRequest mr = new MultipartRequest(request, pathName, maxFilesize, encType,
+               new DefaultFileRenamePolicy());
 
-			System.out.println(storename);
-			System.out.println(subj);
-			System.out.println(b_num);
-			System.out.println(addr);
-			System.out.println(price);
-			System.out.println(content);
-			String[] filename = filenames.split(",");
-			for (String s : filename) {
-				System.out.println(s);
-			}
+         storename = mr.getParameter("storename");
+         subj = mr.getParameter("subj");
+         b_num = mr.getParameter("bottom");
+         addr = mr.getParameter("addr");
+         price = mr.getParameter("price");
+         content = mr.getParameter("content");
+         filenames = mr.getParameter("filenames");
 
-			boolean result = dao.productUpload(storename, subj, b_num, addr, price, content);
-			int p_num = dao.productQuery();
-			System.out.println("서비스 p_num :" + p_num);
+         System.out.println(storename);
+         System.out.println(subj);
+         System.out.println(b_num);
+         System.out.println(addr);
+         System.out.println(price);
+         System.out.println(content);
+         String[] filename = filenames.split(",");
+         for (String s : filename) {
+            System.out.println(s);
+         }
 
-			for (int i = 0; i < filename.length; i++) {
-				b = dao.productImgUpload(filename[i], p_num, i + 1);
-				if (b) {
-					System.out.println("이미지 insert 성공");
+         boolean result = dao.productUpload(storename, subj, b_num, addr, price, content);
+         int p_num = dao.productQuery();
+         System.out.println("서비스 p_num :" + p_num);
 
-				} else {
-					System.out.println("이미지 insert 실패");
-				}
-			}
-			if (result && b) {
-				// url = "/WEB-INF/views/manageshop/managemyproducts.jsp";
-				url = "manageshop.manage";
-				icon = "success";
-				msg = "등록 성공!";
-			} else {
-				url = "mysell.do";
-				icon = "error";
-				msg = "등록 실패..";
-			}
+         for (int i = 0; i < filename.length; i++) {
+            b = dao.productImgUpload(filename[i], p_num, i + 1);
+            if (b) {
+               System.out.println("이미지 insert 성공");
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+            } else {
+               System.out.println("이미지 insert 실패");
+            }
+         }
+         if (result && b) {
+            // url = "/WEB-INF/views/manageshop/managemyproducts.jsp";
+            url = "manageshop.manage";
+            icon = "success";
+            msg = "등록 성공!";
+         } else {
+            url = "mysell.do";
+            icon = "error";
+            msg = "등록 실패..";
+         }
 
-		request.setAttribute("url", url);
-		request.setAttribute("icon", icon);
-		request.setAttribute("msg", msg);
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("WEB-INF/views/redirect/redirect.jsp");
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      }
 
-		return forward;
-	}
+      request.setAttribute("url", url);
+      request.setAttribute("icon", icon);
+      request.setAttribute("msg", msg);
+      ActionForward forward = new ActionForward();
+      forward.setRedirect(false);
+      forward.setPath("WEB-INF/views/redirect/redirect.jsp");
+
+      return forward;
+   }
+
 }

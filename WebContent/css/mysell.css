@@ -19,4 +19,28 @@
   content: attr(data-placeholder);
   color: #f70000;
   font-size: .9em;
+
 }
+
+#manageshop_menu {
+	
+	height:90px;
+	position: fixed;
+	top:140px;
+	z-index: 999;
+}
+
+#manageshop_menu ul{
+	display:flex;
+	margin-bottom:20px;
+	color:gray;
+	padding-left:100px;
+	padding:0;
+	
+}
+
+.deco::after{
+	content:" | ";
+	margin:20px;
+}
+

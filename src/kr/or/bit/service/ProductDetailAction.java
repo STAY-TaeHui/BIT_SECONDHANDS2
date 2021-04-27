@@ -37,7 +37,7 @@ public class ProductDetailAction implements Action{
 		request.setAttribute("jsonarr",dao.showShopInfo(storename));
 		
 		//카테고리 값 표시하기
-		request.setAttribute("categoryarr",dao.setCategory(p_num));
+		//request.setAttribute("categoryarr",dao.setCategory(p_num));
 		
 		//상품 문의 목록 표시하기
 		request.setAttribute("replylist", dao.getReplayList(p_num));
