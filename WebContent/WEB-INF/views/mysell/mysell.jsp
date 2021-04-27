@@ -165,11 +165,12 @@
             </div>
             <hr>
             <div>
-               거래지역<br> <input type="text" id="sample4_postcode"
-                  placeholder="우편번호" readOnly> <input type="button"
-                  onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-               <input name="addr" type="text" id="sample4_roadAddress"
-                  placeholder="도로명주소" readOnly style="width: 325px">
+              거래지역  <input type="hidden" id="sample4_postcode"
+						placeholder="우편번호" readOnly>
+					<input name="addr" type="text" id="sample4_roadAddress"
+						placeholder="도로명주소" readOnly style="width: 325px" value="${p_addr}" >
+						<input type="button"
+						onclick="sample4_execDaumPostcode()" value="주소 찾기">
                <script>
                   //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
                   function sample4_execDaumPostcode() {
@@ -398,7 +399,7 @@
                return;
             }
 
-            if ($('#sample4_postcode').val() == '') {
+            if ($('#sample4_roadAddress').val() == '') {
                swal({
                   title : "거래지역을 선택해주세요",
                   icon : "error"

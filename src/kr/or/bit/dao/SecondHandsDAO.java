@@ -2207,12 +2207,13 @@ public class SecondHandsDAO {
 	}
 	
 	// 파일 수정하기 위한 정보들 넘기기 가희
-	public JSONObject editInfo(int p_num) {
+	
+	public JSONArray editInfo(int p_num) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		JSONObject obj = new JSONObject();
+		JSONArray arr = new JSONArray();
 
 		System.out.println("카테고리로 불러오기 함수 실행");
 
@@ -2220,11 +2221,12 @@ public class SecondHandsDAO {
 			conn = ds.getConnection();
 			
 
-			String sql = "select p.p_subj, p.p_addr, p.p_price, p.p_content, b.b_num, m.m_num, t.t_num  from product p left join category_bottom b"
+			String sql = "select pi.pimg_name, p.p_subj, p.p_addr, p.p_price, p.p_content, b.b_num, m.m_num, t.t_num  from product_img pi left join product p "
+					+ "on pi.p_num=p.p_num left join category_bottom b"
 				    +" on p.b_num=b.b_num left join category_middle m"
 				    +" on b.m_num=m.m_num left join category_top t"
 				    +" on m.t_num=t.t_num"
-				    +" where p_num=?";
+				    +" where p.p_num=?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p_num);
@@ -2232,7 +2234,8 @@ public class SecondHandsDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-
+				JSONObject obj = new JSONObject();
+				obj.put("pimg_name",rs.getString("pimg_name"));
 				obj.put("p_subj",rs.getString("p_subj"));
 				obj.put("p_addr",rs.getString("p_addr"));
 				obj.put("p_content",rs.getString("p_content"));
@@ -2241,7 +2244,69 @@ public class SecondHandsDAO {
 				obj.put("b_num",rs.getInt("b_num"));
 				obj.put("m_num",rs.getInt("m_num"));
 				obj.put("t_num",rs.getInt("t_num"));
+				
+				System.out.println("기존상품 정보 : "+obj);
+				arr.add(obj);
+			}
+		System.out.println("기존상품 배열 : " + arr);
 
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("SQLException" + e.getMessage());
+		} catch (Exception e3) {
+			System.out.println(e3.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();// 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return arr;
+	}
+	
+	/*
+	public JSONObject editInfo(int p_num) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONObject obj = new JSONObject();
+		JSONArray arr = new JSONArray();
+		
+		System.out.println("카테고리로 불러오기 함수 실행");
+
+		try {
+			conn = ds.getConnection();
+			
+
+			String sql = "select pi.pimg_name, p.p_subj, p.p_addr, p.p_price, p.p_content, b.b_num, m.m_num, t.t_num  from product_img pi left join product p "
+					+ "on pi.p_num=p.p_num left join category_bottom b"
+				    +" on p.b_num=b.b_num left join category_middle m"
+				    +" on b.m_num=m.m_num left join category_top t"
+				    +" on m.t_num=t.t_num"
+				    +" where p.p_num=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				obj.put("pimg_name",rs.getString("pimg_name"));
+				obj.put("p_subj",rs.getString("p_subj"));
+				obj.put("p_addr",rs.getString("p_addr"));
+				obj.put("p_content",rs.getString("p_content"));
+				obj.put("p_price",rs.getInt("p_price"));
+				obj.put("p_num",p_num);
+				obj.put("b_num",rs.getInt("b_num"));
+				obj.put("m_num",rs.getInt("m_num"));
+				obj.put("t_num",rs.getInt("t_num"));
+				
+				System.out.println("기존상품 정보 : "+obj);
 			}
 		
 
@@ -2262,7 +2327,7 @@ public class SecondHandsDAO {
 		return obj;
 	}
 	
-	
+	*/
 	////////////////////////////////////////////////////////////////////
 	//상품 수정
 	///////////////////////////////////////////////////////////////////
@@ -2407,37 +2472,22 @@ public class SecondHandsDAO {
 		}
 		*/
 		// 이미지 삭제
-		public boolean deleteProductImg(int p_num) {
-		      Connection conn = null;
-		      PreparedStatement pstmt = null;
-
-		      try {
-		         conn = ds.getConnection();
-
-		         String sql = "delete from product_img where p_num=?";
-		         pstmt = conn.prepareStatement(sql);
-		         pstmt.setInt(1, p_num);
-
-		         int result = pstmt.executeUpdate();
-
-		         if (result > 0) {
-		            System.out.println("반영된 열 있음");
-		            return true;
-		         } else {
-		            System.out.println("반영된 열 없음");
-		            return false;
-		         }
-
-		      } catch (Exception e) {
-		         System.out.println(e.getMessage());
-		      } finally {
-		         try {
-		            pstmt.close();
-		            conn.close();
-		         } catch (Exception e2) {
-		            System.out.println(e2.getMessage());
-		         }
-		      }
-		      return false;
-		   }
+		/*
+		 * public boolean deleteProductImg(int p_num) { Connection conn = null;
+		 * PreparedStatement pstmt = null;
+		 * 
+		 * try { conn = ds.getConnection();
+		 * 
+		 * String sql = "delete from product_img where p_num=?"; pstmt =
+		 * conn.prepareStatement(sql); pstmt.setInt(1, p_num);
+		 * 
+		 * int result = pstmt.executeUpdate();
+		 * 
+		 * if (result > 0) { System.out.println("반영된 열 있음"); return true; } else {
+		 * System.out.println("반영된 열 없음"); return false; }
+		 * 
+		 * } catch (Exception e) { System.out.println(e.getMessage()); } finally { try {
+		 * pstmt.close(); conn.close(); } catch (Exception e2) {
+		 * System.out.println(e2.getMessage()); } } return false; }
+		 */
 }

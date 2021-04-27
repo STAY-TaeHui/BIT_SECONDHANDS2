@@ -28,34 +28,31 @@ public class ProductEditOkAction implements Action {
 	      String addr = "";
 	      String price = "";
 	      String content = "";
-	      String filenames = "";
+	     // String filenames = "";
 	      String url = "";
 	      String icon = "";
 	      String msg = "";
 	      boolean b = false;
 
-	      String encType = "UTF-8";
-	      int maxFilesize = 5 * 1024 * 1024;
-	      String pathName = request.getServletContext().getRealPath("fileUpload");
-
-	      try {
-	         File f = new File(pathName);
-	         if (!f.exists()) {
-	            f.mkdirs();
-	         }
-
-	         MultipartRequest mr = new MultipartRequest(request, pathName, maxFilesize, encType,
-	               new DefaultFileRenamePolicy());
+			/*
+			 * String encType = "UTF-8"; int maxFilesize = 5 * 1024 * 1024; String pathName
+			 * = request.getServletContext().getRealPath("fileUpload");
+			 * 
+			 * try { File f = new File(pathName); if (!f.exists()) { f.mkdirs(); }
+			 * 
+			 * MultipartRequest mr = new MultipartRequest(request, pathName, maxFilesize,
+			 * encType, new DefaultFileRenamePolicy());
+			 */
 	         
-	         p_num = mr.getParameter("p_num");
-	         storename = mr.getParameter("storename");
-	         subj = mr.getParameter("subj");
-	         b_num = mr.getParameter("bottom");
-	         addr = mr.getParameter("addr");
-	         price = mr.getParameter("price");
-	         content = mr.getParameter("content");
+	         p_num = request.getParameter("p_num");
+	         storename = request.getParameter("storename");
+	         subj = request.getParameter("subj");
+	         b_num = request.getParameter("bottom");
+	         addr = request.getParameter("addr");
+	         price = request.getParameter("price");
+	         content = request.getParameter("content");
 	         
-	         filenames = mr.getParameter("filenames");
+	         //filenames = mr.getParameter("filenames");
 
 	         System.out.println(storename);
 	         System.out.println(subj);
@@ -63,33 +60,31 @@ public class ProductEditOkAction implements Action {
 	         System.out.println(addr);
 	         System.out.println(price);
 	         System.out.println(content);
-	         String[] filename = filenames.split(",");
-	         
-	         for (int i = 0; i < filename.length; i++) {
-	            System.out.println("이미지 : " + filename[i]);
-	         }
+				/*
+				 * String[] filename = filenames.split(",");
+				 * 
+				 * for (int i = 0; i < filename.length; i++) { System.out.println("이미지 : " +
+				 * filename[i]); }
+				 */
 	         
 	         // 상품 수정하고
 	         boolean result = dao.productEdit(p_num, storename, subj, b_num, addr, price, content);
-	         int p_number = Integer.parseInt(p_num);
+	         //int p_number = Integer.parseInt(p_num);
 	         //해당상품 이미지 삭제 하고
-	         boolean dresult = dao.deleteProductImg(p_number);
-	         System.out.println("이미지 삭제 : " + dresult);
+	         //boolean dresult = dao.deleteProductImg(p_number);
+
 
 	        
 	         System.out.println("서비스 p_num :" + p_num);
 	         
-	         for (int i = 0; i < filename.length; i++) {
-	        	 //이미지 다시 등록한다
-	        	 b = dao.productImgUpload(filename[i], p_number, i + 1);
-	            if (b) {
-	               System.out.println("이미지 update 성공");
-
-	            } else {
-	               System.out.println("이미지 update 실패");
-	            }
-	         }
-	         if (result && b ) {
+				/*
+				 * for (int i = 0; i < filename.length; i++) { //이미지 다시 등록한다 //b =
+				 * dao.productImgUpload(filename[i], p_number, i + 1); if (b) {
+				 * System.out.println("이미지 update 성공");
+				 * 
+				 * } else { System.out.println("이미지 update 실패"); } }
+				 */
+	         if (result) {
 	            // url = "/WEB-INF/views/manageshop/managemyproducts.jsp";
 	            url = "manageshop.manage";
 	            icon = "success";
@@ -100,11 +95,11 @@ public class ProductEditOkAction implements Action {
 	            msg = "수정 실패..";
 	         }
 
-	      } catch (Exception e) {
-	         System.out.println(e.getMessage());
-	      }finally {
-	    	  
-	      }
+				/*
+				 * } catch (Exception e) { System.out.println(e.getMessage()); }finally {
+				 * 
+				 * }
+				 */
 
 	      request.setAttribute("url", url);
 	      request.setAttribute("icon", icon);

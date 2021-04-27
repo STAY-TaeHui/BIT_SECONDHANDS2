@@ -3,6 +3,7 @@ package kr.or.bit.service.manageshop;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import kr.or.bit.action.Action;
@@ -17,7 +18,7 @@ public class EditProductAction implements Action {
 		SecondHandsDAO dao = new SecondHandsDAO();
 
 		String p_number = request.getParameter("p_num");
-		JSONObject obj = new JSONObject();
+		JSONArray arr = new JSONArray();
 		
 		try {
 			int p_num = Integer.parseInt(p_number);
@@ -25,14 +26,14 @@ public class EditProductAction implements Action {
 			System.out.println("상품수정하기 위한 정보 받아오기");
 			System.out.println(p_num);
 			
-			obj = dao.editInfo(p_num);
+			arr = dao.editInfo(p_num);
 			
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
-		request.setAttribute("product",obj);
+		request.setAttribute("product",arr);
 
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
