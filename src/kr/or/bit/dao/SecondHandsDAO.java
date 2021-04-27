@@ -1,5 +1,8 @@
 package kr.or.bit.dao;
 
+
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +19,6 @@ import javax.sql.DataSource;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import kr.or.bit.dto.Board;
 
 //CRUD 함수 > ConnectionPool > 함수단위 연결 ,받환 
 public class SecondHandsDAO {
@@ -657,6 +659,7 @@ public class SecondHandsDAO {
 	         return 0;
 	     
 	   }
+	   /*
 	// 페이지 이동시 카테고리 유지시켜주는 함수 -가희-
 	public JSONObject setCategory(int p_num) {
 
@@ -705,6 +708,7 @@ public class SecondHandsDAO {
 
 		return obj;
 	}
+	*/
 	 //최신순 가격순 정렬 -가희-
 	public JSONArray getProductListByOrder(String keyword) { 
 	      Connection conn = null;
@@ -1098,7 +1102,7 @@ public class SecondHandsDAO {
 		return arr;
 	}
 
-	// 카페고리에 맞는 상품 물러오기 -가희-
+	// 카페고리에 맞는 상품 불러오기 -가희-
 	public JSONArray getSelectedProduct(String index) {
 
 		Connection conn = null;
@@ -1835,9 +1839,10 @@ public class SecondHandsDAO {
 		try {
 			conn = ds.getConnection();
 
-			String sql = "select pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_status, p.p_ed_time "
+			String sql = "select p.p_num, pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_status, p.p_ed_time "
 					+ "from product p left join product_img pi " + "on p.p_num=pi.p_num "
-					+ "where pi.pimg_num=1 and p.storename=?";
+					+ "where pi.pimg_num=1 and p.storename=?"
+					+ "order by p.p_wr_time desc";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, storename);
@@ -1850,6 +1855,7 @@ public class SecondHandsDAO {
 
 				obj.put("pimg_name", rs.getString("pimg_name").trim());
 				obj.put("p_subj", rs.getString("p_subj"));
+				obj.put("p_num", rs.getInt("p_num"));
 				obj.put("p_price", rs.getInt("p_price"));
 				obj.put("p_wr_time", rs.getString("p_wr_time"));
 				obj.put("p_ed_time", rs.getString("p_ed_time"));
@@ -1970,7 +1976,7 @@ public class SecondHandsDAO {
 		return false;
 	}
 
-	// 상품 등록 쿼리문 -명환-
+	// 상품 등록 쿼리문 -가희 영훈-
 	public int productQuery() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1993,7 +1999,7 @@ public class SecondHandsDAO {
 
 			while (rs.next()) {
 				p_number = rs.getInt("p_num");
-				System.out.println("p_nember" + p_number);
+				System.out.println("p_number" + p_number);
 
 			}
 			System.out.println(sql);
@@ -2199,4 +2205,239 @@ public class SecondHandsDAO {
 		
 		return imgs;
 	}
+	
+	// 파일 수정하기 위한 정보들 넘기기 가희
+	public JSONObject editInfo(int p_num) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONObject obj = new JSONObject();
+
+		System.out.println("카테고리로 불러오기 함수 실행");
+
+		try {
+			conn = ds.getConnection();
+			
+
+			String sql = "select p.p_subj, p.p_addr, p.p_price, p.p_content, b.b_num, m.m_num, t.t_num  from product p left join category_bottom b"
+				    +" on p.b_num=b.b_num left join category_middle m"
+				    +" on b.m_num=m.m_num left join category_top t"
+				    +" on m.t_num=t.t_num"
+				    +" where p_num=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+
+				obj.put("p_subj",rs.getString("p_subj"));
+				obj.put("p_addr",rs.getString("p_addr"));
+				obj.put("p_content",rs.getString("p_content"));
+				obj.put("p_price",rs.getInt("p_price"));
+				obj.put("p_num",p_num);
+				obj.put("b_num",rs.getInt("b_num"));
+				obj.put("m_num",rs.getInt("m_num"));
+				obj.put("t_num",rs.getInt("t_num"));
+
+			}
+		
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("SQLException" + e.getMessage());
+		} catch (Exception e3) {
+			System.out.println(e3.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();// 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return obj;
+	}
+	
+	
+	////////////////////////////////////////////////////////////////////
+	//상품 수정
+	///////////////////////////////////////////////////////////////////
+	// 상품 수정 -가희-
+		public boolean productEdit(String p_num, String storename, String subj, String b_num, String addr, String price,
+				String content) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			System.out.println("상품 수정 함수 실행");
+
+			try {
+				conn = ds.getConnection();
+
+				// String sql = "select * from member";
+				String sql = "";
+				
+				sql += "Update product set b_num="+b_num+", storename='"+storename+"', p_addr='"+addr+"', "
+						+"p_subj='"+subj+"', p_price="+price+", p_content='"+content+"', p_ed_time=sysdate where p_num="+p_num;
+				
+				
+				//sql += "Update product Set b_num=?, storename=?, p_addr=?, p_subj=?,p_price=?, p_content=?, p_ed_time=sysdate where p_num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				//pstmt.setString(1, b_num);
+				//pstmt.setString(2, storename);
+				//pstmt.setString(3, addr);
+				//pstmt.setString(4, subj);
+				//pstmt.setString(5, price);
+				//pstmt.setString(6, content);
+				//pstmt.setString(7, p_num);
+
+				System.out.println("update : " + sql);
+
+				int result = pstmt.executeUpdate();
+
+				if (result > 0) {
+					System.out.println("반영된 행 있음");
+					return true;
+				} else {
+					System.out.println("반영된 행 없음");
+
+				}
+
+			}
+
+			catch (Exception e) {
+				System.out.println("오류 : " + e.getMessage());
+
+			} finally {
+				try {
+					pstmt.close();
+					conn.close();// 반환하기
+
+				} catch (Exception e2) {
+					System.out.println("오류2 : " + e2.getMessage());
+				}
+			}
+
+			return false;
+		}
+
+		/*
+		 * // 상품 등록 쿼리문 -가희 영훈- public int productQuery() { Connection conn = null;
+		 * PreparedStatement pstmt = null; ResultSet rs = null; int p_number = 0;
+		 * System.out.println("상품 등록 쿼리문");
+		 * 
+		 * try { conn = ds.getConnection();
+		 * 
+		 * // String sql = "select * from member"; String sql = "";
+		 * 
+		 * sql +=
+		 * "select p_num from (select p_num from product order by p_num desc) where rownum =1"
+		 * ;
+		 * 
+		 * pstmt = conn.prepareStatement(sql); rs = pstmt.executeQuery();
+		 * 
+		 * System.out.println("select문" + sql);
+		 * 
+		 * while (rs.next()) { p_number = rs.getInt("p_num");
+		 * System.out.println("p_number" + p_number);
+		 * 
+		 * } System.out.println(sql);
+		 * 
+		 * }
+		 * 
+		 * catch (Exception e) { System.out.println(e.getMessage());
+		 * 
+		 * } finally { try { rs.close(); pstmt.close(); conn.close();// 반환하기
+		 * 
+		 * } catch (Exception e2) { System.out.println(e2.getMessage()); } }
+		 * 
+		 * return p_number; }
+		 
+		// 상품등록 이미지 수정 -가희
+		public boolean productImgEdit(String image_name, String p_num, int pimg_num) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			System.out.println("상품 등록 이미지 수정 함수 실행");
+
+			try {
+				conn = ds.getConnection();
+
+				// String sql = "select * from member";
+				String sql = "";
+
+				sql += "Update product_img set pimg_name='"+image_name+"', pimg_size=100  where pimg_num="+pimg_num+" and p_num="+p_num;
+				
+				pstmt = conn.prepareStatement(sql);				
+				//pstmt.setString(1, image_name);
+				//pstmt.setInt(2, 100);
+				//pstmt.setInt(3, pimg_num);
+				//pstmt.setString(4, p_num);
+				System.out.println("update 이미지  : " + sql);
+				
+				int result = pstmt.executeUpdate(sql);
+				
+				if (result > 0) {
+					System.out.println("반영된 행 있음");
+					return true;
+				} else {
+					System.out.println("반영된 행 없음");
+
+				}
+
+			}
+
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+
+			} finally {
+				try {
+					pstmt.close();
+					conn.close();// 반환하기
+
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+
+			return false;
+		}
+		*/
+		// 이미지 삭제
+		public boolean deleteProductImg(int p_num) {
+		      Connection conn = null;
+		      PreparedStatement pstmt = null;
+
+		      try {
+		         conn = ds.getConnection();
+
+		         String sql = "delete from product_img where p_num=?";
+		         pstmt = conn.prepareStatement(sql);
+		         pstmt.setInt(1, p_num);
+
+		         int result = pstmt.executeUpdate();
+
+		         if (result > 0) {
+		            System.out.println("반영된 열 있음");
+		            return true;
+		         } else {
+		            System.out.println("반영된 열 없음");
+		            return false;
+		         }
+
+		      } catch (Exception e) {
+		         System.out.println(e.getMessage());
+		      } finally {
+		         try {
+		            pstmt.close();
+		            conn.close();
+		         } catch (Exception e2) {
+		            System.out.println(e2.getMessage());
+		         }
+		      }
+		      return false;
+		   }
 }

@@ -8,7 +8,7 @@ String profile = (String) request.getAttribute("profile");
 String realPath = application.getRealPath("fileUpload");
 
 if (profile == null) {
-	profile = "default.png";
+   profile = "default.png";
 }
 
 System.out.println("-------------------------------");
@@ -71,43 +71,43 @@ System.out.println("-------------------------------");
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div id="bodywrap">
 <div id="productdetailName">
-				<h4>상점정보</h4>
-			</div>
-			<hr>
-			<form method="post" action="editMember.do" id="submit"
-				enctype="multipart/form-data">
-				<div id="ProductTotal">
-					<div id="ProductPhoto">
-						<div class="box">
-							<img src="" id="img" width="300px" height="300px"> <input
-								type="file" id="file" name="file" style="display: none;">
-							<input id="storename" name="storename" value="<%=storename%>"
-								type="hidden"> <input name="originalPath"
-								value="<%=profile%>" type="hidden">
-							<c:choose>
-								<c:when test="${sessionScope.storename eq storename}">
-									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
-									<input type="button" value="수정하기" id="editBtn" name="">
-								</c:when>
-								<c:otherwise>
-									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-					<div id="Storename">
-						<%
-						out.print("" + storename + "<br>");
-						%>
-					</div>
-					<br>
-				</div>
-			</form>
+            <h4>상점정보</h4>
+         </div>
+         <hr>
+         <form method="post" action="editMember.do" id="submit"
+            enctype="multipart/form-data">
+            <div id="ProductTotal">
+               <div id="ProductPhoto">
+                  <div class="box">
+                     <img src="" id="img" width="300px" height="300px"> <input
+                        type="file" id="file" name="file" style="display: none;">
+                     <input id="storename" name="storename" value="<%=storename%>"
+                        type="hidden"> <input name="originalPath"
+                        value="<%=profile%>" type="hidden">
+                     <c:choose>
+                        <c:when test="${sessionScope.storename eq storename}">
+                           <input type="button" value="상품관리 가기"
+                              onclick="location.href='manageshop.manage'">
+                           <input type="button" value="수정하기" id="editBtn" name="">
+                        </c:when>
+                        <c:otherwise>
+                           <input type="button" value="상품관리 가기"
+                              onclick="location.href='manageshop.manage'">
+                        </c:otherwise>
+                     </c:choose>
+                  </div>
+               </div>
+               <div id="Storename">
+                  <%
+                  out.print("" + storename + "<br>");
+                  %>
+               </div>
+               <br>
+            </div>
+         </form>
 
    
-<div style='width:100%;margin:0 auto;margin-top:50px;'>
+<div style='width:100%;margin:0 auto;margin-top:100px;'>
    <ul class="nav nav-tabs">
       <li class='active'><a href="#tabmenu_01" onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
       <li><a href="#tabmenu_02" onclick="likelist()" data-toggle="tab"> 찜 </a></li>
@@ -203,13 +203,13 @@ System.out.println("-------------------------------");
    
    
     function productlist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = "${requestScope.storename}";
-    	let reqscopestorename = '${requestScope.storename}';
-    	
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
-    	console.log("reqscopestorename : " + reqscopestorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = "${requestScope.storename}";
+       let reqscopestorename = '${requestScope.storename}';
+       
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
+       console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -242,10 +242,10 @@ System.out.println("-------------------------------");
            );
      }
     function likelist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopLikeList.ajax",
@@ -280,10 +280,10 @@ System.out.println("-------------------------------");
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
@@ -309,7 +309,7 @@ System.out.println("-------------------------------");
                               }
                            }
                            if(storename === obj.writer){
-                        	   display="";
+                              display="";
                            }
                            
                            $(".myreviewlist").append(
@@ -335,11 +335,11 @@ System.out.println("-------------------------------");
                                  +"</div>"
                                  +"<div class='row text-left'>"
                                  +"<p class='content'>"+obj.rv_content+"</p>"
-                                 +"</div>"	
+                                 +"</div>"   
                                  +"<div class='row text-left'>"
                                  +"<a class='thumbnail' href='#'>"
                                  +"<img class='img-responsive' src='${pageContext.request.contextPath}/img/review/"+obj.rimg_name+"'>"
-                               	 +"</a>"
+                                   +"</a>"
                                  +"</div>"
                                  +"<div class='row text-left mt-4'>"
                                  +"<div class='like mr-3 vote' style='display:"+display+";'>"
@@ -356,9 +356,9 @@ System.out.println("-------------------------------");
                                     $("#imgmodal").modal('show');
                                });
                            $('span[name=delete]').click(function(){
-                        	   console.log("DELETE CLICK클릭이새끼야");
-                        	   console.log($(this).attr('id'));
-                        	    $.ajax(
+                              console.log("DELETE CLICK클릭이새끼야");
+                              console.log($(this).attr('id'));
+                               $.ajax(
                                        {   
                                           url:"MyShopReviewDelete.ajax",
                                           data:{rv_num : $(this).attr('id')},
@@ -366,19 +366,19 @@ System.out.println("-------------------------------");
                                           async:false,
                                           dataType:"text",
                                           success:function(responsedata){
-                                        	  console.log("데이터반환 성공");
-                                        	  if(responsedata>0){
-                                        		  console.log("DELTE 성공");
-                                        	  }
-                                        	  else{
-                                        		  console.log("DELTE 실패");
-                                        	  }
+                                             console.log("데이터반환 성공");
+                                             if(responsedata>0){
+                                                console.log("DELTE 성공");
+                                             }
+                                             else{
+                                                console.log("DELTE 실패");
+                                             }
                                           },
                                           error:function(){
-                                        	  console.log("데이터 반환 실패");
+                                             console.log("데이터 반환 실패");
                                           }
                                        }); 
-                        	   
+                              
                            })
                       });
                         let count = responsedata.length

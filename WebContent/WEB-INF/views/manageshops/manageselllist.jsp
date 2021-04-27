@@ -24,10 +24,10 @@
 	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	  <div id="manageshop_menu">
    		<ul id="ms_menu">
-	      <li class="deco">상품등록</li>
-	      <li class="deco"><span id="currentpage">상품관리</span></li>
-	      <li class="deco">구매내역</li>
-	      <li >판매내역</li>
+	      <li class="deco"><a href="#">상품등록</a></li>
+	      <li class="deco"><a href="manageshop.manage">상품관리</a></li>
+	      <li class="deco"><a href="buylist.manage">구매내역</a></li>
+	      <li ><span id="currentpage">판매내역</span></li>
 	   </ul>
 	   </div>
        <!--  탭 부트스트랩  -->

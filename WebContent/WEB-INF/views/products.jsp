@@ -159,7 +159,7 @@
 	<c:forEach var="products" items="${products}">
 		<li><a href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
 			<div class='thumnail'>
-    			<img src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'>
+    			<img src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'> 
     		</div>
     			<div class=title>${products.p_subj}</div>
     			<div class='imginfo'><p class='price'>${products.p_price}</p>

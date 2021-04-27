@@ -17,18 +17,19 @@ public class ManageShopAction implements Action {
 		// TODO Auto-generated method stub
 		ActionForward forward = new ActionForward();
 		
-		String storename = request.getParameter("storename");
+		//String storename = request.getParameter("storename");
 		String keyword = request.getParameter("keyword");
 		String status = request.getParameter("staus");
+		HttpSession session = request.getSession();
+		String storename = (String)session.getAttribute("storename");
 		
 		SecondHandsDAO dao = new SecondHandsDAO(); 
     	String m_profile =  dao.MyShopProfile(storename);
     	
-    	HttpSession session = request.getSession();
-    	System.out.println("SESION 이름은 : "+session.getAttribute(storename));
+    	
+    	System.out.println("SESION 이름은 : "+ storename);
     	
     	//그냥 불러오기
-
     	request.setAttribute("myproducts",dao.getmyproductslist(storename)); 
     	request.setAttribute("storename", storename);
     	request.setAttribute("m_profile", m_profile);
