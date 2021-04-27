@@ -147,75 +147,55 @@
 </head>
 
 <body>
-
-
-	<div id="fullwrap">
-		<jsp:include page="include/header.jsp"></jsp:include>
-		<jsp:include page="include/category.jsp"></jsp:include>
-
-		<div id="bodywrap">
-
-			<!-- Hero Section End -->
-			<div id="content">
-				<div id="ordermenu">
-					<p>오늘의 추천</p>
-
-					<ul id="defaultorder">
-						<li><input type="button" value="최신순"
-							onclick="searchOrderbytime()" id="timebtn" class="unclickedbtn"></li>
-						<li><input type="button" value="가격순"
-							onclick="searchOrderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-					</ul>
-
-					<ul id="categoryorder">
-						<li><input type="button" value="최신순"
-							onclick="c_orderbytime()" id="timebtn" class="unclickedbtn"></li>
-						<li><input type="button" value="가격순"
-							onclick="c_orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-					</ul>
-
-				</div>
-
-				<c:choose>
-
-					<c:when test="${not empty products}">
-						<ul class="productlist">
-							<c:forEach var="products" items="${products}">
-								<li><a
-									href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
-										<div class='thumnail'>
-											<img
-												src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'>
-										</div>
-										<div class=title>${products.p_subj}</div>
-										<div class='imginfo'>
-											<p class='price'>${products.p_price}</p>
-											<p class='wrtime'>${products.p_wr_time}</p>
-										</div>
-								</a></li>
-							</c:forEach>
-						</ul>
-					</c:when>
-
-					<c:otherwise>
-						<p style="width: 100%; margin-top: 30px; text-align: center;">검색
-							결과가 없습니다</p>
-					</c:otherwise>
-				</c:choose>
-
-
-				<!-- Latest Blog Section End -->
-
-			</div>
-			<!-- Footer Section Begin -->
-
-
-			<jsp:include page="include/footer.jsp"></jsp:include>
-			<!-- bodywrap end -->
-		</div>
-
-
+<div id="fullwrap">
+	<jsp:include page="include/header.jsp"></jsp:include>
+	<jsp:include page="include/category.jsp"></jsp:include>
+	
+	<div id="bodywrap">
+	
+    <!-- Hero Section End -->
+    <div id="content">
+    <div id="ordermenu">
+	<p>오늘의 추천</p>
+	
+	<ul id="defaultorder">
+		<li><input type="button" value="최신순" onclick="searchOrderbytime()" id="timebtn" class="unclickedbtn"></li>
+		<li><input type="button" value="가격순" onclick="searchOrderbyprice()" id="pricebtn" class="unclickedbtn"></li>
+	</ul>
+	
+	<ul id="categoryorder">
+		<li><input type="button" value="최신순" onclick="c_orderbytime()" id="timebtn" class="unclickedbtn"></li>
+		<li><input type="button" value="가격순" onclick="c_orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
+	</ul>
+	
 	</div>
+	
+	<c:choose>
+	
+	<c:when test="${not empty products}">
+	<ul class="productlist">
+	<c:forEach var="products" items="${products}">
+	
+		<li><a href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
+			<div class='thumnail'>
+    			<img src='${pageContext.request.contextPath}/fileUpload/${products.pimg_name}'> 
+    		</div>
+    			<div class=title>${products.p_subj}</div>
+    			<div class='imginfo'><p class='price'>${products.p_price}</p>
+    			<p class='wrtime'>${products.p_wr_time}</p></div></a>
+    	</li>
+    	
+	</c:forEach>
+	</ul>
+	</c:when>
+	
+	<c:otherwise>
+	<p style="width:100%; margin-top:30px; text-align:center;">검색 결과가 없습니다</p>
+	</c:otherwise>
+	</c:choose>
+
+    <!-- Latest Blog Section End -->
+		</div>
 	<!-- fullwrap end -->
 
 	<!-- Js Plugins -->

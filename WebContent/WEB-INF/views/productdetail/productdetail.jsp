@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -9,266 +9,294 @@
 <!-- 상품 문의 목록 -->
 <c:set var="replylist" value="${requestScope.replylist}" />
 
-<c:set var ="jsonarr" value="${requestScope.jsonarr}" />
+<c:set var="jsonarr" value="${requestScope.jsonarr}" />
 
-<c:set var="imgs" value="${requestScope.imgs}"/>
+<c:set var="imgs" value="${requestScope.imgs}" />
 
 <!-- 제이슨 배열에서 폰번호 뽑아내기 -->
 <c:forEach var="arr" items="${jsonarr}">
-<c:set var="phone" value="${arr.m_phone}"/>
+	<c:set var="phone" value="${arr.m_phone}" />
 </c:forEach>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Template</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- 로딩이미지
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- 로딩이미지
     <script src="https://codepen.io/fbrz/pen/9a3e4ee2ef6dfd479ad33a2c85146fc1.js"></script>
  -->
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    
-    <!-- 내가 커스텀한 css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productdetail.css" type="text/css">
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+
+<!-- 내가 커스텀한 css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/productdetail.css"
+	type="text/css">
 
 </head>
 
 <body>
 
-<div id="fullwrap">
-   <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-   <jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
-   
-          <!-- 모달을 위한 탭 부트스트랩  -->
-    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   
-   <div id="bodywrap">
+	<div id="fullwrap">
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/include/category.jsp"></jsp:include>
 
-    <!-- Product Shop Section Begin -->
-    <section class="product-shop spad page-details">
-        <div class="container">
-            <div class="row">
-              
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="product-pic-zoom">
-                                <img class="product-big-img" src="${pageContext.request.contextPath}/img/store/${jsonobj.pimg_name}" alt="">
-                                <div class="zoom-icon">
-                                    <i class="fa fa-search-plus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="product-details">
-                                <div class="pd-title">
-                                <ul>
-                                   <li id="shopname">${jsonobj.storename}</li>
-                                   <li><h4>${jsonobj.p_subj}</h4></li>
-                                   <li><h3>${jsonobj.p_price}원</h3>
-                                   
-                                   <c:choose>
-                                   	<c:when test="${jsonobj.p_dcharge eq 0}">
-                                   <span> *배송비 미포함</span>
-                                   </c:when>
-                                   <c:otherwise>
-                                   <span> *배송비 포함</span>
-                                   </c:otherwise>
-                                   </c:choose>
-                                   </li>
-                                </ul>
-                                
-                                </div>
-                                <hr>
-                                <div id="pd-time">
-                                <p id="likecounts">찜한 사람 <span id="likers" style="color:red;">${likecounts}</span></p>
-								<p id="location">${jsonobj.p_addr}</p>
-								<p id="wr_time">등록 ${jsonobj.p_wr_time}</p>
-                                </div>
-                                <div id="contactseller">
-                                
-                                <c:choose>
-                                	<c:when test="${sessionScope.storename eq jsonobj.storename}">
-                                	<input type="button" value="내 상점 관리" id="manageshop" style="width:100%;" onclick="location.href='manageshop?storename=${sessionScope.storename}'">
-                                	<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
-                                	<input type="hidden" value="찜♥" id="like">
-                                	</c:when>
-                                	<c:otherwise>
-                                   <input type="button" value="찜♥" id="like">
-                                   <input type="hidden" id="phone_number" value="${phone}">			
-                                   <input type="button" value="연락하기" id="call" onclick="contact()">                                  
-                                   <input type="button" value="바로구매" id="buynow" onclick="buy()">
+		<!-- 모달을 위한 탭 부트스트랩  -->
+		<script type='text/javascript'
+			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-                                   
-                                   </c:otherwise>
-                                  </c:choose>
-                                </div>
+		<div id="bodywrap">
 
-                        </div>
-                    </div>
-                    
-                    <!-- 사진 더 표시할 div -->
-                    <c:choose>
-                    
-                    <c:when test="${not empty imgs}">
-                    <div id="moreimgs">
-                    	<c:forEach var="imgs" items="${imgs}">
-                    	<div class="sub_imgs"><img src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
-                    	</c:forEach>
-                    </div>
-                    </c:when>
+			<!-- Product Shop Section Begin -->
+			<section class="product-shop spad page-details">
+				<div class="container">
+					<div class="row">
 
-                    </c:choose>
-                    <div class="product-tab">
-                        <div class="tab-item">
-                            <ul class="nav" role="tablist">
-                                <li>
-                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">상품정보</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-item-content">
-                            <div class="tab-content">
-                                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
-                                    <div class="product-content">
-                                        <div class="row">
-                                            <div class="col-lg-8" id="p_content">
-                                            <div>
-                                                <h5>상품 소개</h5>
-                                                <p>${jsonobj.p_content}</p>
-                                                </div>
-                                                
-                                                <!-- 상품 문의 댓글 영역 -->
-                                                <div id="replyarea">
-                                                <p id="replytitle" style="color:black;">상품문의 <span id="recount" style="color:red;">${fn:length(replylist)}</span></p>
-                                                
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="product-pic-zoom">
+										<img class="product-big-img"
+											src="${pageContext.request.contextPath}/fileUpload/${jsonobj.pimg_name}"
+											alt="">
+										<div class="zoom-icon">
+											<i class="fa fa-search-plus"></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="product-details">
+										<div class="pd-title">
+											<ul>
+												<li id="shopname">${jsonobj.storename}</li>
+												<li><h4>${jsonobj.p_subj}</h4></li>
+												<li><h3>${jsonobj.p_price}원</h3> <c:choose>
+														<c:when test="${jsonobj.p_dcharge eq 0}">
+															<span> *배송비 미포함</span>
+														</c:when>
+														<c:otherwise>
+															<span> *배송비 포함</span>
+														</c:otherwise>
+													</c:choose></li>
+											</ul>
 
-                                           <textarea placeholder="상품문의입력" id="replytext" name="replytext" style="width:100%; height:100px;"></textarea>
-                                           <div id="test_cnt">(0/100)</div>
-                                           <input type="button" value="댓글달기" class="replybtn" onclick="reply_check()"> 
+										</div>
+										<hr>
+										<div id="pd-time">
+											<p id="likecounts">
+												찜한 사람 <span id="likers" style="color: red;">${likecounts}</span>
+											</p>
+											<p id="location">${jsonobj.p_addr}</p>
+											<p id="wr_time">등록 ${jsonobj.p_wr_time}</p>
+										</div>
+										<div id="contactseller">
 
-                                                <div id="relist">
-                                                <c:if test="${not empty replylist}">
-                                                
-                                       <c:forEach var="reply" items="${replylist}">
-                                          <table id="reply${reply.rp_num}"><!-- 이거 넘버링 안됨 -->
-                                             <tr >
-                                                <th class="replywriter" id="writer${reply.rp_num}">${reply.storename}</th>
-                                             </tr>
-                                             <tr >
-                                                
-                                                <td class="replycontent" id="replycontent${reply.rp_num}">
-                                                ${reply.rp_content}<br>
-                                                </td>
-                                             </tr>
-                                             <tr class="replybtnarea">
-                                                <td>
-                                          <input type="button" value="댓글달기" class="replybtn" id="re${reply.rp_num}" onclick="rewrite(${reply.rp_num})">
-                                          <input type="button" value="삭제하기" class="replybtn" id="del${reply.rp_num}" onclick="deleteReply(${reply.p_num},${reply.rp_num})">
-                                          <input type="button" value="수정하기" class="replybtn" id="edit${reply.rp_num}" onclick="editReply(${reply.p_num},${reply.rp_num})">
-                                                </td>
-                                             </tr>
-                                          </table>
-                                       </c:forEach>
-                                    </c:if>
-                                                </div>   
-                                                
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4" id="shopcontainer">
-                                            <!--  
+											<c:choose>
+												<c:when
+													test="${sessionScope.storename eq jsonobj.storename}">
+													<input type="button" value="내 상점 관리" id="manageshop"
+														style="width: 100%;"
+														onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+													<!-- 쿼리셀렉터로 선택해 자동실행하는 함수가 있어서 여기에도 일단 만들어줌 -->
+													<input type="hidden" value="찜♥" id="like">
+												</c:when>
+												<c:otherwise>
+													<input type="button" value="찜♥" id="like">
+													<input type="hidden" id="phone_number" value="${phone}">
+													<input type="button" value="연락하기" id="call"
+														onclick="contact()">
+													<input type="button" value="바로구매" id="buynow"
+														onclick="buy()">
+
+
+												</c:otherwise>
+											</c:choose>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- 사진 더 표시할 div -->
+								<c:choose>
+
+									<c:when test="${not empty imgs}">
+										<div id="moreimgs">
+											<c:forEach var="imgs" items="${imgs}">
+												<div class="sub_imgs">
+													<img class="sub_img"
+														src="${pageContext.request.contextPath}/fileUpload/${imgs}" />
+												</div>
+											</c:forEach>
+										</div>
+									</c:when>
+
+								</c:choose>
+								<div class="product-tab">
+									<div class="tab-item">
+										<ul class="nav" role="tablist">
+											<li><a class="active" data-toggle="tab" href="#tab-1"
+												role="tab">상품정보</a></li>
+										</ul>
+									</div>
+									<div class="tab-item-content">
+										<div class="tab-content">
+											<div class="tab-pane fade-in active" id="tab-1"
+												role="tabpanel">
+												<div class="product-content">
+													<div class="row">
+														<div class="col-lg-8" id="p_content">
+															<div>
+																<h5>상품 소개</h5>
+																<p>${jsonobj.p_content}</p>
+															</div>
+
+															<!-- 상품 문의 댓글 영역 -->
+															<div id="replyarea">
+																<p id="replytitle" style="color: black;">
+																	상품문의 <span id="recount" style="color: red;">${fn:length(replylist)}</span>
+																</p>
+
+
+																<textarea placeholder="상품문의입력" id="replytext"
+																	name="replytext" style="width: 100%; height: 100px;"></textarea>
+																<div id="test_cnt">(0/100)</div>
+																<input type="button" value="댓글달기" class="replybtn"
+																	onclick="reply_check()">
+
+																<div id="relist">
+																	<c:if test="${not empty replylist}">
+
+																		<c:forEach var="reply" items="${replylist}">
+																			<table id="reply${reply.rp_num}">
+																				<!-- 이거 넘버링 안됨 -->
+																				<tr>
+																					<th class="replywriter" id="writer${reply.rp_num}">${reply.storename}</th>
+																				</tr>
+																				<tr>
+
+																					<td class="replycontent"
+																						id="replycontent${reply.rp_num}">
+																						${reply.rp_content}<br>
+																					</td>
+																				</tr>
+																				<tr class="replybtnarea">
+																					<td><input type="button" value="댓글달기"
+																						class="replybtn" id="re${reply.rp_num}"
+																						onclick="rewrite(${reply.rp_num})"> <input
+																						type="button" value="삭제하기" class="replybtn"
+																						id="del${reply.rp_num}"
+																						onclick="deleteReply(${reply.p_num},${reply.rp_num})">
+																						<input type="button" value="수정하기" class="replybtn"
+																						id="edit${reply.rp_num}"
+																						onclick="editReply(${reply.p_num},${reply.rp_num})">
+																					</td>
+																				</tr>
+																			</table>
+																		</c:forEach>
+																	</c:if>
+																</div>
+
+															</div>
+														</div>
+														<div class="col-lg-4" id="shopcontainer">
+															<!--  
                                                 <img src="img/product-single/tab-desc.jpg" alt="">
                                                 -->
-                                                <h5>상점 정보</h5>
-                                                <div id="shopinfo">
-                                                   <div id="title">
-                                                  <!--  ${jsonobj.m_profile}  -->
-                                                   ${jsonobj.storename}
-                                                   </div>
-                                                   
-                                                   <c:choose>
-                                                   <c:when test="${ empty jsonarr}">
-                                                    <p>더 이상 등록된 상품이 없습니다</p>
-                                                   
-                                                   </c:when>
-                                                   
-                                                   <c:otherwise>
-                                                   
-                                                  <c:forEach var="arr" items="${jsonarr}">
-                                                  
-                                                   <div class ="recently_p" >
-                                                   <img src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
-                                                      
-                                                   </div>
-                                                   
-                                                   </c:forEach>
-                                                   
-                                                   </c:otherwise>
-                                                   </c:choose>
-                                                   
-                                                   <div id="more">
-                                                      <input type="button" value="더보기" id="moreinfo">
-                                                      </div>
-                                                  
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-    <!-- 모달창 -->
-             <div class="modal fade" role="dialog" id="imgmodal">
-                     <div class="modal-dialog">
-                    <div class="modal-content"></div>          
-                       <img class="img-responsive" src="" id="show-img">         
-                    </div>
-                </div>
- 
-    
-    <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-     <!-- bodywrap end -->
-    </div>
-</div>
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-    
-    <script>
+															<h5>상점 정보</h5>
+															<div id="shopinfo">
+																<div id="title">
+																	<!--  ${jsonobj.m_profile}  -->
+																	${jsonobj.storename}
+																</div>
+
+																<c:choose>
+																	<c:when test="${ empty jsonarr}">
+																		<p>더 이상 등록된 상품이 없습니다</p>
+
+																	</c:when>
+
+																	<c:otherwise>
+
+																		<c:forEach var="arr" items="${jsonarr}">
+
+																			<div class="recently_p">
+																				<img
+																					src="${pageContext.request.contextPath}/img/store/${arr.pimg_name}">
+
+																			</div>
+
+																		</c:forEach>
+
+																	</c:otherwise>
+																</c:choose>
+
+																<div id="more">
+																	<input type="button" value="더보기" id="moreinfo">
+																</div>
+
+															</div>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 모달창 -->
+			<div class="modal fade" role="dialog" id="imgmodal"
+				style="top: 25%; margin: auto;">
+				<div class="modal-dialog">
+					<!-- <div class="modal-content"></div>   -->
+					<img class="img-responsive" src="" id="show-img">
+				</div>
+			</div>
+
+
+			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+			<!-- bodywrap end -->
+		</div>
+	</div>
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
+
+	<script>
        window.onload=function(){
         
           //카테고리 유지시키기(미완)
@@ -857,7 +885,7 @@ function buy(){
        }
        
        //상세 이미지 모달
-        $('img').click(function(){
+        $('.sub_img').click(function(){
                                   console.log("img function");
                                   var img=$(this).attr('src');
                                     $("#show-img").attr('src',img);

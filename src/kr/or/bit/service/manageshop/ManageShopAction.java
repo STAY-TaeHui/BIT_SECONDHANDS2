@@ -36,6 +36,7 @@ public class ManageShopAction implements Action {
     	
     	forward.setRedirect(false);
     	forward.setPath("WEB-INF/views/manageshops/managemyproducts.jsp");
+    	
 		return forward;
 	}
 

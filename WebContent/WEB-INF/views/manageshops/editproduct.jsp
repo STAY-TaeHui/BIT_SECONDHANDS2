@@ -419,15 +419,32 @@
 
             //function check(){
             	//let att = document.getElementById("att_zone");
-/*              if($("#att_zone").find("img").length==0){
-            	// if(att.length==0){
+/*              if($("#att_zone").find("img").length==12){
+            	// if(att.length==12){
             	swal({
                     title : "이미지를 등록해주세요",
                     icon : "error"
                  });
                  return;	
             } 
-             */	
+             */
+             
+				if ($('#att_zone').html() == '') {
+					swal({
+						title : "최소 이미지 하나를 넣어주세요",
+						icon : "error"
+					});
+					return;
+				}
+				
+				if ($('#att_zone').find("div").length > 12) {
+					swal({
+						title : "이미지는 최대 12개까지 업로드 할 수 있습니다",
+						icon : "error"
+					});
+					return;
+				}
+             
             if ($('#subj').val() == '') {
                swal({
                   title : "제목을 입력해주세요",

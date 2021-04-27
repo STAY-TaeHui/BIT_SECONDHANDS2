@@ -197,7 +197,7 @@ System.out.println("-------------------------------");
       $.ajax(
             {   
                url:"MyShopProductList.ajax",
-               data:{storename : '${requestScope.storename}'},
+               data:{storename :'${requestScope.storename}'},
                type:"get",
                dataType:"json",
                success:function(responsedata){
@@ -205,7 +205,7 @@ System.out.println("-------------------------------");
                   $.each(responsedata, function(index, obj){
                         console.log(obj)
                         $(".myproductlist").append("<li><a href='productdetail.do?p_num="+obj.p_num+"&storename="+obj.storename+"'><div class='thumnail'>"
-                               +"<img src='${pageContext.request.contextPath}/img/store/"+obj.pimg_name+"'>"+
+                               +"<img src='${pageContext.request.contextPath}/fileUpload/"+obj.pimg_name+"'>"+
                                      "</div><div class=title>"+obj.p_subj+"</div><div class='imginfo'><p calss='price'>"+obj.p_price+"</p>"+
                                      "<p class='wrtime'>"+obj.p_wr_time+"</p></div></a></li>");
                   });

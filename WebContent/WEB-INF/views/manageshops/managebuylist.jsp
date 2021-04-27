@@ -31,23 +31,28 @@
 </head>
 <body>
 	<div id="fullwrap">
-	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	  <div id="manageshop_menu">
-   		<ul id="ms_menu">
-	      <li class="deco"><a href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
-	      <li class="deco"><a href="manageshop.manage">상품관리</a></li>
-	      <li class="deco"><span id="currentpage">구매내역</span></li>
-	      <li><a href="selllist.manage">판매내역</a></li>
-	   </ul>
-	   </div>
-       <!--  탭 부트스트랩  -->
-    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   		<div id="bodywrap">
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
+		<!--  탭 부트스트랩  -->
+		<script type='text/javascript'
+			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<div id="bodywrap">
 			<!-- Shopping Cart Section Begin -->
 			<section class="shopping-cart spad">
 				<div class="container">
+
+					<div id="manageshop_menu">
+						<ul id="ms_menu">
+							<li class="deco"><a
+								href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
+							<li class="deco"><a href="manageshop.manage">상품관리</a></li>
+							<li class="deco"><span id="currentpage">구매내역</span></li>
+							<li><a href="selllist.manage">판매내역</a></li>
+						</ul>
+					</div>
+
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="cart-table">
@@ -70,7 +75,7 @@
 												<td class="cart-pic"
 													onclick="location.href='${pageContext.request.contextPath}/productdetail.do?p_num=${item.p_num}&storename=${itme.storename_buyer}'">
 													<img
-													src="${pageContext.request.contextPath}/img/store/${item.pimg_name}">
+													src="${pageContext.request.contextPath}/fileUpload/${item.pimg_name}">
 												</td>
 												<td class="cart-title"
 													onclick="location.href='${pageContext.request.contextPath}/productdetail.do?p_num=${item.p_num}&storename=${itme.storename_buyer}'">
@@ -84,80 +89,75 @@
 												<td class="p_price"><c:out value="${item.p_price}" />원
 												</td>
 												<td class="date"><c:out value="${item.buy_date}" /></td>
-												<td><c:set var="flag" value='false'></c:set> <c:forEach
-														var="rvitem" items="${requestScope.reviewlist}">
-														<c:if test="${not flag}">
-															<c:choose>
-																<c:when test="${rvitem.buy_num eq item.buy_num}">
-																	<c:set var="flag" value="true" />
-																	<span class='reviewspan'>후기작성 완료</span>
-																</c:when>
-															</c:choose>
-														</c:if>
-													</c:forEach> <c:if test="${not flag}">
-														<button class='reviewbtn' data-toggle="modal"
-															data-target=#modal${item.buy_num}>후기작성</button>
-														<!-- 후기작성 모달 시작 -->
-														<div class="modal fade" id='modal${item.buy_num}'
-															tabindex="-1" role="dialog"
-															aria-labelledby="exampleModalLabel" aria-hidden="true">
-															<div class="modal-dialog modal-dialog-centered"
-																role="document">
-																<div class="modal-content">
-																	<div class="text-right cross">
-																		<i class="fa fa-times mr-2" data-dismiss="modal"></i>
-																	</div>
-																	<div class="card-body text-center">
-																		<img
-																			src="${pageContext.request.contextPath}/img/store/${item.pimg_name}"
-																			height="100" width="100">
-																		<div class="comment-box text-center">
-																			<h4>${item.p_subj}</h4>
-																			<form action='reviewok.manage' method=post>
-																				<input type="text" name="buy_num"
-																					value='${item.buy_num}' style="display: none">
-																				<input type="text" name="p_num"
-																					value='${item.p_num}' style="display: none">
-																				<input type="text" name="storename_buyer"
-																					value='${item.storename_buyer}'
-																					style="display: none"> <input type="text"
-																					id="rimg_name" name="rimg_name"
-																					style="display: none"> <input type="text"
-																					id="rimg_size" name="rimg_size"
-																					style="display: none">
+												<td><c:forEach var="rvitem"
+														items="${requestScope.reviewlist}">
+														<c:choose>
+															<c:when test="${rvitem.buy_num eq item.buy_num}">
 
+																<button class='reviewbtn' data-toggle="modal"
+																	data-target=#modal${item.buy_num}>후기작성</button>
 
-																				<div class="rating">
-																					<input type="radio" name="rating" value="5" id="5"><label
-																						for="5">☆</label> <input type="radio"
-																						name="rating" value="4" id="4"><label
-																						for="4">☆</label> <input type="radio"
-																						name="rating" value="3" id="3"><label
-																						for="3">☆</label> <input type="radio"
-																						name="rating" value="2" id="2"><label
-																						for="2">☆</label> <input type="radio"
-																						name="rating" value="1" id="1"><label
-																						for="1">☆</label>
+																<!-- 후기작성 모달 시작 -->
+																<div class="modal fade" id='modal${item.buy_num}'
+																	tabindex="-1" role="dialog"
+																	aria-labelledby="exampleModalLabel" aria-hidden="true">
+																	<div class="modal-dialog modal-dialog-centered"
+																		role="document">
+																		<div class="modal-content">
+																			<div class="text-right cross">
+																				<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+																			</div>
+																			<div class="card-body text-center">
+																				<img
+																					src="${pageContext.request.contextPath}/img/store/${item.pimg_name}"
+																					height="100" width="100">
+																				<div class="comment-box text-center">
+																					<h4>${item.p_subj}</h4>
+																					<form action='reviewok' method=post>
+																						<input type="text" name="buy_num"
+																							value='${item.buy_num}' style="display: none">
+																						<input type="text" name="p_num"
+																							value='${item.p_num}' style="display: none">
+																						<input type="text" name="storename_buyer"
+																							value='${item.storename_buyer}'
+																							style="display: none">
+																						<div class="rating">
+																							<input type="radio" name="rating" value="5"
+																								id="5"><label for="5">☆</label> <input
+																								type="radio" name="rating" value="4" id="4"><label
+																								for="4">☆</label> <input type="radio"
+																								name="rating" value="3" id="3"><label
+																								for="3">☆</label> <input type="radio"
+																								name="rating" value="2" id="2"><label
+																								for="2">☆</label> <input type="radio"
+																								name="rating" value="1" id="1"><label
+																								for="1">☆</label>
+																						</div>
+																						<!-- <div class="comment-area" style="display:none"> <textarea name="rv_content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div> -->
+																						<div class="comment-area">
+																							<textarea id="summernote" name="rv_content"
+																								class="form-control" placeholder="거 쉬ㅠ펄것"
+																								rows="4"></textarea>
+																						</div>
+																						<div class="text-center mt-4">
+																							<button class="btn btn-success send px-5">
+																								Send message <i
+																									class="fa fa-long-arrow-right ml-1"></i>
+																							</button>
+																						</div>
+																					</form>
 																				</div>
-																				<!-- <div class="comment-area" style="display:none"> <textarea name="rv_content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div> -->
-																				<div class="comment-area">
-																					<textarea id="summernote" name="rv_content"
-																						class="form-control" placeholder="거 쉬ㅠ펄것" rows="4"></textarea>
-																				</div>
-																				<div class="text-center mt-4">
-																					<button class="btn btn-success send px-5">
-																						Send message <i
-																							class="fa fa-long-arrow-right ml-1"></i>
-																					</button>
-																				</div>
-																			</form>
+																			</div>
 																		</div>
 																	</div>
 																</div>
-															</div>
-														</div>
-														<!-- 후기작성 모달 끝 -->
-													</c:if> <!-- <button class='reviewbtn' onclick="location.href='#'">후기작성</button> -->
+																<!-- 후기작성 모달 끝 -->
+															</c:when>
+															<c:otherwise>
+																<span class='reviewspan'>후기작성 완료</span>
+															</c:otherwise>
+														</c:choose>
+													</c:forEach> <!-- <button class='reviewbtn' onclick="location.href='#'">후기작성</button> -->
 												</td>
 											</tr>
 										</c:forEach>

@@ -137,26 +137,25 @@
 	<div id="fullwrap">
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-					<div id="manageshop_menu">
-					<ul id="ms_menu">
-						<li class="deco"><span id="currentpage" style="color:#f70000">상품등록</span></li>
-						<li class="deco"><a href="manageshop.manage">상품관리</a></li>
-						<li class="deco"><a href="buylist.manage">구매내역</a></li>
-						<li><a href="selllist.manage">판매내역</a></li>
-					</ul>
-				</div>
+		<div id="manageshop_menu">
+			<ul id="ms_menu">
+				<li class="deco"><span id="currentpage" style="color: #f70000">상품등록</span></li>
+				<li class="deco"><a href="manageshop.manage">상품관리</a></li>
+				<li class="deco"><a href="buylist.manage">구매내역</a></li>
+				<li><a href="selllist.manage">판매내역</a></li>
+			</ul>
+		</div>
 		<div id="bodywrap" style="padding-top: 230px;">
 
 			<form action="productupload.do" id="frm" method="post"
 				enctype="multipart/form-data">
-	
-				
+
+
 				<div class="content">
 					상품이미지 ( 최대 12 장 ) <input type='file' id='btnAtt' name="imgs"
 						multiple='multiple' /> <input type="hidden" id="filenames"
 						name="filenames">
-					<div id='att_zone'
-						data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하세요'></div>
+					<div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하세요'></div>
 				</div>
 				<hr>
 				<div class="form-group row">
@@ -300,7 +299,6 @@
 				        img.src = ee.target.result;
 				        attZone.appendChild(makeDiv(img, file));
 				      }
-				      
 				      reader.readAsDataURL(file);
 				    }
 				    
@@ -374,7 +372,33 @@
 					});
 					return;
 				}
-
+				
+				if ($('#att_zone').find("div").length > 12) {
+					swal({
+						title : "이미지는 최대 12개까지 업로드 할 수 있습니다",
+						icon : "error"
+					});
+					return;
+				}
+				
+				
+	            /* var fileInput = document.getElementById("btnAtt");
+	            var filenames = "";
+	            var files = fileInput.files;
+	            if(files.length > 12) {
+	            	swal({
+	            		title : "이미지는 최대 12개 업로드할 수 있습니다",
+	            		icon : "error"
+	            	});
+	            	return ;
+	            }
+	            var file;
+	            for (var i = 0; i < files.length; i++) {
+	                file = files[i];
+	                filenames += file.name+",";
+	            } */
+				
+	            
 				if ($('#bottom').val() == '') {
 					swal({
 						title : "카테고리를 선택해주세요",
@@ -406,16 +430,8 @@
 					});
 					return;
 				}
-				
-	            var fileInput = document.getElementById("btnAtt");
-	            var filenames = "";
-	            var files = fileInput.files;
-	            var file;
-	            for (var i = 0; i < files.length; i++) {
-	                file = files[i];
-	                filenames += file.name+",";
-	            }
-	            console.log("클릭클릭");
+
+
 	            $('#filenames').val(filenames);
 	            $('#bottom').val($('#bottom_b').val());
 				$('#submit').click();
