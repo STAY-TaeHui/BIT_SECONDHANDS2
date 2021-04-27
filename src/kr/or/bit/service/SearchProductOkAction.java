@@ -26,6 +26,7 @@ public class SearchProductOkAction implements Action {
         JSONArray arr = dao.searchProduct(keyword);
         
         request.setAttribute("products", arr);
+        request.setAttribute("keyword", keyword);
         forward = new ActionForward();
         forward.setRedirect(false);
 		forward.setPath("WEB-INF/views/products.jsp");

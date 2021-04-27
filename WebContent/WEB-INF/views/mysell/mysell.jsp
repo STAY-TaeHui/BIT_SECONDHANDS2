@@ -138,6 +138,15 @@
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 		<div id="bodywrap">
+			<div id="manageshop_menu">
+				<ul id="ms_menu">
+					<li class="deco"><span id="currentpage">상품등록</span></li>
+					<li class="deco"><a href="manageshop.manage">상품관리</a></li>
+					<li class="deco"><a href="buylist.manage">구매내역</a></li>
+					<li><a href="selllist.manage">판매내역</a></li>
+				</ul>
+			</div>
+
 			<form action="productupload.do" id="frm" method="post"
 				enctype="multipart/form-data">
 				<div class="content">

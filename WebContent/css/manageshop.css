@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+#ordermenu{
+	margin-left:auto;
+}
 #manageshop_menu {
 	
 	height:90px;
@@ -7,9 +9,7 @@
 	top:140px;
 	z-index: 999;
 }
-#ordermenu{
-	margin-left:auto;
-}
+
 #manageshop_menu ul{
 	display:flex;
 	margin-bottom:20px;

@@ -140,7 +140,7 @@
         <div class="container">
      	<div id="manageshop_menu">
 	<ul id="ms_menu">
-		<li class="deco"><a href="#">상품등록</a></li>
+		<li class="deco"><a href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
 		<li class="deco"><span id="currentpage">상품관리</span></li>
 		<li class="deco"><a href="buylist.manage">구매내역</a></li>
 		<li><a href="selllist.manage">판매내역</a></li>
@@ -203,7 +203,11 @@
                                 <c:when test="${not empty myproducts}">
                                 <c:forEach items="${myproducts}" var="myproducts" begin="0" varStatus="status" end="${fn:length(myproducts)}">
                                 <tr class="product">
-                               		<td class="p_img"><img src="${pageContext.request.contextPath}/img/store/${myproducts.pimg_name}"/></th>
+                               		<td class="p_img">
+                               		<a href='productdetail.do?p_num=${myproducts.p_num}&storename=${sessionScope.storename}'>
+                               		<img src="${pageContext.request.contextPath}/img/store/${myproducts.pimg_name}"/>
+                               		</a>
+                               		</td>
                                     <td class="p_name"><p class="sbj">${myproducts.p_subj}</p></td>
                                     <td class="p_status">
                                     <c:choose>

@@ -34,7 +34,7 @@
 	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	  <div id="manageshop_menu">
    		<ul id="ms_menu">
-	      <li class="deco"><a href="#">상품등록</a></li>
+	      <li class="deco"><a href="mysell.do?storename=${sessionScope.storename}">상품등록</a></li>
 	      <li class="deco"><a href="manageshop.manage">상품관리</a></li>
 	      <li class="deco"><span id="currentpage">구매내역</span></li>
 	      <li><a href="selllist.manage">판매내역</a></li>
