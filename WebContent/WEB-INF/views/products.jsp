@@ -33,13 +33,13 @@
 	       	//let b_val;
 	       	
 	       	//console.log(t_val);
-	       	
+	       	/*
 	       	if(t_number != undefined && m_number != undefined && c_number != undefined){
 	       		$("#top").val(t_number).prop("selected", true);
 		       	$("#middle").val(m_number).prop("selected", true);
 		       	$("#bottom").val(c_number).prop("selected", true);
 	       	}
-	             	
+	          */   	
 
             
         });
@@ -159,7 +159,7 @@
 	<c:forEach var="products" items="${products}">
 		<li><a href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
 			<div class='thumnail'>
-    			<img src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'>
+    			<img src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'> 
     		</div>
     			<div class=title>${products.p_subj}</div>
     			<div class='imginfo'><p class='price'>${products.p_price}</p>

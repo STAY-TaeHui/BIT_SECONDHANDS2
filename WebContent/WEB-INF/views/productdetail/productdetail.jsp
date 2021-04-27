@@ -272,7 +272,7 @@
        window.onload=function(){
         
           //카테고리 유지시키기(미완)
-          setCategory();
+          //setCategory();
           
           //이 페이지의 상품이 찜한 상품인지 확인
           checkLike();     

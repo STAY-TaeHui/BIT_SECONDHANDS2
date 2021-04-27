@@ -102,7 +102,7 @@ p_price{
 	height:150px;
 }
 
-#editbtn{
+.editbtn{
 	width:60px;
 	height:40px;
 	border:1px solid gray;

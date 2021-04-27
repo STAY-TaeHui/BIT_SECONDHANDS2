@@ -43,6 +43,12 @@ System.out.println("-------------------------------");
 
 .countp {
 	margin-bottom: 0;
+	opacity: 0;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
+	transition: opacity .15s linear;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
 }
 </style>
 <meta charset="UTF-8">
@@ -54,6 +60,7 @@ System.out.println("-------------------------------");
 <link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
 	rel='stylesheet'>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/myshop.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -70,6 +77,7 @@ System.out.println("-------------------------------");
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 <body>
+
 	<div id="fullwrap">
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 		<!--  탭 부트스트랩  -->
@@ -114,8 +122,8 @@ System.out.println("-------------------------------");
 					</div>
 					<div id="Storename">
 						<%
-									out.print("" + storename + "<br>");
-									%>
+						out.print("" + storename + "<br>");
+						%>
 					</div>
 					<br>
 				</div>
@@ -232,8 +240,7 @@ System.out.println("-------------------------------");
         	 
 	
 	});
-      
-     
+  
    });
    
    
@@ -333,7 +340,8 @@ System.out.println("-------------------------------");
                       
                        
                         $.each(responsedata, function(index, obj){
-                        	console.log("INEX : " + index)
+     						 	console.log("INEX : " + index)
+
                            let starstring="";
                            let display="none";
                            for(let i=2; i<=5; i++){
@@ -346,7 +354,7 @@ System.out.println("-------------------------------");
                            }
                            
                            if(sessionstorename === obj.writer){
-                        	   display="";
+                              display="";
                            }
                            
                            $(".myreviewlist").append(

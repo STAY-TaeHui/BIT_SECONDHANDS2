@@ -13,11 +13,13 @@ import javax.servlet.http.HttpSession;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.LoginOkAction;
+import kr.or.bit.service.ProductUploadAction;
 import kr.or.bit.service.manageshop.DeleteProductAction;
+import kr.or.bit.service.manageshop.EditProductAction;
 import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.manageshop.ManageShopBuyListAction;
 import kr.or.bit.service.manageshop.ManageShopSellListAction;
-import kr.or.bit.service.manageshop.ReviewOkAction;
+import kr.or.bit.service.manageshop.ProductEditOkAction;
 import kr.or.bit.service.myshop.MyShopInfoAction;
 
 import kr.or.bit.service.manageshop.ManageShopAction;
@@ -45,44 +47,51 @@ public class ManageShopController extends HttpServlet {
     	System.out.println("url_Command : "+url_Command);
     	Action action=null;
     	ActionForward forward=null;
-    	
-        //myshop 메인
-	     if(url_Command.equals("/manageshop.manage")) {
-	           System.out.println("manageshop.jsp VIEW");
-	           action = new ManageShopAction();
-	           forward = action.execute(request, response);
-	     }
-	     else if(url_Command.equals("/buylist.manage")) {
-	           System.out.println("managebuylist.jsp VIEW");
-	           action = new ManageShopBuyListAction();
-	           forward = action.execute(request, response);
-	     }
-	     else if(url_Command.equals("/selllist.manage")) {
-	           System.out.println("manageselllist.jsp VIEW");
-	           action = new ManageShopSellListAction(); 
-	           forward = action.execute(request, response);
-	     }
-	     else if(url_Command.equals("/reviewok.manage")) {
-	           System.out.println(request.getParameter("rv_content"));
-	           System.out.println(request.getParameter("rating"));
-	           System.out.println(request.getParameter("buy_num"));
-	           System.out.println(request.getParameter("p_num"));
-	           System.out.println(request.getParameter("storename_buyer"));
-	           System.out.println(request.getParameter("rimg_name"));
-	           System.out.println(request.getParameter("rimg_size"));
-	           action = new ReviewOkAction(); 
-	           forward = action.execute(request, response);
-	           
-	     }
-	     else if(url_Command.equals("/imgupload.manage")) {
-	           forward=new ActionForward();
-	           forward.setPath("/WEB-INF/views/manageshops/summernote_imageUpload.jsp");
-	           forward.setRedirect(false);
-	     }
-	     else if (url_Command.equals("/deleteproduct.manage")) {
-				action = new DeleteProductAction();
+
+    		//myshop 메인
+		 if(url_Command.equals("/manageshop.manage")) {
+	    		System.out.println("manageshop.jsp VIEW");
+	    		action = new ManageShopAction();
+	    		forward = action.execute(request, response);
+		 }
+		 else if(url_Command.equals("/buylist.manage")) {
+	    		System.out.println("managebuylist.jsp VIEW");
+	    		action = new ManageShopBuyListAction();
+	    		forward = action.execute(request, response);
+		 }
+		 else if(url_Command.equals("/selllist.manage")) {
+	    		System.out.println("manageselllist.jsp VIEW");
+	    		action = new ManageShopSellListAction(); 
+	    		forward = action.execute(request, response);
+		 }
+		 else if(url_Command.equals("/reviewok.manage")) {
+	    		System.out.println(request.getParameter("rv_content"));
+	    		System.out.println(request.getParameter("rating"));
+	    		System.out.println(request.getParameter("buy_num"));
+	    		System.out.println(request.getParameter("p_num"));
+	    		System.out.println(request.getParameter("storename_buyer"));
+	    		
+		 } //상품 수정할 때 필요한 UI, 정보 가져오기
+		  else if (url_Command.equals("/editproduct.manage")) {
+			  	
+			  	action = new EditProductAction();
 				forward = action.execute(request, response);
-		}
+				/*
+				 * forward = new ActionForward(); forward.setRedirect(false);
+				 * forward.setPath("WEB-INF/views/manageshops/editproduct.jsp");
+				 */
+		 
+		  } //상품 수정하기 로직
+		  else if(url_Command.equals("/producteditok.manage")) {
+			    
+			    System.out.println("producteditok.manage");
+				action = new ProductEditOkAction();
+				forward = action.execute(request, response);
+		 }
+		     else if (url_Command.equals("/deleteproduct.manage")) {
+					action = new DeleteProductAction();
+					forward = action.execute(request, response);
+			}
     	//////////////////////////////////////////////////////
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

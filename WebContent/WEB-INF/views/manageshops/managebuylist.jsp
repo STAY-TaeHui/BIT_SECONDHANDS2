@@ -31,21 +31,19 @@
 </head>
 <body>
 	<div id="fullwrap">
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-		<div id="manageshop_menu">
-			<ul id="ms_menu">
-				<li class="deco"><a href="#">상품등록</a></li>
-				<li class="deco"><a href="manageshop.manage">상품관리</a></li>
-				<li class="deco"><span id="currentpage">구매내역</span></li>
-				<li><a href="selllist.manage">판매내역</a></li>
-			</ul>
-		</div>
-		<!--  탭 부트스트랩  -->
-		<script type='text/javascript'
-			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-		<script
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<div id="bodywrap">
+	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	  <div id="manageshop_menu">
+   		<ul id="ms_menu">
+	      <li class="deco"><a href="#">상품등록</a></li>
+	      <li class="deco"><a href="manageshop.manage">상품관리</a></li>
+	      <li class="deco"><span id="currentpage">구매내역</span></li>
+	      <li><a href="selllist.manage">판매내역</a></li>
+	   </ul>
+	   </div>
+       <!--  탭 부트스트랩  -->
+    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   		<div id="bodywrap">
 
 			<!-- Shopping Cart Section Begin -->
 			<section class="shopping-cart spad">
