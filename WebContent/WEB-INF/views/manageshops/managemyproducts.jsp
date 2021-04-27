@@ -122,7 +122,6 @@
     	console.log("싹제");
     	console.log(num);
     	 location.href="deleteproduct.manage?p_num="+num;
-	
     }
   </script>
 

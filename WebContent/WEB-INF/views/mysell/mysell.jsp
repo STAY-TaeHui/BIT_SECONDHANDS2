@@ -145,7 +145,7 @@
 						multiple='multiple' /> <input type="hidden" id="filenames"
 						name="filenames">
 					<div id='att_zone'
-						data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+						data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭해주세요'></div>
 				</div>
 				<hr>
 				<div class="form-group row">
@@ -279,33 +279,6 @@
 				      }
 				    }  
 				    
-				  
-				    // 탐색기에서 드래그앤 드롭 사용
-				    attZone.addEventListener('dragenter', function(e){
-				      e.preventDefault();
-				      e.stopPropagation();
-				    }, false)
-				    
-				    attZone.addEventListener('dragover', function(e){
-				      e.preventDefault();
-				      e.stopPropagation();
-				      
-				    }, false)
-				  
-				    attZone.addEventListener('drop', function(e){
-				      var files = {};
-				      e.preventDefault();
-				      e.stopPropagation();
-				      var dt = e.dataTransfer;
-				      files = dt.files;
-				      for(f of files){
-				        imageLoader(f);
-				      }
-				      
-				    }, false)
-				    
-
-				    
 				    /*첨부된 이미리즐을 배열에 넣고 미리보기 */
 				    imageLoader = function(file){
 				      sel_files.push(file);
@@ -383,7 +356,7 @@
 					return;
 				}
 
-				if ($('#thumbnails').html() == '') {
+				if ($('#att_zone').html() == '') {
 					swal({
 						title : "최소 이미지 하나를 넣어주세요",
 						icon : "error"
