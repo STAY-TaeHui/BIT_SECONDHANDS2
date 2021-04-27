@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String currentStorename = (String) session.getAttribute("storename");
@@ -23,54 +23,62 @@ System.out.println("-------------------------------");
 <head>
 <style>
 .fadetb {
-  opacity: 0;
-  -webkit-transition: opacity .15s linear;
-       -o-transition: opacity .15s linear;
-          transition: opacity .15s linear;
+	opacity: 0;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
+	transition: opacity .15s linear;
 }
+
 .fade.in {
-  opacity: 1 !important;
+	opacity: 1 !important;
 }
-.tab-content > .tab-pane {
-  display: none;
+
+.tab-content>.tab-pane {
+	display: none;
 }
-.tab-content > .active {
-  display: block;
+
+.tab-content>.active {
+	display: block;
 }
-.countp{
-   margin-bottom:0;
+
+.countp {
+	margin-bottom: 0;
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title> 
- <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/myshop.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/tab.css" type="text/css">
-     <link rel="stylesheet" href="css/reviews.css" type="text/css">
+<title>Insert title here</title>
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
+<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
+	rel='stylesheet'>
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/myshop.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/tab.css" type="text/css">
+<link rel="stylesheet" href="css/reviews.css" type="text/css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    
-
-     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 <body>
-   <div id="fullwrap" >
-   <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-       <!--  탭 부트스트랩  -->
-    <script type='text/javascript'src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div id="bodywrap">
-<div id="productdetailName">
+	<div id="fullwrap">
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<!--  탭 부트스트랩  -->
+		<script type='text/javascript'
+			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<div id="bodywrap">
+			<div id="productdetailName">
 				<h4>상점정보</h4>
 			</div>
 			<hr>
@@ -87,12 +95,12 @@ System.out.println("-------------------------------");
 							<c:choose>
 								<c:when test="${sessionScope.storename eq storename}">
 									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+										onclick="location.href='manageshop.manage'">
 									<input type="button" value="수정하기" id="editBtn" name="">
 								</c:when>
 								<c:otherwise>
 									<input type="button" value="상품관리 가기"
-										onclick="location.href='manageshop?storename=${sessionScope.storename}'">
+										onclick="location.href='manageshop.manage'">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -106,60 +114,63 @@ System.out.println("-------------------------------");
 				</div>
 			</form>
 
-   
-<div style='width:100%;margin:0 auto;margin-top:50px;'>
-   <ul class="nav nav-tabs">
-      <li class='active'><a href="#tabmenu_01" onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
-      <li><a href="#tabmenu_02" onclick="likelist()" data-toggle="tab"> 찜 </a></li>
-      <li><a href="#tabmenu_03" onclick="reviewlist()" data-toggle="tab"> 거래 후기 </a></li>
-   </ul>
-   <div class="tab-content" >
-      <div class="tab-pane fade in active" id="tabmenu_01">
-         <!-- 상품 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         상품  <span class="productcount"></span> 개
-         </p>
-         </div>
-         <ul class="myproductlist"></ul>
-      </div>
-      <div class="tab-pane fade" id="tabmenu_02">
-         <!-- 찜 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         찜  <span class="likecount"></span> 개
-         </p>
-         </div>
-         <ul class="myproductlist"></ul>
-      </div>
-      <div class="tab-pane fade" id="tabmenu_03">
-         <!-- 찜 리스트 뿌려주는곳 -->
-         <div class="counttext">
-         <p class=countp>
-         거래후기  <span class="reviewcount"></span> 개
-         </p>
-         </div>
-         <!-- //////////////// REVIEW CARD START////////////////// -->
-         <!-- 모달창 -->
-         <div class="modal fade" role="dialog" id="imgmodal">
-                     <div class="modal-dialog">
-                    <div class="modal-content"></div>          
-                       <img class="img-responsive" src="" id="show-img">         
-                    </div>
-                </div>
-         <ul class="myreviewlist">
-         
-         </ul>
-            <!-- //////////////// REVIEW CARD EMD////////////////// -->
-         <!-- <ul class="productlist"></ul> -->
-      </div>
-   </div>
-</div>
-<!-- Footer Section Begin -->
-    <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-<!-- Footer Section End -->
-</div>
-</div>
+
+			<div style='width: 100%; margin: 0 auto; margin-top: 100px;'>
+				<ul class="nav nav-tabs">
+					<li class='active'><a href="#tabmenu_01"
+						onclick="productlist()" data-toggle="tab"> 상 품 </a></li>
+					<li><a href="#tabmenu_02" onclick="likelist()"
+						data-toggle="tab"> 찜 </a></li>
+					<li><a href="#tabmenu_03" onclick="reviewlist()"
+						data-toggle="tab"> 거래 후기 </a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="tabmenu_01">
+						<!-- 상품 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								상품 <span class="productcount"></span> 개
+							</p>
+						</div>
+						<ul class="myproductlist"></ul>
+					</div>
+					<div class="tab-pane fade" id="tabmenu_02">
+						<!-- 찜 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								찜 <span class="likecount"></span> 개
+							</p>
+						</div>
+						<ul class="myproductlist"></ul>
+					</div>
+					<div class="tab-pane fade" id="tabmenu_03">
+						<!-- 찜 리스트 뿌려주는곳 -->
+						<div class="counttext">
+							<p class=countp>
+								거래후기 <span class="reviewcount"></span> 개
+							</p>
+						</div>
+						<!-- //////////////// REVIEW CARD START////////////////// -->
+						<!-- 모달창 -->
+						<div class="modal fade" role="dialog" id="imgmodal">
+							<div class="modal-dialog">
+								<div class="modal-content"></div>
+								<img class="img-responsive" src="" id="show-img">
+							</div>
+						</div>
+						<ul class="myreviewlist">
+
+						</ul>
+						<!-- //////////////// REVIEW CARD EMD////////////////// -->
+						<!-- <ul class="productlist"></ul> -->
+					</div>
+				</div>
+			</div>
+			<!-- Footer Section Begin -->
+			<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+			<!-- Footer Section End -->
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
    $(function() {    //화면 다 뜨면 시작
@@ -203,13 +214,13 @@ System.out.println("-------------------------------");
    
    
     function productlist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = "${requestScope.storename}";
-    	let reqscopestorename = '${requestScope.storename}';
-    	
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
-    	console.log("reqscopestorename : " + reqscopestorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = "${requestScope.storename}";
+       let reqscopestorename = '${requestScope.storename}';
+       
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
+       console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -242,10 +253,10 @@ System.out.println("-------------------------------");
            );
      }
     function likelist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopLikeList.ajax",
@@ -280,10 +291,10 @@ System.out.println("-------------------------------");
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
@@ -309,7 +320,7 @@ System.out.println("-------------------------------");
                               }
                            }
                            if(storename === obj.writer){
-                        	   display="";
+                              display="";
                            }
                            
                            $(".myreviewlist").append(
@@ -335,11 +346,11 @@ System.out.println("-------------------------------");
                                  +"</div>"
                                  +"<div class='row text-left'>"
                                  +"<p class='content'>"+obj.rv_content+"</p>"
-                                 +"</div>"	
+                                 +"</div>"   
                                  +"<div class='row text-left'>"
                                  +"<a class='thumbnail' href='#'>"
                                  +"<img class='img-responsive' src='${pageContext.request.contextPath}/img/review/"+obj.rimg_name+"'>"
-                               	 +"</a>"
+                                   +"</a>"
                                  +"</div>"
                                  +"<div class='row text-left mt-4'>"
                                  +"<div class='like mr-3 vote' style='display:"+display+";'>"
@@ -356,9 +367,9 @@ System.out.println("-------------------------------");
                                     $("#imgmodal").modal('show');
                                });
                            $('span[name=delete]').click(function(){
-                        	   console.log("DELETE CLICK클릭이새끼야");
-                        	   console.log($(this).attr('id'));
-                        	    $.ajax(
+                              console.log("DELETE CLICK클릭이새끼야");
+                              console.log($(this).attr('id'));
+                               $.ajax(
                                        {   
                                           url:"MyShopReviewDelete.ajax",
                                           data:{rv_num : $(this).attr('id')},
@@ -366,19 +377,19 @@ System.out.println("-------------------------------");
                                           async:false,
                                           dataType:"text",
                                           success:function(responsedata){
-                                        	  console.log("데이터반환 성공");
-                                        	  if(responsedata>0){
-                                        		  console.log("DELTE 성공");
-                                        	  }
-                                        	  else{
-                                        		  console.log("DELTE 실패");
-                                        	  }
+                                             console.log("데이터반환 성공");
+                                             if(responsedata>0){
+                                                console.log("DELTE 성공");
+                                             }
+                                             else{
+                                                console.log("DELTE 실패");
+                                             }
                                           },
                                           error:function(){
-                                        	  console.log("데이터 반환 실패");
+                                             console.log("데이터 반환 실패");
                                           }
                                        }); 
-                        	   
+                              
                            })
                       });
                         let count = responsedata.length
@@ -398,49 +409,44 @@ System.out.println("-------------------------------");
               );
        
         }
-    
+ 	let currentStorename = '<%=currentStorename%>';
+	let storename = '<%=storename%>';
+	let profile = '<%=profile%>';
+	let nameCan = false;
+	let profilePath = "fileUpload/" + profile;
+	console.log(profile);
+	console.log(currentStorename);
+	console.log(storename);
+	console.log(profilePath);
 
-/*
-$('#target_img').click(function (e) {
-    document.signform.target_url.value = document.getElementById( 'target_img' ).src;
-    e.preventDefault();
-    $('#file').click();
-});    
+		$('#img').attr("src", profilePath);
 
-function changeValue(obj){
-      document.signform.submit();
+		$('#img').click(function(e) {
+			$('#file').click();
+		});
 
-   }
-*/
-/*
-$('#btnUpload').on('click', function(event) {
-    event.preventDefault();
-    
-    var form = $('#uploadForm')[0]
-    var data = new FormData(form);
-    
-    $('#btnUpload').prop('disabled', true);
-   
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "upload",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-           $('#btnUpload').prop('disabled', false);
-           alert('success')
-        },
-        error: function (e) {
-            $('#btnUpload').prop('disabled', false);
-            alert('fail');
-        }
-    });
-})
-*/
+		$('#file').change(
+				function(event) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						var img = document.createElement("img");
+						document.getElementById('img').setAttribute("src",
+								event.target.result);
+					};
+					reader.readAsDataURL(event.target.files[0]);
+				});
+
+		$('#editBtn').click(function() {
+			if ($('#file').val() == '') {
+				swal({
+					title : "내용이 바뀌지 않았습니다",
+					icon : "error"
+				});
+				return;
+			}
+
+			$('#submit').submit();
+		});
 </script>
 
 

@@ -16,26 +16,26 @@ public class ManageShopAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		ActionForward forward = new ActionForward();
-		
-		String storename = request.getParameter("storename");
+
+		// String storename = request.getParameter("storename");
 		String keyword = request.getParameter("keyword");
 		String status = request.getParameter("staus");
-		
-		SecondHandsDAO dao = new SecondHandsDAO(); 
-    	String m_profile =  dao.MyShopProfile(storename);
-    	
-    	HttpSession session = request.getSession();
-    	System.out.println("SESION 이름은 : "+session.getAttribute(storename));
-    	
-    	//그냥 불러오기
+		HttpSession session = request.getSession();
+		String storename = (String) session.getAttribute("storename");
 
-    	request.setAttribute("myproducts",dao.getmyproductslist(storename)); 
-    	request.setAttribute("storename", storename);
-    	request.setAttribute("m_profile", m_profile);
-    	
-    	forward.setRedirect(false);
-    	forward.setPath("WEB-INF/views/manageshops/managemyproducts.jsp");
-    	
+		SecondHandsDAO dao = new SecondHandsDAO();
+		String m_profile = dao.MyShopProfile(storename);
+
+		System.out.println("SESION 이름은 : " + storename);
+
+		// 그냥 불러오기
+		request.setAttribute("myproducts", dao.getmyproductslist(storename));
+		request.setAttribute("storename", storename);
+		request.setAttribute("m_profile", m_profile);
+
+		forward.setRedirect(false);
+		forward.setPath("WEB-INF/views/manageshops/managemyproducts.jsp");
+
 		return forward;
 	}
 
