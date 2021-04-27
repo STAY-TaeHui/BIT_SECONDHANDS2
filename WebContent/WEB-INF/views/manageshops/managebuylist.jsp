@@ -14,13 +14,16 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Fashi | Template</title>
 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/manageshop.css"
+	type="text/css">
+
 <!-- Google Font -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/manageshop.css"
-	type="text/css">
+
+<!-- summernote css -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css"
 	type="text/css">
@@ -83,75 +86,80 @@
 												<td class="p_price"><c:out value="${item.p_price}" />원
 												</td>
 												<td class="date"><c:out value="${item.buy_date}" /></td>
-												<td><c:forEach var="rvitem"
-														items="${requestScope.reviewlist}">
-														<c:choose>
-															<c:when test="${rvitem.buy_num eq item.buy_num}">
+												<td><c:set var="flag" value='false'></c:set> <c:forEach
+														var="rvitem" items="${requestScope.reviewlist}">
+														<c:if test="${not flag}">
+															<c:choose>
+																<c:when test="${rvitem.buy_num eq item.buy_num}">
+																	<c:set var="flag" value="true" />
+																	<span class='reviewspan'>후기작성 완료</span>
+																</c:when>
+															</c:choose>
+														</c:if>
+													</c:forEach> <c:if test="${not flag}">
+														<button class='reviewbtn' data-toggle="modal"
+															data-target=#modal${item.buy_num}>후기작성</button>
+														<!-- 후기작성 모달 시작 -->
+														<div class="modal fade" id='modal${item.buy_num}'
+															tabindex="-1" role="dialog"
+															aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered"
+																role="document">
+																<div class="modal-content">
+																	<div class="text-right cross">
+																		<i class="fa fa-times mr-2" data-dismiss="modal"></i>
+																	</div>
+																	<div class="card-body text-center">
+																		<img
+																			src="${pageContext.request.contextPath}/img/store/${item.pimg_name}"
+																			height="100" width="100">
+																		<div class="comment-box text-center">
+																			<h4>${item.p_subj}</h4>
+																			<form action='reviewok.manage' method=post>
+																				<input type="text" name="buy_num"
+																					value='${item.buy_num}' style="display: none">
+																				<input type="text" name="p_num"
+																					value='${item.p_num}' style="display: none">
+																				<input type="text" name="storename_buyer"
+																					value='${item.storename_buyer}'
+																					style="display: none"> <input type="text"
+																					id="rimg_name" name="rimg_name"
+																					style="display: none"> <input type="text"
+																					id="rimg_size" name="rimg_size"
+																					style="display: none">
 
-																<button class='reviewbtn' data-toggle="modal"
-																	data-target=#modal${item.buy_num}>후기작성</button>
 
-																<!-- 후기작성 모달 시작 -->
-																<div class="modal fade" id='modal${item.buy_num}'
-																	tabindex="-1" role="dialog"
-																	aria-labelledby="exampleModalLabel" aria-hidden="true">
-																	<div class="modal-dialog modal-dialog-centered"
-																		role="document">
-																		<div class="modal-content">
-																			<div class="text-right cross">
-																				<i class="fa fa-times mr-2" data-dismiss="modal"></i>
-																			</div>
-																			<div class="card-body text-center">
-																				<img
-																					src="${pageContext.request.contextPath}/img/store/${item.pimg_name}"
-																					height="100" width="100">
-																				<div class="comment-box text-center">
-																					<h4>${item.p_subj}</h4>
-																					<form action='reviewok' method=post>
-																						<input type="text" name="buy_num"
-																							value='${item.buy_num}' style="display: none">
-																						<input type="text" name="p_num"
-																							value='${item.p_num}' style="display: none">
-																						<input type="text" name="storename_buyer"
-																							value='${item.storename_buyer}'
-																							style="display: none">
-																						<div class="rating">
-																							<input type="radio" name="rating" value="5"
-																								id="5"><label for="5">☆</label> <input
-																								type="radio" name="rating" value="4" id="4"><label
-																								for="4">☆</label> <input type="radio"
-																								name="rating" value="3" id="3"><label
-																								for="3">☆</label> <input type="radio"
-																								name="rating" value="2" id="2"><label
-																								for="2">☆</label> <input type="radio"
-																								name="rating" value="1" id="1"><label
-																								for="1">☆</label>
-																						</div>
-																						<!-- <div class="comment-area" style="display:none"> <textarea name="rv_content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div> -->
-																						<div class="comment-area">
-																							<textarea id="summernote" name="rv_content"
-																								class="form-control" placeholder="거 쉬ㅠ펄것"
-																								rows="4"></textarea>
-																						</div>
-																						<div class="text-center mt-4">
-																							<button class="btn btn-success send px-5">
-																								Send message <i
-																									class="fa fa-long-arrow-right ml-1"></i>
-																							</button>
-																						</div>
-																					</form>
+																				<div class="rating">
+																					<input type="radio" name="rating" value="5" id="5"><label
+																						for="5">☆</label> <input type="radio"
+																						name="rating" value="4" id="4"><label
+																						for="4">☆</label> <input type="radio"
+																						name="rating" value="3" id="3"><label
+																						for="3">☆</label> <input type="radio"
+																						name="rating" value="2" id="2"><label
+																						for="2">☆</label> <input type="radio"
+																						name="rating" value="1" id="1"><label
+																						for="1">☆</label>
 																				</div>
-																			</div>
+																				<!-- <div class="comment-area" style="display:none"> <textarea name="rv_content" class="form-control" placeholder="거래. 성곡적이었나요?" rows="4"></textarea> </div> -->
+																				<div class="comment-area">
+																					<textarea id="summernote" name="rv_content"
+																						class="form-control" placeholder="거 쉬ㅠ펄것" rows="4"></textarea>
+																				</div>
+																				<div class="text-center mt-4">
+																					<button class="btn btn-success send px-5">
+																						Send message <i
+																							class="fa fa-long-arrow-right ml-1"></i>
+																					</button>
+																				</div>
+																			</form>
 																		</div>
 																	</div>
 																</div>
-																<!-- 후기작성 모달 끝 -->
-															</c:when>
-															<c:otherwise>
-																<span class='reviewspan'>후기작성 완료</span>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach> <!-- <button class='reviewbtn' onclick="location.href='#'">후기작성</button> -->
+															</div>
+														</div>
+														<!-- 후기작성 모달 끝 -->
+													</c:if> <!-- <button class='reviewbtn' onclick="location.href='#'">후기작성</button> -->
 												</td>
 											</tr>
 										</c:forEach>
@@ -175,6 +183,7 @@
                                 -->
 									</tbody>
 								</table>
+
 							</div>
 						</div>
 					</div>
@@ -199,6 +208,8 @@
 			<script
 				src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
 			<script src="${pageContext.request.contextPath}/js/main.js"></script>
+
+			<!-- summernote js -->
 			<script
 				src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
 			<script
@@ -217,16 +228,43 @@ $(document).ready(function() {
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-			callbacks:{
-        	  onImageUpload: function(){
-        		  console.log("Thisis onImageUpload")
-        	  }
+		  callbacks: { // 콜백을 사용
+              // 이미지를 업로드할 경우 이벤트를 발생
+			    onImageUpload: function(files, editor, welEditable) {
+				    sendFile(files[0], this);
+				}
           }
-        	 
-	
-	});
+	})
 });
+
+function sendFile(file, editor) {
+    // 파일 전송을 위한 폼생성
+		data = new FormData();
+	    data.append("uploadFile", file);
+	    $.ajax({ // ajax를 통해 파일 업로드 처리
+	        data : data,
+	        type : "POST",
+	        url : "imgupload.manage",
+	        cache : false,
+	        contentType : false,
+	        processData : false,
+	        success : function(data) { // 처리가 성공할 경우
+            // 에디터에 이미지 출력
+            	console.log("성공시 콜백펑션");
+	        	$(editor).summernote('editor.insertImage', data.url, function($image){
+	        		/* 이미지 삽입 시 기본 width값 : 25% */
+	        		$image.css('width', '25%');
+	        	});
+	        	$('#rimg_name').val(data.rimg_name);
+	        	$('#rimg_size').val(data.rimg_size);
+	        	
+	        }
+	    });
+	}
+function includeCheck(){
+	console.log("includeCheck 들어왓");
+}
+
 </script>
 
 </html>

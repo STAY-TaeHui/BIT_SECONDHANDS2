@@ -65,7 +65,6 @@ System.out.println("-------------------------------");
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/tab.css" type="text/css">
 <link rel="stylesheet" href="css/reviews.css" type="text/css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
@@ -77,6 +76,13 @@ System.out.println("-------------------------------");
 			src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<!-- summernote js -->
+		<script
+			src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
+
 		<div id="bodywrap">
 			<div id="productdetailName">
 				<h4>상점정보</h4>
@@ -107,13 +113,12 @@ System.out.println("-------------------------------");
 					</div>
 					<div id="Storename">
 						<%
-						out.print("" + storename + "<br>");
-						%>
+									out.print("" + storename + "<br>");
+									%>
 					</div>
 					<br>
 				</div>
 			</form>
-
 
 			<div style='width: 100%; margin: 0 auto; margin-top: 100px;'>
 				<ul class="nav nav-tabs">
@@ -208,6 +213,24 @@ System.out.println("-------------------------------");
             
             
          );
+      
+      /* summernote initialize */
+      $('#summernote').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+		  callbacks: { // 콜백을 사용
+              // 이미지를 업로드할 경우 이벤트를 발생
+			    onImageUpload: function(files, editor, welEditable) {
+				    sendFile(files[0], this);
+				}
+          }
+        	 
+	
+	});
       
      
    });
@@ -309,6 +332,7 @@ System.out.println("-------------------------------");
                       
                        
                         $.each(responsedata, function(index, obj){
+                        	console.log("INEX : " + index)
                            let starstring="";
                            let display="none";
                            for(let i=2; i<=5; i++){
@@ -319,8 +343,9 @@ System.out.println("-------------------------------");
                                  starstring+="<span class='fa fa-star star-inactive'></span>";
                               }
                            }
-                           if(storename === obj.writer){
-                              display="";
+                           
+                           if(sessionstorename === obj.writer){
+                        	   display="";
                            }
                            
                            $(".myreviewlist").append(
@@ -351,6 +376,8 @@ System.out.println("-------------------------------");
                                  +"<a class='thumbnail' href='#'>"
                                  +"<img class='img-responsive' src='${pageContext.request.contextPath}/img/review/"+obj.rimg_name+"'>"
                                    +"</a>"
+                                 +"<div class='row text-left' id=summernote>"
+                                 +obj.rv_content
                                  +"</div>"
                                  +"<div class='row text-left mt-4'>"
                                  +"<div class='like mr-3 vote' style='display:"+display+";'>"
@@ -409,6 +436,7 @@ System.out.println("-------------------------------");
               );
        
         }
+
  	let currentStorename = '<%=currentStorename%>';
 	let storename = '<%=storename%>';
 	let profile = '<%=profile%>';
@@ -418,35 +446,57 @@ System.out.println("-------------------------------");
 	console.log(currentStorename);
 	console.log(storename);
 	console.log(profilePath);
+	/* summernote  */
+	function sendFile(file, editor) {
+		// 파일 전송을 위한 폼생성
+		data = new FormData();
+		data.append("uploadFile", file);
+		$.ajax({ // ajax를 통해 파일 업로드 처리
+			data : data,
+			type : "POST",
+			url : "imgupload.manage",
+			cache : false,
+			contentType : false,
+			processData : false,
+			success : function(data) { // 처리가 성공할 경우
+				// 에디터에 이미지 출력
+				console.log("성공시 콜백펑션");
+				$(editor).summernote('editor.insertImage', data.url);
+				$('#rimg_name').val(data.rimg_name);
+				$('#rimg_size').val(data.rimg_size);
 
-		$('#img').attr("src", profilePath);
-
-		$('#img').click(function(e) {
-			$('#file').click();
-		});
-
-		$('#file').change(
-				function(event) {
-					var reader = new FileReader();
-					reader.onload = function(event) {
-						var img = document.createElement("img");
-						document.getElementById('img').setAttribute("src",
-								event.target.result);
-					};
-					reader.readAsDataURL(event.target.files[0]);
-				});
-
-		$('#editBtn').click(function() {
-			if ($('#file').val() == '') {
-				swal({
-					title : "내용이 바뀌지 않았습니다",
-					icon : "error"
-				});
-				return;
 			}
-
-			$('#submit').submit();
 		});
+	}
+
+	$('#img').attr("src", profilePath);
+
+	$('#img').click(function(e) {
+		$('#file').click();
+	});
+
+	$('#file').change(
+			function(event) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					var img = document.createElement("img");
+					document.getElementById('img').setAttribute("src",
+							event.target.result);
+				};
+				reader.readAsDataURL(event.target.files[0]);
+			});
+
+	$('#editBtn').click(function() {
+		if ($('#file').val() == '') {
+			swal({
+				title : "내용이 바뀌지 않았습니다",
+				icon : "error"
+			});
+			return;
+		}
+
+		$('#submit').submit();
+	});
 </script>
 
 
