@@ -17,20 +17,20 @@ public class ManageShopBuyListAction implements Action {
 		// TODO Auto-generated method stub
 		ActionForward forward = new ActionForward();
 		SecondHandsDAO dao = new SecondHandsDAO();
-		JSONArray arr = new JSONArray();
+		JSONArray buyarr = new JSONArray();
 		JSONArray reviewarr = new JSONArray();
 		
 		HttpSession session = request.getSession();
 		String storename = (String)session.getAttribute("storename");
 		System.out.println(storename);
-		arr = dao.getBuyList(storename);
+		buyarr = dao.getBuyList(storename);
 		
 		reviewarr=dao.getReviewCheck(storename);
 		
 //		
-		System.out.println("리스트 사이즈 : "+arr.size());
+		System.out.println("리스트 사이즈 : "+buyarr.size());
 		
-		request.setAttribute("buylist", arr);
+		request.setAttribute("buylist", buyarr);
 		request.setAttribute("reviewlist", reviewarr);
 		
 		forward.setRedirect(false);

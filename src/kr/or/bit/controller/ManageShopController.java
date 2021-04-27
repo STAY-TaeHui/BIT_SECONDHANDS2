@@ -17,6 +17,7 @@ import kr.or.bit.service.LoginOkAction;
 import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.manageshop.ManageShopBuyListAction;
 import kr.or.bit.service.manageshop.ManageShopSellListAction;
+import kr.or.bit.service.manageshop.ReviewOkAction;
 import kr.or.bit.service.myshop.MyShopInfoAction;
 
 import kr.or.bit.service.manageshop.ManageShopAction;
@@ -25,7 +26,7 @@ import kr.or.bit.service.manageshop.ManageShopAction;
 /**
  * Servlet implementation class MyShopController
  */
-@WebServlet({"/manageshop/*","*.list"})
+@WebServlet("*.manage")
 public class ManageShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,35 +46,40 @@ public class ManageShopController extends HttpServlet {
     	System.out.println("url_Command : "+url_Command);
     	Action action=null;
     	ActionForward forward=null;
-    	HttpSession session =null;;
     	
-    		//myshop 메인
-		 if(url_Command.equals("/manageshop")) {
-	    		System.out.println("manageshop.jsp VIEW");
-	    		action = new ManageShopAction();
-	    		forward = action.execute(request, response);
-		 }
-		 else if(url_Command.equals("/manageshop/buylist.list")) {
-	    		System.out.println("managebuylist.jsp VIEW");
-	    		action = new ManageShopBuyListAction();
-	    		forward = action.execute(request, response);
-		 }
-		 else if(url_Command.equals("/manageshop/selllist.list")) {
-	    		System.out.println("manageselllist.jsp VIEW");
-	    		action = new ManageShopSellListAction(); 
-	    		forward = action.execute(request, response);
-		 }
-		 else if(url_Command.equals("/manageshop/reviewok")) {
-	    		System.out.println(request.getParameter("rv_content"));
-	    		System.out.println(request.getParameter("rating"));
-	    		System.out.println(request.getParameter("buy_num"));
-	    		System.out.println(request.getParameter("p_num"));
-	    		System.out.println(request.getParameter("storename_buyer"));
-	    		
-		 }
-		 
-
-		 
+        //myshop 메인
+	     if(url_Command.equals("/manageshop.manage")) {
+	           System.out.println("manageshop.jsp VIEW");
+	           action = new ManageShopAction();
+	           forward = action.execute(request, response);
+	     }
+	     else if(url_Command.equals("/buylist.manage")) {
+	           System.out.println("managebuylist.jsp VIEW");
+	           action = new ManageShopBuyListAction();
+	           forward = action.execute(request, response);
+	     }
+	     else if(url_Command.equals("/selllist.manage")) {
+	           System.out.println("manageselllist.jsp VIEW");
+	           action = new ManageShopSellListAction(); 
+	           forward = action.execute(request, response);
+	     }
+	     else if(url_Command.equals("/reviewok.manage")) {
+	           System.out.println(request.getParameter("rv_content"));
+	           System.out.println(request.getParameter("rating"));
+	           System.out.println(request.getParameter("buy_num"));
+	           System.out.println(request.getParameter("p_num"));
+	           System.out.println(request.getParameter("storename_buyer"));
+	           System.out.println(request.getParameter("rimg_name"));
+	           System.out.println(request.getParameter("rimg_size"));
+	           action = new ReviewOkAction(); 
+	           forward = action.execute(request, response);
+	           
+	     }
+	     else if(url_Command.equals("/imgupload.manage")) {
+	           forward=new ActionForward();
+	           forward.setPath("/WEB-INF/views/manageshops/summernote_imageUpload.jsp");
+	           forward.setRedirect(false);
+	     }
     	//////////////////////////////////////////////////////
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

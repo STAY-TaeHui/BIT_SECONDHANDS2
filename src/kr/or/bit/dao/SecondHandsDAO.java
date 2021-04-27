@@ -616,27 +616,50 @@ public class SecondHandsDAO {
 	      }
 	   
 	   //리뷰작성 INSERT -태희-
-	   public int insertReview(int buy_num, int p_num, String rv_content, int rv_star,  String storename_buyer) {
+	   public int insertReview(int buy_num, int p_num, String rv_content, int rv_star,  String storename_buyer, String rimg_name, int rimg_size) {
 		     Connection conn = null;
 	         PreparedStatement pstmt = null;
-	         int rs=0;
+	         int rs_review=0;
+	         int rs_rimg=0;
 	         try {
 				conn=ds.getConnection();
+				conn.setAutoCommit(false);
 				
 				//String sql = "select * from member";
 				
-				String sql = "insert into review(rv_num, buy_num, p_num, rv_content, rv_star,storename) "
-				+ "values (rv_num_seq.nextval,?,?,?,?,?)"; 
+				String in_review = "insert into review(rv_num, buy_num, p_num, rv_content, rv_star,storename) "
+				+ "values (rv_num_seq.nextval,?,?,?,?,?)";
+				String in_rimg= "insert into review_img(rimg_num, rimg_name, rimg_size, rv_num, buy_num) "
+						+"values (rimg_num_seq.nextval,?,?,rv_num_seq.currval,?)";
 				    
-				    pstmt = conn.prepareStatement(sql);
+				    pstmt = conn.prepareStatement(in_review);
+				    
+				    
 				    pstmt.setInt(1, buy_num);
 				    pstmt.setInt(2, p_num);
 				    pstmt.setString(3, rv_content);
 				    pstmt.setInt(4, rv_star);
 				    pstmt.setString(5, storename_buyer);
+				    rs_review=pstmt.executeUpdate();
 				    
-				    rs= pstmt.executeUpdate();	            
-				    return rs;
+				    if(rs_review>0) {
+				    pstmt.close();
+				    
+				    pstmt = conn.prepareStatement(in_rimg);
+				    pstmt.setString(1, rimg_name);
+				    pstmt.setInt(2, rimg_size);
+				    pstmt.setInt(3, buy_num);
+				    
+				    
+				    rs_rimg= pstmt.executeUpdate();	  
+				    }
+				    
+				    if(rs_rimg>0) {
+				    	conn.commit();
+				    }
+				    
+				   return rs_rimg;
+				    
 				    
 	         } catch (SQLException e) {
 	            // TODO: handle exception
