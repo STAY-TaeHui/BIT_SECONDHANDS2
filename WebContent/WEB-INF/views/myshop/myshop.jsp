@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String currentStorename = (String) session.getAttribute("storename");
@@ -23,25 +23,30 @@ System.out.println("-------------------------------");
 <head>
 <style>
 .fadetb {
-  opacity: 0;
-  -webkit-transition: opacity .15s linear;
-       -o-transition: opacity .15s linear;
-          transition: opacity .15s linear;
+	opacity: 0;
+	-webkit-transition: opacity .15s linear;
+	-o-transition: opacity .15s linear;
+	transition: opacity .15s linear;
 }
+
 .fade.in {
-  opacity: 1 !important;
+	opacity: 1 !important;
 }
-.tab-content > .tab-pane {
-  display: none;
+
+.tab-content>.tab-pane {
+	display: none;
 }
-.tab-content > .active {
-  display: block;
+
+.tab-content>.active {
+	display: block;
 }
-.countp{
-   margin-bottom:0;
+
+.countp {
+	margin-bottom: 0;
 }
 </style>
 <meta charset="UTF-8">
+
 <title>Insert title here</title> 
  <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -63,9 +68,11 @@ System.out.println("-------------------------------");
 
     
 
-     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 </head>
 <body>
+
    <div id="fullwrap" >
    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
        <!--  탭 부트스트랩  -->
@@ -114,6 +121,7 @@ System.out.println("-------------------------------");
 					<br>
 				</div>
 			</form>
+
 
    
 <div style='width:100%;margin:0 auto;margin-top:100px;'>
@@ -227,13 +235,13 @@ System.out.println("-------------------------------");
    
    
     function productlist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = "${requestScope.storename}";
-    	let reqscopestorename = '${requestScope.storename}';
-    	
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
-    	console.log("reqscopestorename : " + reqscopestorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = "${requestScope.storename}";
+       let reqscopestorename = '${requestScope.storename}';
+       
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
+       console.log("reqscopestorename : " + reqscopestorename);
         $.ajax(
               {   
                  url:"MyShopProductList.ajax",
@@ -266,10 +274,10 @@ System.out.println("-------------------------------");
            );
      }
     function likelist(){
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopLikeList.ajax",
@@ -304,10 +312,10 @@ System.out.println("-------------------------------");
      function reviewlist(){
        //[rv_num], [p_num], [p_sugj], [writer], [m_profile], [rv_star], [rv_content], [rimg_name][rv_date] 
        
-    	let sessionstorename = '${sessionScope.storename}';
-    	let reqstorename = '${requestScope.storename}';
-    	console.log("sessionstorename : " + sessionstorename);
-    	console.log("reqstorename : " + reqstorename);
+       let sessionstorename = '${sessionScope.storename}';
+       let reqstorename = '${requestScope.storename}';
+       console.log("sessionstorename : " + sessionstorename);
+       console.log("reqstorename : " + reqstorename);
            $.ajax(
                  {   
                     url:"MyShopReviewList.ajax",
@@ -333,8 +341,10 @@ System.out.println("-------------------------------");
                                  starstring+="<span class='fa fa-star star-inactive'></span>";
                               }
                            }
+
                            if(sessionstorename === obj.writer){
                         	   display="";
+
                            }
                            
                            $(".myreviewlist").append(
@@ -358,6 +368,7 @@ System.out.println("-------------------------------");
                                  +"<p class='text-muted pt-5 pt-sm-3'>"+obj.rv_date+"</p>"
                                  +"</div>"
                                  +"</div>"
+
                                  +"<div class='row text-left' id=summernote>"
                                  +obj.rv_content
                                 
@@ -377,9 +388,9 @@ System.out.println("-------------------------------");
                                     $("#imgmodal").modal('show');
                                });
                            $('span[name=delete]').click(function(){
-                        	   console.log("DELETE CLICK클릭이새끼야");
-                        	   console.log($(this).attr('id'));
-                        	    $.ajax(
+                              console.log("DELETE CLICK클릭이새끼야");
+                              console.log($(this).attr('id'));
+                               $.ajax(
                                        {   
                                           url:"MyShopReviewDelete.ajax",
                                           data:{rv_num : $(this).attr('id')},
@@ -387,19 +398,19 @@ System.out.println("-------------------------------");
                                           async:false,
                                           dataType:"text",
                                           success:function(responsedata){
-                                        	  console.log("데이터반환 성공");
-                                        	  if(responsedata>0){
-                                        		  console.log("DELTE 성공");
-                                        	  }
-                                        	  else{
-                                        		  console.log("DELTE 실패");
-                                        	  }
+                                             console.log("데이터반환 성공");
+                                             if(responsedata>0){
+                                                console.log("DELTE 성공");
+                                             }
+                                             else{
+                                                console.log("DELTE 실패");
+                                             }
                                           },
                                           error:function(){
-                                        	  console.log("데이터 반환 실패");
+                                             console.log("데이터 반환 실패");
                                           }
                                        }); 
-                        	   
+                              
                            })
                       });
                         let count = responsedata.length
@@ -419,6 +430,7 @@ System.out.println("-------------------------------");
               );
        
         }
+
      /* summernote  */
      function sendFile(file, editor) {
     	    // 파일 전송을 위한 폼생성
@@ -441,49 +453,35 @@ System.out.println("-------------------------------");
     		        }
     		    });
     		}
-    
 
-/*
-$('#target_img').click(function (e) {
-    document.signform.target_url.value = document.getElementById( 'target_img' ).src;
-    e.preventDefault();
-    $('#file').click();
-});    
+		$('#img').attr("src", profilePath);
 
-function changeValue(obj){
-      document.signform.submit();
+		$('#img').click(function(e) {
+			$('#file').click();
+		});
 
-   }
-*/
-/*
-$('#btnUpload').on('click', function(event) {
-    event.preventDefault();
-    
-    var form = $('#uploadForm')[0]
-    var data = new FormData(form);
-    
-    $('#btnUpload').prop('disabled', true);
-   
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "upload",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-           $('#btnUpload').prop('disabled', false);
-           alert('success')
-        },
-        error: function (e) {
-            $('#btnUpload').prop('disabled', false);
-            alert('fail');
-        }
-    });
-})
-*/
+		$('#file').change(
+				function(event) {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						var img = document.createElement("img");
+						document.getElementById('img').setAttribute("src",
+								event.target.result);
+					};
+					reader.readAsDataURL(event.target.files[0]);
+				});
+
+		$('#editBtn').click(function() {
+			if ($('#file').val() == '') {
+				swal({
+					title : "내용이 바뀌지 않았습니다",
+					icon : "error"
+				});
+				return;
+			}
+
+			$('#submit').submit();
+		});
 </script>
 
 

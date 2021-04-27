@@ -3,7 +3,7 @@
 <%@page import="kr.or.bit.dto.Board"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -14,18 +14,21 @@
 <html lang="zxx">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
-    
-    <!-- 내상점관리만 적용되는 css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manageshop.css" type="text/css">
-    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    <script>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Template</title>
+
+<!-- 내상점관리만 적용되는 css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/manageshop.css"
+	type="text/css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
     
     //1. 세션에 해당하는 상품 목록 전체 불러오기
     //2. 상품 검색해서 키워드 상품만 불러오기
@@ -122,8 +125,6 @@
 	   location.href="editproduct.manage?p_num="+num;
 	   
    }
-
-
   </script>
 
 
@@ -133,9 +134,10 @@
 </head>
 
 <body>
-<div id="fullwrap">
-	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	<div id="bodywrap">
+	<div id="fullwrap">
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<div id="bodywrap">
+
 
 	
     <!-- Shopping Cart Section Begin -->
@@ -165,6 +167,7 @@
     </select>
 	</li>
 	-->
+
 	<li>
 	    <select id="status" onchange="productlistByStaus()">
     	<option value="2">전체</option>
@@ -243,11 +246,10 @@
                 </div>
             </div>
         </div>
-
     </section>
 
+		</div>
 	</div>
-</div>    
 </body>
 
 </html>

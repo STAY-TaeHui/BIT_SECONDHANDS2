@@ -19,6 +19,7 @@
   content: attr(data-placeholder);
   color: #f70000;
   font-size: .9em;
+
 }
 
 #manageshop_menu {
@@ -42,3 +43,4 @@
 	content:" | ";
 	margin:20px;
 }
+

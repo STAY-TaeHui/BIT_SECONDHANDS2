@@ -134,6 +134,7 @@
 </script>
 </head>
 <body>
+
    <div id="fullwrap">
 
       <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>

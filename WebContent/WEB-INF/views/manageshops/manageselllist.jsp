@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -7,16 +7,20 @@
 <html lang="zxx">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Template</title>
 
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manageshop.css" type="text/css">
+<!-- Google Font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/manageshop.css"
+	type="text/css">
 
 </head>
 <body>
@@ -81,6 +85,7 @@
                                 </c:forEach>
                                 
                                 <!-- <tr>
+
                                     <td class="cart-pic"><img src="img/cart-page/product-2.jpg" alt=""></td>
                                     <td class="cart-title">
                                         <h5>American lobster</h5>
@@ -97,30 +102,36 @@
                                     <td class="close-td"><i class="ti-close"></i></td>
                                 </tr>
                                 -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Shopping Cart Section End -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Shopping Cart Section End -->
 
-    <!-- Js Plugins -->
-    <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.countdown.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.zoom.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.dd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-    <script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/main.js"></script>
+			<!-- Js Plugins -->
+			<script
+				src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+			<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+			<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/js/jquery.countdown.min.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/js/jquery.zoom.min.js"></script>
+			<script src="${pageContext.request.contextPath}/js/jquery.dd.min.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
+			<script src="${pageContext.request.contextPath}/js/main.js"></script>
 		</div>
 	</div>
-    
-   
+
+
 </body>
 
 </html>

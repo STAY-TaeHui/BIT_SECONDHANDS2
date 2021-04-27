@@ -16,6 +16,7 @@ public class ManageShopAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		ActionForward forward = new ActionForward();
+
 		
 		//String storename = request.getParameter("storename");
 		String keyword = request.getParameter("keyword");
@@ -37,6 +38,7 @@ public class ManageShopAction implements Action {
     	forward.setRedirect(false);
     	forward.setPath("WEB-INF/views/manageshops/managemyproducts.jsp");
     	
+
 		return forward;
 	}
 

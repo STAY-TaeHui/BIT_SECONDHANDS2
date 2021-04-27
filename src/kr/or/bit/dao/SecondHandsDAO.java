@@ -142,6 +142,7 @@ public class SecondHandsDAO {
 	}
 
 	// 회원가입 insert 하기 - 명환
+
 	   public int registerInsert(String email, String password, String name, String shopname, String phone) {
 		      Connection conn = null;
 		      PreparedStatement pstmt = null;
@@ -797,6 +798,7 @@ public class SecondHandsDAO {
 	      }
 	      return arr;
 	   }
+
 	// 검색하는 함수 (가희)
 	public JSONArray searchProduct(String keyword) {
 		System.out.println("k : " + keyword);
@@ -807,9 +809,11 @@ public class SecondHandsDAO {
 
 		try {
 			conn = ds.getConnection();
+
 			String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename, p.p_status"
 					+ "	from product p left join product_img pi  on p.p_num=pi.p_num"
 					+ " where (p.p_status=1 and pi.pimg_num=1) and (p.p_subj Like '%"+keyword+"%' or p.p_content Like '%"+keyword+"%')";
+
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -1247,6 +1251,7 @@ public class SecondHandsDAO {
 	      }
 	      return arr;
 	   }
+
 
 	// 메인에서 선택한 상품번호에 해당하는 상품의 내용 가져오는 함수(가희)
 	// 여기서 가져온 정보들을 상품상세페이지에 적당히 뿌려준다
@@ -1715,10 +1720,12 @@ public class SecondHandsDAO {
 		}
 		return false;
 	}
-	//구매하면 구매상태 바꿔주는 함수
+
+	// 구매하면 구매상태 바꿔주는 함수
 	public boolean changeStatus(int p_num) {
-		
+
 		Connection conn = null;
+
 	      PreparedStatement pstmt = null;
 	      
 	      try {
@@ -1753,96 +1760,88 @@ public class SecondHandsDAO {
 	         }
 	      }
 	      return false;
-		
 	}
-	
-	
-	//구매내역 insert함수 가희
+
+	// 구매내역 insert함수 가희
 	public boolean buy(int p_num, String buyer, String seller) {
-		
-		  Connection conn = null;
-	      PreparedStatement pstmt = null;
-	      
-	      try {
-	         conn=ds.getConnection();				     
-	         	
-         	    String sql = "insert into buylist(buy_num, p_num, storename_buyer,storename_seller,buy_date) "
-         	    +"values(buy_num_seq.nextval,?,?,?,sysdate)";
 
-
-         	   pstmt = conn.prepareStatement(sql);
-         	   pstmt.setInt(1, p_num);
-         	   pstmt.setString(2, buyer);
-         	   pstmt.setString(3, seller);
-         	   
-		         
-		       int result = pstmt.executeUpdate();   
-		       
-		       if(result > 0) {
-		    	   return true;
-		       }
-	         
-	      } catch (SQLException e) {
-	         // TODO: handle exception
-	         System.out.println("SQLException : " + e.getMessage());
-	      }catch(Exception e3) {
-	         System.out.println(e3.getMessage());
-	      }
-	      finally {
-	         try {
-
-	            pstmt.close();
-	            conn.close();//반환하기
-	         } catch (Exception e2) {
-	            System.out.println(e2.getMessage());
-	         }
-	      }
-	      return false;
-	}
-	
-	
-	//판매내역 insert 함수 가희
-	public boolean sell(int p_num, String buyer, String seller) {
-		
 		Connection conn = null;
-	      PreparedStatement pstmt = null;
-      
-	      try {
-	         conn=ds.getConnection();				     
-	         	
-         	    String sql = "insert into selllist(sell_num, p_num, storename_buyer,storename_seller,sell_date) "
-         	    		+"values(buy_num_seq.nextval,?,?,?,sysdate)";
+		PreparedStatement pstmt = null;
 
+		try {
+			conn = ds.getConnection();
 
-         	   pstmt = conn.prepareStatement(sql);
-         	   pstmt.setInt(1, p_num);
-         	   pstmt.setString(2, buyer);
-         	   pstmt.setString(3, seller);
-         	   
-		         
-		       int result = pstmt.executeUpdate();   
-		       
-		       if(result > 0) {
-		    	   return true;
-		       }
-	         
-	      } catch (SQLException e) {
-	         // TODO: handle exception
-	         System.out.println("SQLException : " + e.getMessage());
-	      }catch(Exception e3) {
-	         System.out.println(e3.getMessage());
-	      }
-	      finally {
-	         try {
+			String sql = "insert into buylist(buy_num, p_num, storename_buyer,storename_seller,buy_date) "
+					+ "values(buy_num_seq.nextval,?,?,?,sysdate)";
 
-	            pstmt.close();
-	            conn.close();//반환하기
-	         } catch (Exception e2) {
-	            System.out.println(e2.getMessage());
-	         }
-	      }
-	      return false;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_num);
+			pstmt.setString(2, buyer);
+			pstmt.setString(3, seller);
+
+			int result = pstmt.executeUpdate();
+
+			if (result > 0) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("SQLException : " + e.getMessage());
+		} catch (Exception e3) {
+			System.out.println(e3.getMessage());
+		} finally {
+			try {
+
+				pstmt.close();
+				conn.close();// 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return false;
 	}
+
+	// 판매내역 insert 함수 가희
+	public boolean sell(int p_num, String buyer, String seller) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = "insert into selllist(sell_num, p_num, storename_buyer,storename_seller,sell_date) "
+					+ "values(buy_num_seq.nextval,?,?,?,sysdate)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_num);
+			pstmt.setString(2, buyer);
+			pstmt.setString(3, seller);
+
+			int result = pstmt.executeUpdate();
+
+			if (result > 0) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("SQLException : " + e.getMessage());
+		} catch (Exception e3) {
+			System.out.println(e3.getMessage());
+		} finally {
+			try {
+
+				pstmt.close();
+				conn.close();// 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return false;
+	}
+
 	// 상품 관리에서 내 상품 전체 목록 불러오는 함수 -가희-
 	public JSONArray getmyproductslist(String storename) {
 
@@ -1960,7 +1959,7 @@ public class SecondHandsDAO {
 	
 	
 
-	//상점프로필사진 UPDATE -명환-
+	// 상점프로필사진 UPDATE -명환-
 	public boolean updateMemberProfile(String profile, String storename) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -2141,7 +2140,7 @@ public class SecondHandsDAO {
 		return false;
 	}
 
-	//상점 프로필 가져오기 -명환-
+	// 상점 프로필 가져오기 -명환-
 	public String getStoreProfile(String storename) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -2177,7 +2176,7 @@ public class SecondHandsDAO {
 		return profile;
 	}
 
-	//차트리스트 가져오기 -태희-
+	// 차트리스트 가져오기 -태희-
 	public JSONArray getmyshopchartlist(String storename) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -2192,7 +2191,7 @@ public class SecondHandsDAO {
 			String sql = "select l.p_num, l.mycount from (select p_num, count(*) as mycount from likelist group by p_num) l "
 					+ "join" + "(select p_num from product where storename = ? ) p" + "on l.p_num = p.p_num"
 					+ "order by l.mycount desc";
-			//푸시를 위한 주석
+			// 푸시를 위한 주석
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, storename);
 			rs = pstmt.executeQuery();
@@ -2223,57 +2222,57 @@ public class SecondHandsDAO {
 		}
 		return arr;
 	}
-	 //상품 상세페이지에서 상품 이미지 불러오는 함수 -가희-
+
+	// 상품 상세페이지에서 상품 이미지 불러오는 함수 -가희-
 	public ArrayList<String> getImagelist(int p_num) {
 
 		Connection conn = null;
-	      PreparedStatement pstmt = null;
-	      ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-	      System.out.println("상품 이미지 목록 불러오기 쿼리문");
-	      ArrayList<String> imgs = new ArrayList(); 
-	      try {
-	         conn = ds.getConnection();
+		System.out.println("상품 이미지 목록 불러오기 쿼리문");
+		ArrayList<String> imgs = new ArrayList();
+		try {
+			conn = ds.getConnection();
 
-	         // String sql = "select * from member";
-	         String sql = "";
+			// String sql = "select * from member";
+			String sql = "";
 
-	         sql += "select pimg_name from product_img where p_num=?";
-	         
-	         pstmt = conn.prepareStatement(sql);
-	         pstmt.setInt(1, p_num);
-	         
-	         rs = pstmt.executeQuery();
-	         
-	         System.out.println("select문" + sql);
-	         
-	         while(rs.next()) {
-	            
-	        	String pimg_name = rs.getString("pimg_name");
-	        	
-	        	imgs.add(pimg_name);
-	            System.out.println("pimg_name" + pimg_name);
-	         
-	         }
-	         System.out.println(sql);
-	            
-	      }
-	      
-	      
-	      catch (Exception e) {
-	         System.out.println(e.getMessage());
+			sql += "select pimg_name from product_img where p_num=?";
 
-	      } finally {
-	         try {
-	            rs.close();
-	            pstmt.close();
-	            conn.close();// 반환하기
-	            
-	         } catch (Exception e2) {
-	            System.out.println(e2.getMessage());
-	         }
-	      }
-		
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_num);
+
+			rs = pstmt.executeQuery();
+
+			System.out.println("select문" + sql);
+
+			while (rs.next()) {
+
+				String pimg_name = rs.getString("pimg_name");
+
+				imgs.add(pimg_name);
+				System.out.println("pimg_name" + pimg_name);
+
+			}
+			System.out.println(sql);
+
+		}
+
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();// 반환하기
+
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
 		return imgs;
 	}
 	
@@ -2331,6 +2330,7 @@ public class SecondHandsDAO {
 				rs.close();
 				pstmt.close();
 				conn.close();// 반환하기
+
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -2391,10 +2391,12 @@ public class SecondHandsDAO {
 				rs.close();
 				pstmt.close();
 				conn.close();// 반환하기
+
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
 		}
+
 		return obj;
 	}
 	

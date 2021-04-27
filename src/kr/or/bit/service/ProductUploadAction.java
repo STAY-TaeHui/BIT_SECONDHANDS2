@@ -18,6 +18,7 @@ import kr.or.bit.dao.SecondHandsDAO;
 
 public class ProductUploadAction implements Action {
 
+
    @Override
    public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -104,4 +105,5 @@ public class ProductUploadAction implements Action {
 
       return forward;
    }
+
 }

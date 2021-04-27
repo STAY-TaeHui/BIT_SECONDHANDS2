@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 
+
 import kr.or.bit.service.manageshop.EditProductAction;
+
 import kr.or.bit.service.manageshop.ManageShopAction;
 import kr.or.bit.service.manageshop.ManageShopBuyListAction;
 import kr.or.bit.service.manageshop.ManageShopSellListAction;
 import kr.or.bit.service.manageshop.ReviewOkAction;
 import kr.or.bit.service.manageshop.ProductEditOkAction;
-
 
 
 /**
@@ -27,17 +28,18 @@ import kr.or.bit.service.manageshop.ProductEditOkAction;
 @WebServlet("*.manage")
 public class ManageShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
- 
-    public ManageShopController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ManageShopController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("ManageShopController");
-		
+
 		String requestURI = request.getRequestURI();
+
     	String contextPath = request.getContextPath();
     	String url_Command = requestURI.substring(contextPath.length());
     	System.out.println("THIS IS manageshop");
@@ -109,15 +111,17 @@ public class ManageShopController extends HttpServlet {
     			dis.forward(request, response);
     		}
     	}
-	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doProcess(request, response);
-		
+
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 

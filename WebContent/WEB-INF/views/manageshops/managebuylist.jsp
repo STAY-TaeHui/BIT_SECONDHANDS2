@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -7,6 +7,7 @@
 <html lang="zxx">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
@@ -22,9 +23,11 @@
     <!-- summernote css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css" type="text/css">
 
+
 </head>
 <body>
 	<div id="fullwrap">
+
 	 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	  
        <!--  탭 부트스트랩  -->
@@ -131,6 +134,7 @@
                                 </c:forEach>
                                 
                                 <!-- <tr>
+
                                     <td class="cart-pic"><img src="img/cart-page/product-2.jpg" alt=""></td>
                                     <td class="cart-title">
                                         <h5>American lobster</h5>
@@ -147,6 +151,7 @@
                                     <td class="close-td"><i class="ti-close"></i></td>
                                 </tr>
                                 -->
+
                             </tbody>
                         </table>
                         
@@ -174,8 +179,8 @@
 	<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
 		</div>
 	</div>
-    
-   
+
+
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
