@@ -28,6 +28,12 @@
         	$("#categoryorder").css("display","none"); 
 	       	getcategorytop();
 	       	
+	       	let keyword = '${requestScope.keyword}'
+	       	console.log(keyword);
+	       	if(keyword != null){
+	       		$("#keyword").val(keyword);
+	       	}
+	       	
 	       	//let t_val;
 	       	//let m_val;
 	       	//let b_val;
@@ -55,8 +61,8 @@
         }
         
         
-        //최신순 정렬
-        function orderbytime(){
+        //검색 후 최신순 정렬
+        function searchOrderbytime(){
         	
         	$("#timebtn").addClass("clickedbtn");
         	$("#timebtn").removeClass("unclickedbtn");
@@ -91,7 +97,7 @@
         }
         
         //가격순 정렬
-        function orderbyprice(){
+        function searchOrderbyprice(){
         	
         	$("#pricebtn").addClass("clickedbtn");
         	$("#pricebtn").removeClass("unclickedbtn");
@@ -143,8 +149,8 @@
 	<p>오늘의 추천</p>
 	
 	<ul id="defaultorder">
-		<li><input type="button" value="최신순" onclick="orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
+		<li><input type="button" value="최신순" onclick="searchOrderbytime()" id="timebtn" class="unclickedbtn"></li>
+		<li><input type="button" value="가격순" onclick="searchOrderbyprice()" id="pricebtn" class="unclickedbtn"></li>
 	</ul>
 	
 	<ul id="categoryorder">
@@ -153,8 +159,9 @@
 	</ul>
 	
 	</div>
-	<ul class="productlist">
+	
 	<c:choose>
+	<ul class="productlist">
 	<c:when test="${not empty products}">
 	<c:forEach var="products" items="${products}">
 		<li><a href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
@@ -165,13 +172,15 @@
     			<div class='imginfo'><p class='price'>${products.p_price}</p>
     			<p class='wrtime'>${products.p_wr_time}</p></div></a>
     	</li>
+    	
 	</c:forEach>
 	</c:when>
+	</ul>
 	<c:otherwise>
-	<li>검색 결과가 없습니다</li>
+	<p style="width:100%; margin-top:30px; text-align:center;">검색 결과가 없습니다</p>
 	</c:otherwise>
 	</c:choose>
-	</ul>
+	
 
     <!-- Latest Blog Section End -->
 	

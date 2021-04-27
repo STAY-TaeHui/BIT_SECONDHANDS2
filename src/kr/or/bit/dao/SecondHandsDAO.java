@@ -190,7 +190,7 @@ public class SecondHandsDAO {
 	         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
 	               +"from product p left join product_img pi "
 	               +"on p.p_num=pi.p_num "
-	               +"where pi.pimg_num=1";
+	               +"where pi.pimg_num=1 and p.p_status=1";
 	         
 	         pstmt = conn.prepareStatement(sql);
 	         
@@ -231,7 +231,7 @@ public class SecondHandsDAO {
 	      return arr;
 	   }
 	
-	 //메인에 뿌려줄 상품 리스트 뽑기 -태희-
+	   //내 상품 리스트 뽑기 가희
 	   public JSONArray getMyProductList(String storename) { 
 	         Connection conn = null;
 	         PreparedStatement pstmt = null;
@@ -726,7 +726,7 @@ public class SecondHandsDAO {
 	         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
 	               +"from product p left join product_img pi "
 	               +"on p.p_num=pi.p_num "
-	               +"where pi.pimg_num=1 and p.p_status=0 ";
+	               +"where pi.pimg_num=1 and p.p_status=1 ";
 	         
 	         if(keyword.equals("p.p_price")) {
 	        	 System.out.println("가격순");
@@ -787,9 +787,9 @@ public class SecondHandsDAO {
 
 		try {
 			conn = ds.getConnection();
-			String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename "
-					+ "from product p left join product_img pi " + "on p.p_num=pi.p_num " + "where p.p_subj Like '%"
-					+ keyword + "%' or p.p_content Like '%" + keyword + "%' " + "and pi.pimg_num=1 ";
+			String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename, p.p_status"
+					+ "	from product p left join product_img pi  on p.p_num=pi.p_num"
+					+ " where (p.p_status=1 and pi.pimg_num=1) and (p.p_subj Like '%"+keyword+"%' or p.p_content Like '%"+keyword+"%')";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -839,12 +839,10 @@ public class SecondHandsDAO {
 			      
 			      try {
 			         conn=ds.getConnection();
-			         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
-			               +"from product p left join product_img pi "
-			               +"on p.p_num=pi.p_num "
-			               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' "
-			               +"and pi.pimg_num=1  and p.p_status=0 "
-			               +"order by p.p_wr_time";
+			         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename, p.p_status"
+			         		+ "	from product p left join product_img pi  on p.p_num=pi.p_num"
+			         		+ " where (p.p_status=1 and pi.pimg_num=1) and (p.p_subj Like '%"+keyword+"%' or p.p_content Like '%"+keyword+"%') "
+			               +"order by p.p_wr_time desc";
 			         pstmt = conn.prepareStatement(sql);
 			         
 			         rs = pstmt.executeQuery();
@@ -897,12 +895,10 @@ public class SecondHandsDAO {
 			      
 			      try {
 			         conn=ds.getConnection();
-			         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
-			               +"from product p left join product_img pi "
-			               +"on p.p_num=pi.p_num "
-			               +"where p.p_subj Like '%" + keyword + "%' or p.p_content Like '%"+ keyword + "%' "
-			               +"and pi.pimg_num=1  and p.p_status=0 "
-			               +"order by p.p_price";
+			         String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time,p.p_num, p.storename, p.p_status"
+				         		+ "	from product p left join product_img pi  on p.p_num=pi.p_num"
+				         		+ " where (p.p_status=1 and pi.pimg_num=1) and (p.p_subj Like '%"+keyword+"%' or p.p_content Like '%"+keyword+"%') "
+				               +"order by p.p_price";
 			         pstmt = conn.prepareStatement(sql);
 			         
 			         rs = pstmt.executeQuery();
@@ -1118,7 +1114,7 @@ public class SecondHandsDAO {
 			// String sql = "select * from member";
 
 			String sql = "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
-					+ "from product p left join product_img pi " + "on p.p_num=pi.p_num " + "where p.b_num=" + c_num;
+					+ "from product p left join product_img pi " + "on p.p_num=pi.p_num " + "where (p.p_status=1 and pi.pimg_num=1) and p.b_num=" + c_num;
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -1158,7 +1154,7 @@ public class SecondHandsDAO {
 		return arr;
 	}
 
-	//카페고리에 맞는 상품 물러와서 가격순 정렬하기 -가희
+	//카페고리에 맞는 상품 물러와서 정렬하기 -가희
 	public JSONArray C_ProductOder(String keyword, String type) { 
 		
 		  
@@ -1179,15 +1175,14 @@ public class SecondHandsDAO {
 	        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
 			               +"from product p left join product_img pi "
 			               +"on p.p_num=pi.p_num "
-			               +"where p.b_num=" + c_num
-			               +" and pi.pimg_num=1  and p.p_status=0 "
-			               +"order by p.p_wr_time";
+			               +"where (p.p_status=1 and pi.pimg_num=1) and"
+			               + " p.b_num=" + c_num
+			               +"order by p.p_wr_time desc";
 	         }else {
 	        	 sql += "select pi.pimg_name, p.p_subj,p.p_price, p.p_wr_time, p.p_num, p.storename "
 			               +"from product p left join product_img pi "
 			               +"on p.p_num=pi.p_num "
-			               +"where p.b_num=" + c_num
-			               +" and pi.pimg_num=1  and p.p_status=0 "
+			               +"where (p.p_status=1 and pi.pimg_num=1) and p.b_num=" + c_num
 			               +"order by p.p_price";
 	         }
 	         
@@ -1709,7 +1704,7 @@ public class SecondHandsDAO {
 	      try {
 	         conn=ds.getConnection();				     
 	         	
-         	    String sql = "update product set p_status=1 where p_num=?";
+         	    String sql = "update product set p_status=0 where p_num=?";
 
 
          	   pstmt = conn.prepareStatement(sql);
@@ -1937,7 +1932,7 @@ public class SecondHandsDAO {
 			// String sql = "select * from member";
 			String sql = "";
 
-			sql += "insert into product(p_num, b_num, storename, p_addr, p_subj, p_dcharge, p_price, p_content, p_ed_time, p_status) values(p_num_seq.nextval,?, ?, ?,?,0,?,?,null,0)";
+			sql += "insert into product(p_num, b_num, storename, p_addr, p_subj, p_dcharge, p_price, p_content, p_ed_time, p_status) values(p_num_seq.nextval,?, ?, ?,?,0,?,?,null,1)";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, b_num);
