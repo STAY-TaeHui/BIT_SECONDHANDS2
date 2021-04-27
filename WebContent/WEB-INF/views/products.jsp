@@ -161,12 +161,14 @@
 	</div>
 	
 	<c:choose>
-	<ul class="productlist">
+	
 	<c:when test="${not empty products}">
+	<ul class="productlist">
 	<c:forEach var="products" items="${products}">
+	
 		<li><a href='productdetail.do?p_num=${products.p_num}&storename=${products.storename}'>
 			<div class='thumnail'>
-    			<img src='${pageContext.request.contextPath}/img/store/${products.pimg_name}'> 
+    			<img src='${pageContext.request.contextPath}/fileUpload/${products.pimg_name}'> 
     		</div>
     			<div class=title>${products.p_subj}</div>
     			<div class='imginfo'><p class='price'>${products.p_price}</p>
@@ -174,8 +176,9 @@
     	</li>
     	
 	</c:forEach>
-	</c:when>
 	</ul>
+	</c:when>
+	
 	<c:otherwise>
 	<p style="width:100%; margin-top:30px; text-align:center;">검색 결과가 없습니다</p>
 	</c:otherwise>

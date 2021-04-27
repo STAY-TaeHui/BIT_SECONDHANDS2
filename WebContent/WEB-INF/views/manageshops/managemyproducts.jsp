@@ -123,6 +123,7 @@
 	   
    }
 
+
   </script>
 
 
@@ -173,15 +174,6 @@
 	</li>
 	</ul>
 	</div>
-	
-	   	
-    <div id="ordermenu">
-	<ul id="defaultorder">
-		<li><input type="button" value="최신순" onclick="orderbytime()" id="timebtn" class="unclickedbtn"></li>
-		<li><input type="button" value="가격순" onclick="orderbyprice()" id="pricebtn" class="unclickedbtn"></li>
-	</ul>
-	
-	</div>
         	
             <div class="row">
                 <div class="col-lg-12">
@@ -207,7 +199,7 @@
                                 <tr class="product">
                                		<td class="p_img">
                                		<a href='productdetail.do?p_num=${myproducts.p_num}&storename=${sessionScope.storename}'>
-                               		<img src="${pageContext.request.contextPath}/img/store/${myproducts.pimg_name}"/>
+                               		<img src="${pageContext.request.contextPath}/fileUpload/${myproducts.pimg_name}"/>
                                		</a>
                                		</td>
                                     <td class="p_name"><p class="sbj">${myproducts.p_subj}</p></td>

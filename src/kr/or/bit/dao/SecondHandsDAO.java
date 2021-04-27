@@ -241,7 +241,7 @@ public class SecondHandsDAO {
 	            conn=ds.getConnection();
 	            
 	            //sql 바꾸고
-	            String sql =  "select p.p_num, pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time "
+	            String sql =  "select p.p_num, pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.storename "
 	            		 +"from product p left join product_img pi "
 	            		 +"on p.p_num=pi.p_num "
 	            		 +"where pi.pimg_num=1 and p.storename=?";
@@ -256,6 +256,7 @@ public class SecondHandsDAO {
 	            while(rs.next()) {
 	               JSONObject obj = new JSONObject();
 	               obj.put("pimg_name",rs.getString("pimg_name"));
+	               obj.put("storename",rs.getString("storename"));
 	               obj.put("p_subj",rs.getString("p_subj"));
 	               obj.put("p_price",rs.getInt("p_price"));
 	               obj.put("p_num",rs.getInt("p_num"));
@@ -1883,6 +1884,79 @@ public class SecondHandsDAO {
 
 		return arr;
 	}
+	
+	//내 상품 관리에서 정렬
+	public JSONArray getmyproductslistByOrder(String storename, String keyword) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONArray arr = new JSONArray();
+
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "select p.p_num, pi.pimg_name, p.p_subj, p.p_price, p.p_wr_time, p.p_status, p.p_ed_time "
+					+ "from product p left join product_img pi " + "on p.p_num=pi.p_num "
+					+ "where pi.pimg_num=1 and p.storename=? ";
+			
+			if(keyword.equals("time")) {
+				
+				sql += "order by p.p_wr_time desc";
+				
+			} else {
+				
+				sql += "order by p.p_price";
+				
+			}
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, storename);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				JSONObject obj = new JSONObject();
+
+				obj.put("pimg_name", rs.getString("pimg_name").trim());
+				obj.put("p_subj", rs.getString("p_subj"));
+				obj.put("p_num", rs.getInt("p_num"));
+				obj.put("p_price", rs.getInt("p_price"));
+				obj.put("p_wr_time", rs.getString("p_wr_time"));
+				obj.put("p_ed_time", rs.getString("p_ed_time"));
+				obj.put("p_status", rs.getString("p_status"));
+
+				System.out.println(obj);
+				// 상품하나씩 배열에 넣는다.
+				arr.add(obj);
+			}
+
+			System.out.println(arr);
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+
+		} catch (Exception e3) {
+			e3.printStackTrace();
+
+		} finally {
+
+			try {
+				// rs.close();
+				pstmt.close();
+				conn.close();// 반환하기
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return arr;
+	}
+	
+	
+	
 
 	//상점프로필사진 UPDATE -명환-
 	public boolean updateMemberProfile(String profile, String storename) {

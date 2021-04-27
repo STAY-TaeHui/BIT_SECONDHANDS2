@@ -70,7 +70,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="${pageContext.request.contextPath}/img/store/${jsonobj.pimg_name}" alt="">
+                                <img class="product-big-img" src="${pageContext.request.contextPath}/fileUpload/${jsonobj.pimg_name}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -130,7 +130,7 @@
                     <c:when test="${not empty imgs}">
                     <div id="moreimgs">
                     	<c:forEach var="imgs" items="${imgs}">
-                    	<div class="sub_imgs"><img src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
+                    	<div class="sub_imgs"><img class="sub_img" src="${pageContext.request.contextPath}/img/store/${imgs}"/></div>
                     	</c:forEach>
                     </div>
                     </c:when>
@@ -244,9 +244,9 @@
         </div>
     </section>
     <!-- 모달창 -->
-             <div class="modal fade" role="dialog" id="imgmodal">
+             <div class="modal fade" role="dialog" id="imgmodal" style="top:25%; margin:auto;">
                      <div class="modal-dialog">
-                    <div class="modal-content"></div>          
+                    <!-- <div class="modal-content"></div>   -->        
                        <img class="img-responsive" src="" id="show-img">         
                     </div>
                 </div>
@@ -857,7 +857,7 @@ function buy(){
        }
        
        //상세 이미지 모달
-        $('img').click(function(){
+        $('.sub_img').click(function(){
                                   console.log("img function");
                                   var img=$(this).attr('src');
                                     $("#show-img").attr('src',img);
