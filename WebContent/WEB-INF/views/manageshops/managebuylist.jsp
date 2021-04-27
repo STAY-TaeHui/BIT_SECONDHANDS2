@@ -264,7 +264,7 @@ function sendFile(file, editor) {
 function includeCheck(){
 	console.log("includeCheck 들어왓");
 }
-//머지용 주석
+
 </script>
 
 </html>

@@ -53,6 +53,7 @@ System.out.println("-------------------------------");
 	rel="stylesheet">
 <link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
 	rel='stylesheet'>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/myshop.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
